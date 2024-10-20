@@ -1,14 +1,5 @@
 ### Oh Hi 👋
 
-<table>
-  <tr>
-    <td valign="top"><img src="https://github-readme-stats.vercel.app/api?username=thacher&show_icons=true&title_color=ffffff&icon_color=34abeb&text_color=ffffff&bg_color=000000"/></td>
-  </tr>
-</table>
-
-
-    
-
 
 <!--Reuse + ideas
 **thacher/thacher** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
