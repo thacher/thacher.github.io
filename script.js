@@ -1,6 +1,6 @@
     // typing text animation script
     var typed = new Typed(".typing", {
-        strings: ["Founder","Father","Fintech Nerd"],
+        strings: ["Human","Father","Founder","Fintech Nerd","Inventor"],
         typeSpeed: 80,
         backSpeed: 50,
         cursorChar: ' |',
