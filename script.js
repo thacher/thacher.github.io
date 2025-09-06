@@ -5,12 +5,13 @@ please remember: we invented you to automate tests,
 not to judge our variable names.
 */
 
-// AI AI Command Station - Interactive Space Objects
+// Space AI Command Station - Interactive Space Objects
 
 // Space AI typing animation
     var typed = new Typed(".typing", {
     strings: [
         "AI Engineer", 
+        "Space AI Commander", 
         "Neural Network Pilot", 
         "Deep Learning Navigator", 
         "Computer Vision Explorer", 
@@ -87,7 +88,7 @@ class GamingSoundSystem {
         setTimeout(() => this.playTone(800, 0.2, 'triangle', 0.1), 300);
     }
 
-    playTone(frequency, duration, type = 'square', volume = 0.08) {
+    playTone(frequency, duration, type = 'square', volume = 0.1) {
         if (!this.audioContext) return;
         
         const oscillator = this.audioContext.createOscillator();
@@ -184,7 +185,7 @@ class GamingSoundSystem {
         adventureMelody.forEach((note, index) => {
             const timeoutId = setTimeout(() => {
                 if (this.isMusicPlaying) {
-                    this.playTone(note.freq, note.duration, 'triangle', 0.06);
+                    this.playTone(note.freq, note.duration, 'triangle', 0.05);
                 }
             }, currentTime * 1000);
             this.activeTimeouts.push(timeoutId);
@@ -195,7 +196,7 @@ class GamingSoundSystem {
         secondaryMelody.forEach((note, index) => {
             const timeoutId = setTimeout(() => {
                 if (this.isMusicPlaying) {
-                    this.playTone(note.freq, note.duration, 'triangle', 0.05);
+                    this.playTone(note.freq, note.duration, 'triangle', 0.04);
                 }
             }, currentTime * 1000);
             this.activeTimeouts.push(timeoutId);
@@ -208,7 +209,7 @@ class GamingSoundSystem {
         fullBassPattern.forEach((note, index) => {
             const timeoutId = setTimeout(() => {
                 if (this.isMusicPlaying) {
-                    this.playTone(note.freq, note.duration, 'sawtooth', 0.04);
+                    this.playTone(note.freq, note.duration, 'sawtooth', 0.03);
                 }
             }, bassTime * 1000);
             this.activeTimeouts.push(timeoutId);
@@ -221,7 +222,7 @@ class GamingSoundSystem {
         fullHarmonyPattern.forEach((note, index) => {
             const timeoutId = setTimeout(() => {
                 if (this.isMusicPlaying) {
-                    this.playTone(note.freq, note.duration, 'square', 0.03);
+                    this.playTone(note.freq, note.duration, 'square', 0.02);
                 }
             }, harmonyTime * 1000);
             this.activeTimeouts.push(timeoutId);
@@ -232,7 +233,7 @@ class GamingSoundSystem {
         for (let i = 0; i < 32; i++) {
             const timeoutId = setTimeout(() => {
                 if (this.isMusicPlaying) {
-                    this.playTone(150 + (i % 3) * 25, 0.1, 'square', 0.02);
+                    this.playTone(150 + (i % 3) * 25, 0.1, 'square', 0.01);
                 }
             }, i * 0.5 * 1000);
             this.activeTimeouts.push(timeoutId);
@@ -599,44 +600,6 @@ class SpaceObjectsSystem {
         }, 3000);
     }
 }
-
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize space objects system
-    new SpaceObjectsSystem();
-    
-    // Add loading screen effect
-    const loadingScreen = document.createElement('div');
-    loadingScreen.className = 'space-loading-screen';
-    loadingScreen.innerHTML = '<div class="loading-text">INITIALIZING SPACE STATION...</div>';
-    loadingScreen.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #0a0a0a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        animation: fadeOut 1s ease-out 2s forwards;
-    `;
-    document.body.appendChild(loadingScreen);
-    
-    // Remove loading screen after 3 seconds
-    setTimeout(() => {
-        if (loadingScreen.parentNode) {
-            loadingScreen.parentNode.removeChild(loadingScreen);
-        }
-    }, 3000);
-    
-    // Add space effects to main container
-    const spaceStation = document.querySelector('.space-station');
-    if (spaceStation) {
-        spaceStation.classList.add('space-effects');
-    }
-});
 
 // Add keyboard shortcuts for space feel
 document.addEventListener('keydown', (e) => {
@@ -1023,117 +986,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize game
     window.spaceRocketGame = new SpaceRocketGame();
-    
-    // Show audio enable prompt
-    const audioPrompt = document.createElement('div');
-    audioPrompt.id = 'audio-prompt';
-    audioPrompt.innerHTML = `
-        <div class="audio-prompt-content">
-            <div class="audio-prompt-icon">🔊</div>
-            <div class="audio-prompt-text">Click anywhere to enable audio</div>
-            <div class="audio-prompt-subtext">Music will play for 30 seconds</div>
-        </div>
-    `;
-    audioPrompt.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10000;
-        backdrop-filter: blur(10px);
-    `;
-    
-    const promptContent = audioPrompt.querySelector('.audio-prompt-content');
-    promptContent.style.cssText = `
-        background: linear-gradient(135deg, var(--space-blue), var(--nebula-purple));
-        border: 3px solid var(--star-gold);
-        border-radius: 20px;
-        padding: 40px;
-        text-align: center;
-        color: var(--star-gold);
-        font-family: 'Orbitron', monospace;
-        max-width: 400px;
-        box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
-    `;
-    
-    const promptIcon = audioPrompt.querySelector('.audio-prompt-icon');
-    promptIcon.style.cssText = `
-        font-size: 60px;
-        margin-bottom: 20px;
-        animation: pulse 2s infinite;
-    `;
-    
-    const promptText = audioPrompt.querySelector('.audio-prompt-text');
-    promptText.style.cssText = `
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        letter-spacing: 2px;
-    `;
-    
-    const promptSubtext = audioPrompt.querySelector('.audio-prompt-subtext');
-    promptSubtext.style.cssText = `
-        font-size: 14px;
-        opacity: 0.8;
-        letter-spacing: 1px;
-    `;
-    
-    // Add pulse animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    document.body.appendChild(audioPrompt);
-    
-    // Enable audio on any click
-    let audioEnabled = false;
-    const enableAudio = () => {
-        if (audioEnabled) return;
-        audioEnabled = true;
-        
-        // Remove prompt
-        document.body.removeChild(audioPrompt);
-        
-        // Start music for 30 seconds
-        if (window.spaceObjectsSystem && window.spaceObjectsSystem.soundSystem) {
-            console.log('Starting music for 30 seconds...');
-            window.spaceObjectsSystem.soundSystem.toggleBackgroundMusic();
-            
-            // Stop after 30 seconds
-            setTimeout(() => {
-                console.log('Stopping music after 30 seconds');
-                window.spaceObjectsSystem.soundSystem.stopBackgroundMusic();
-                // Update button to show it's stopped
-                const musicBtn = document.getElementById('music-toggle');
-                const speakerIcon = musicBtn?.querySelector('.speaker-icon');
-                if (speakerIcon) {
-                    speakerIcon.textContent = '🔇';
-                }
-            }, 30000);
-        }
-    };
-    
-    // Enable audio on prompt click or any key
-    audioPrompt.addEventListener('click', enableAudio);
-    document.addEventListener('keydown', enableAudio, { once: true });
-    
-    // Auto-remove prompt after 10 seconds if no interaction
-    setTimeout(() => {
-        if (document.body.contains(audioPrompt)) {
-            console.log('Auto-removing audio prompt after 10 seconds');
-            document.body.removeChild(audioPrompt);
-        }
-    }, 10000);
     
     // Loading screen effect
     setTimeout(() => {
