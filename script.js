@@ -735,10 +735,17 @@ class SpaceRocketGame {
     
     setupEventListeners() {
         // Rocket click to start game
-        document.getElementById('rocket-game-trigger').addEventListener('click', () => {
-            console.log('Rocket clicked! Starting game...');
-            this.startGame();
-        });
+        const rocketElement = document.getElementById('rocket-game-trigger');
+        console.log('Rocket element found:', rocketElement);
+        
+        if (rocketElement) {
+            rocketElement.addEventListener('click', () => {
+                console.log('Rocket clicked! Starting game...');
+                this.startGame();
+            });
+        } else {
+            console.error('Rocket element not found!');
+        }
         
         // Close game
         document.getElementById('close-game').addEventListener('click', () => {
