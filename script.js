@@ -900,7 +900,9 @@ class SpaceRocketGame {
     
     gameComplete() {
         this.gameState.running = false;
-        document.getElementById('game-over-title').textContent = 'MISSION COMPLETE!';
+        const gameOverTitle = document.getElementById('game-over-title');
+        gameOverTitle.textContent = 'MISSION COMPLETE!';
+        gameOverTitle.classList.remove('failed');
         document.getElementById('final-score').textContent = this.gameState.score;
         
         // Reset award display to gold for success
@@ -934,7 +936,9 @@ class SpaceRocketGame {
     
     gameOver() {
         this.gameState.running = false;
-        document.getElementById('game-over-title').textContent = 'MISSION FAILED!';
+        const gameOverTitle = document.getElementById('game-over-title');
+        gameOverTitle.textContent = 'MISSION FAILED!';
+        gameOverTitle.classList.add('failed');
         document.getElementById('final-score').textContent = this.gameState.score;
         
         // Change award display to red for failure

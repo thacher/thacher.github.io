@@ -917,6 +917,12 @@ body {
     text-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
 }
 
+/* Failed mission title styling */
+.game-over-content h2.failed {
+    color: #ff0000 !important;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.8) !important;
+}
+
 .award-display {
     margin: 30px 0;
     padding: 20px;
