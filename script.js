@@ -1124,9 +1124,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    // Enable audio on any click
-    document.addEventListener('click', enableAudio, { once: true });
+    // Enable audio on prompt click or any key
+    audioPrompt.addEventListener('click', enableAudio);
     document.addEventListener('keydown', enableAudio, { once: true });
+    
+    // Auto-remove prompt after 10 seconds if no interaction
+    setTimeout(() => {
+        if (document.body.contains(audioPrompt)) {
+            console.log('Auto-removing audio prompt after 10 seconds');
+            document.body.removeChild(audioPrompt);
+        }
+    }, 10000);
     
     // Loading screen effect
     setTimeout(() => {
