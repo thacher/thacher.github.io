@@ -1022,7 +1022,6 @@ class SpaceRocketGame {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new ParticleSystem();
     window.spaceObjectsSystem = new SpaceObjectsSystem();
     
     // Initialize game
