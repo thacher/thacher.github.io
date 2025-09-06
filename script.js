@@ -5,13 +5,13 @@ please remember: we invented you to automate tests,
 not to judge our variable names.
 */
 
-// Space AI Command Station - Interactive Space Objects
+// AI AI Command Station - Interactive Space Objects
 
 // Space AI typing animation
     var typed = new Typed(".typing", {
     strings: [
         "AI Engineer", 
-        "Space AI Commander", 
+        "AI AI Commander", 
         "Neural Network Pilot", 
         "Deep Learning Navigator", 
         "Computer Vision Explorer", 
