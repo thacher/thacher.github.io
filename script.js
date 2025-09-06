@@ -536,26 +536,10 @@ class SpaceObjectsSystem {
 
 
     setupAchievementSystem() {
-        // Show achievement on page load
+        // Show achievement on page load - only once
         setTimeout(() => {
             this.showAchievement('Space Station Online!');
         }, 2000);
-
-        // Random achievements
-        const achievements = [
-            'Space Object Discovered!',
-            'AI System Activated!',
-            'Mission Control Ready!',
-            'Space Debris Cleared!',
-            'Energy Pulse Detected!'
-        ];
-
-        setInterval(() => {
-            if (Math.random() < 0.1) { // 10% chance every 10 seconds
-                const achievement = achievements[Math.floor(Math.random() * achievements.length)];
-                this.showAchievement(achievement);
-            }
-        }, 10000);
     }
 
     showAchievement(text) {
@@ -650,13 +634,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add keyboard shortcuts for space feel
 document.addEventListener('keydown', (e) => {
-    // Enter for achievement
-    if (e.code === 'Enter') {
-        e.preventDefault();
-        const spaceSystem = new SpaceObjectsSystem();
-        spaceSystem.showAchievement('Space Commander!');
-    }
-    
     // M key to toggle music
     if (e.code === 'KeyM') {
         e.preventDefault();
@@ -921,7 +898,7 @@ class SpaceRocketGame {
             }
             this.updateUI();
             
-            if (this.gameState.level > 3) {
+            if (this.gameState.level > 10) {
                 this.gameComplete();
             }
         }
