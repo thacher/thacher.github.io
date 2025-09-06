@@ -1,21 +1,25 @@
-// Enhanced Gaming JavaScript with Interactive Effects
+// Space AI Command Station - Interactive Space Objects
 
-// Typing animation with gaming-themed strings
+// Space AI typing animation
 var typed = new Typed(".typing", {
     strings: [
         "AI Engineer", 
-        "Digital Creator", 
-        "Tech Innovator", 
-        "Code Wizard", 
-        "Problem Solver", 
-        "Future Builder",
-        "Human",
-        "Father",
-        "Founder",
-        "Nerd"
+        "Space AI Commander", 
+        "Neural Network Pilot", 
+        "Deep Learning Navigator", 
+        "Computer Vision Explorer", 
+        "NLP Space Specialist",
+        "MLOps Mission Control",
+        "AI Systems Architect",
+        "Algorithm Space Engineer",
+        "Data Science Commander",
+        "AI Product Launch Director",
+        "Technical Space Founder",
+        "Machine Learning Astronaut",
+        "AI Mission Specialist"
     ],
-    typeSpeed: 60,
-    backSpeed: 40,
+    typeSpeed: 50,
+    backSpeed: 30,
     cursorChar: ' █',
     smartBackspace: true,
     loop: true,
@@ -23,127 +27,249 @@ var typed = new Typed(".typing", {
     cursorChar: '█'
 });
 
-// Particle System
-class ParticleSystem {
+// Space Objects Interaction System
+class SpaceObjectsSystem {
     constructor() {
-        this.particles = [];
-        this.container = document.querySelector('.particles');
+        this.objects = document.querySelectorAll('.space-object');
         this.init();
     }
 
     init() {
-        // Create initial particles
-        for (let i = 0; i < 20; i++) {
-            this.createParticle();
-        }
-        
-        // Add new particles periodically
-        setInterval(() => {
-            if (this.particles.length < 30) {
-                this.createParticle();
-            }
-        }, 2000);
-    }
-
-    createParticle() {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        
-        // Random position and properties
-        const startX = Math.random() * window.innerWidth;
-        const size = Math.random() * 3 + 1;
-        const duration = Math.random() * 5 + 5;
-        
-        particle.style.left = startX + 'px';
-        particle.style.width = size + 'px';
-        particle.style.height = size + 'px';
-        particle.style.animationDuration = duration + 's';
-        
-        // Random color
-        const colors = ['#00ff88', '#0080ff', '#ff0080', '#ffff00'];
-        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-        
-        this.container.appendChild(particle);
-        this.particles.push(particle);
-        
-        // Remove particle after animation
-        setTimeout(() => {
-            if (particle.parentNode) {
-                particle.parentNode.removeChild(particle);
-                this.particles = this.particles.filter(p => p !== particle);
-            }
-        }, duration * 1000);
-    }
-}
-
-// Gaming UI Interactions
-class GamingUI {
-    constructor() {
-        this.init();
-    }
-
-    init() {
-        this.setupButtonInteractions();
-        this.setupHealthBarAnimation();
+        this.setupObjectInteractions();
+        this.createSpaceEffects();
         this.setupAchievementSystem();
     }
 
-    setupButtonInteractions() {
-        const buttons = document.querySelectorAll('.action-button');
-        
-        buttons.forEach(button => {
+    setupObjectInteractions() {
+        this.objects.forEach((object, index) => {
+            // Add staggered animation delay
+            object.style.animationDelay = `${index * 0.2}s`;
+            
             // Hover effects
-            button.addEventListener('mouseenter', () => {
-                this.addGlowEffect(button);
+            object.addEventListener('mouseenter', () => {
+                this.createHoverEffect(object);
+                this.playSpaceSound();
             });
 
             // Click effects
-            button.addEventListener('click', (e) => {
-                this.createClickEffect(e.target);
-                this.showAchievement('Link Accessed!');
+            object.addEventListener('click', (e) => {
+                const link = object.getAttribute('data-link');
+                if (link) {
+                    this.createClickEffect(object);
+                    this.showAchievement('Space Object Activated!');
+                    setTimeout(() => {
+                        window.open(link, '_blank', 'noopener,noreferrer');
+                    }, 300);
+                }
             });
 
             // Mouse leave
-            button.addEventListener('mouseleave', () => {
-                this.removeGlowEffect(button);
+            object.addEventListener('mouseleave', () => {
+                this.removeHoverEffect(object);
             });
         });
     }
 
-    setupHealthBarAnimation() {
-        const healthBar = document.querySelector('.health-fill');
-        const healthText = document.querySelector('.health-text');
+    createSpaceEffects() {
+        // Create floating space debris
+        this.createSpaceDebris();
         
-        // Simulate health changes
-        setInterval(() => {
-            const currentHealth = Math.random() * 20 + 80; // 80-100%
-            healthBar.style.width = currentHealth + '%';
-            healthText.textContent = `HP: ${Math.round(currentHealth)}%`;
-            
-            // Color change based on health
-            if (currentHealth < 30) {
-                healthBar.style.background = 'linear-gradient(90deg, #ff0000, #ff0000)';
-            } else if (currentHealth < 60) {
-                healthBar.style.background = 'linear-gradient(90deg, #ff0000, #ffff00)';
-            } else {
-                healthBar.style.background = 'linear-gradient(90deg, #ff0000, #ffff00, #00ff00)';
+        // Create energy pulses
+        this.createEnergyPulses();
+        
+        // Create shield effects
+        this.createShieldEffects();
+    }
+
+    createSpaceDebris() {
+        const debrisContainer = document.createElement('div');
+        debrisContainer.className = 'space-debris';
+        debrisContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        `;
+        document.body.appendChild(debrisContainer);
+
+        for (let i = 0; i < 15; i++) {
+            const debris = document.createElement('div');
+            debris.style.cssText = `
+                position: absolute;
+                width: ${Math.random() * 4 + 2}px;
+                height: ${Math.random() * 4 + 2}px;
+                background: #00ffff;
+                border-radius: 50%;
+                left: ${Math.random() * 100}%;
+                top: ${Math.random() * 100}%;
+                animation: debrisFloat ${Math.random() * 10 + 10}s linear infinite;
+                opacity: ${Math.random() * 0.5 + 0.3};
+            `;
+            debrisContainer.appendChild(debris);
+        }
+
+        // Add debris animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes debrisFloat {
+                0% { transform: translateY(100vh) translateX(0px) rotate(0deg); }
+                100% { transform: translateY(-100px) translateX(${Math.random() * 200 - 100}px) rotate(360deg); }
             }
-        }, 5000);
+        `;
+        document.head.appendChild(style);
+    }
+
+    createEnergyPulses() {
+        setInterval(() => {
+            const pulse = document.createElement('div');
+            pulse.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                width: 4px;
+                height: 4px;
+                background: #00ffff;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+                z-index: 1000;
+                animation: energyPulse 2s ease-out forwards;
+            `;
+            document.body.appendChild(pulse);
+
+            setTimeout(() => {
+                if (pulse.parentNode) {
+                    pulse.parentNode.removeChild(pulse);
+                }
+            }, 2000);
+        }, 3000);
+
+        // Add energy pulse animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes energyPulse {
+                0% { width: 4px; height: 4px; opacity: 1; }
+                100% { width: 200px; height: 200px; opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    createShieldEffects() {
+        const shieldBar = document.querySelector('.shield-fill');
+        if (shieldBar) {
+            setInterval(() => {
+                const currentShield = Math.random() * 20 + 80; // 80-100%
+                shieldBar.style.width = currentShield + '%';
+                
+                // Color change based on shield level
+                if (currentShield < 30) {
+                    shieldBar.style.background = 'linear-gradient(90deg, #ff0000, #ff0000)';
+                } else if (currentShield < 60) {
+                    shieldBar.style.background = 'linear-gradient(90deg, #ff0000, #ffff00)';
+                } else {
+                    shieldBar.style.background = 'linear-gradient(90deg, #00ff00, #ffff00, #00ff00)';
+                }
+            }, 5000);
+        }
+    }
+
+    createHoverEffect(object) {
+        object.style.transform = 'translateY(-15px) scale(1.1)';
+        object.style.boxShadow = '0 0 40px rgba(0, 255, 255, 0.8)';
+        
+        // Create energy rings
+        const ring = document.createElement('div');
+        ring.className = 'energy-ring';
+        ring.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00ffff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: energyRing 0.5s ease-out forwards;
+            pointer-events: none;
+        `;
+        object.appendChild(ring);
+
+        setTimeout(() => {
+            if (ring.parentNode) {
+                ring.parentNode.removeChild(ring);
+            }
+        }, 500);
+    }
+
+    removeHoverEffect(object) {
+        object.style.transform = '';
+        object.style.boxShadow = '';
+    }
+
+    createClickEffect(object) {
+        const explosion = document.createElement('div');
+        explosion.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #00ffff, transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: spaceExplosion 0.6s ease-out forwards;
+            pointer-events: none;
+            z-index: 1000;
+        `;
+        object.appendChild(explosion);
+
+        setTimeout(() => {
+            if (explosion.parentNode) {
+                explosion.parentNode.removeChild(explosion);
+            }
+        }, 600);
+    }
+
+    playSpaceSound() {
+        // Create audio context for space sound effects
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        } catch (e) {
+            console.log('Web Audio API not supported');
+        }
     }
 
     setupAchievementSystem() {
         // Show achievement on page load
         setTimeout(() => {
-            this.showAchievement('Profile Loaded!');
+            this.showAchievement('Space Station Online!');
         }, 2000);
 
         // Random achievements
         const achievements = [
-            'Code Master!',
-            'Digital Explorer!',
-            'Tech Wizard!',
-            'Innovation Leader!',
-            'Future Builder!'
+            'Space Object Discovered!',
+            'AI System Activated!',
+            'Mission Control Ready!',
+            'Space Debris Cleared!',
+            'Energy Pulse Detected!'
         ];
 
         setInterval(() => {
@@ -154,67 +280,35 @@ class GamingUI {
         }, 10000);
     }
 
-    createClickEffect(element) {
-        const clickEffect = document.createElement('div');
-        clickEffect.style.position = 'absolute';
-        clickEffect.style.top = '50%';
-        clickEffect.style.left = '50%';
-        clickEffect.style.transform = 'translate(-50%, -50%)';
-        clickEffect.style.width = '20px';
-        clickEffect.style.height = '20px';
-        clickEffect.style.border = '2px solid #00ff88';
-        clickEffect.style.borderRadius = '50%';
-        clickEffect.style.pointerEvents = 'none';
-        clickEffect.style.zIndex = '1000';
-        clickEffect.style.animation = 'soundWave 0.5s ease-out';
-        
-        element.style.position = 'relative';
-        element.appendChild(clickEffect);
-        
-        setTimeout(() => {
-            if (clickEffect.parentNode) {
-                clickEffect.parentNode.removeChild(clickEffect);
-            }
-        }, 500);
-    }
-
-    addGlowEffect(element) {
-        element.style.boxShadow = '0 0 30px rgba(0, 255, 136, 0.8)';
-        element.style.transform = 'scale(1.02)';
-    }
-
-    removeGlowEffect(element) {
-        element.style.boxShadow = '';
-        element.style.transform = '';
-    }
-
     showAchievement(text) {
         // Create achievement notification
         const achievement = document.createElement('div');
-        achievement.className = 'achievement-notification';
+        achievement.className = 'space-achievement';
         achievement.innerHTML = `
             <div class="achievement-content">
-                <i class="fas fa-trophy"></i>
+                <i class="fas fa-star"></i>
                 <span>${text}</span>
             </div>
         `;
         
         // Style the achievement
-        achievement.style.position = 'fixed';
-        achievement.style.top = '20px';
-        achievement.style.right = '-300px';
-        achievement.style.background = 'linear-gradient(45deg, #ffd700, #ffed4e)';
-        achievement.style.color = '#000';
-        achievement.style.padding = '15px 25px';
-        achievement.style.borderRadius = '25px';
-        achievement.style.fontFamily = "'Press Start 2P', monospace";
-        achievement.style.fontSize = '12px';
-        achievement.style.zIndex = '10000';
-        achievement.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
-        achievement.style.transition = 'right 0.5s ease';
-        achievement.style.display = 'flex';
-        achievement.style.alignItems = 'center';
-        achievement.style.gap = '10px';
+        achievement.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: -300px;
+            background: linear-gradient(45deg, #ffcc00, #ffff00);
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            z-index: 10000;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+            transition: right 0.5s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        `;
         
         document.body.appendChild(achievement);
         
@@ -237,16 +331,26 @@ class GamingUI {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize particle system
-    new ParticleSystem();
-    
-    // Initialize gaming UI
-    new GamingUI();
+    // Initialize space objects system
+    new SpaceObjectsSystem();
     
     // Add loading screen effect
     const loadingScreen = document.createElement('div');
-    loadingScreen.className = 'loading-screen';
-    loadingScreen.innerHTML = '<div class="loading-text">LOADING...</div>';
+    loadingScreen.className = 'space-loading-screen';
+    loadingScreen.innerHTML = '<div class="loading-text">INITIALIZING SPACE STATION...</div>';
+    loadingScreen.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0a0a0a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        animation: fadeOut 1s ease-out 2s forwards;
+    `;
     document.body.appendChild(loadingScreen);
     
     // Remove loading screen after 3 seconds
@@ -256,27 +360,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 3000);
     
-    // Add CRT effect to main container
-    const gameContainer = document.querySelector('.game-container');
-    if (gameContainer) {
-        gameContainer.classList.add('crt-effect');
+    // Add space effects to main container
+    const spaceStation = document.querySelector('.space-station');
+    if (spaceStation) {
+        spaceStation.classList.add('space-effects');
     }
 });
 
-// Add keyboard shortcuts for gaming feel
+// Add keyboard shortcuts for space feel
 document.addEventListener('keydown', (e) => {
-    // Space bar for random effect
+    // Space bar for random space object activation
     if (e.code === 'Space') {
         e.preventDefault();
-        const buttons = document.querySelectorAll('.action-button');
-        const randomButton = buttons[Math.floor(Math.random() * buttons.length)];
-        randomButton.click();
+        const objects = document.querySelectorAll('.space-object');
+        const randomObject = objects[Math.floor(Math.random() * objects.length)];
+        randomObject.click();
     }
     
     // Enter for achievement
     if (e.code === 'Enter') {
         e.preventDefault();
-        const gamingUI = new GamingUI();
-        gamingUI.showAchievement('Keyboard Master!');
+        const spaceSystem = new SpaceObjectsSystem();
+        spaceSystem.showAchievement('Space Commander!');
     }
 });
+
+// Add space explosion animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes spaceExplosion {
+        0% { width: 10px; height: 10px; opacity: 1; }
+        100% { width: 100px; height: 100px; opacity: 0; }
+    }
+    
+    @keyframes energyRing {
+        0% { width: 20px; height: 20px; opacity: 1; }
+        100% { width: 100px; height: 100px; opacity: 0; }
+    }
+    
+    @keyframes fadeOut {
+        0% { opacity: 1; }
+        100% { opacity: 0; visibility: hidden; }
+    }
+`;
+document.head.appendChild(style);
