@@ -59,13 +59,13 @@
                     <div class="system">
                         <span class="system-label">AI:</span>
                         <div class="system-bar">
-                            <div class="system-fill" style="width: 98%"></div>
+                            <div class="system-fill" style="width: 75%"></div>
                         </div>
                     </div>
                     <div class="system">
                         <span class="system-label">ML:</span>
                         <div class="system-bar">
-                            <div class="system-fill" style="width: 95%"></div>
+                            <div class="system-fill" style="width: 80%"></div>
                         </div>
                     </div>
                     <div class="system">
@@ -76,28 +76,9 @@
                     </div>
                 </div>
             </div>
-        <!-- Skills Scrolling Display -->
-        <section class="skills-display">
-            <div class="skills-container">
-                <h3 class="skills-title">EXECUTIVE EXPERTISE</h3>
-                <div class="skills-scroll">
-                    <div class="skill-item">Scaled Consumer Platforms</div>
-                    <div class="skill-item">Scaled Cloud-Native Systems</div>
-                    <div class="skill-item">AI/ML Transformation</div>
-                    <div class="skill-item">Product Innovation</div>
-                    <div class="skill-item">Data Resiliency</div>
-                    <div class="skill-item">Agile Execution</div>
-                    <div class="skill-item">Servant Leadership</div>
-                    <div class="skill-item">Culture Builder</div>
-                    <div class="skill-item">Visionary Operator</div>
-                    <div class="skill-item">Embedded Products</div>
-                    <div class="skill-item">Go-to-Market Leadership</div>
-                    <div class="skill-item">Digital & Data Transformation</div>
-                    <div class="skill-item">P&L Ownership</div>
-                    <div class="skill-item">Talent Magnet</div>
-                </div>
-            </div>
         </section>
+
+        <!-- Interactive Space Objects -->
         <div class="space-objects-container">
             <div class="space-object consultation" data-link="https://intro.co/RobThacher">
                 <div class="object-icon">🚀</div>
@@ -172,37 +153,41 @@
     <div id="game-modal" class="game-modal">
         <div class="game-container">
             <div class="game-header">
-                <h2>🚀 SPACE AI COMMANDER TRAINING</h2>
+                <h2>🚀 SPACE ROCKET MISSION</h2>
                 <div class="game-stats">
-                    <span id="level-display">Level: 1</span>
-                    <span id="score-display">Score: 0</span>
-                    <span id="lives-display">Lives: 3</span>
+                    <span id="level-display">LEVEL: 1</span>
+                    <span id="score-display">SCORE: 0</span>
+                    <span id="lives-display">LIVES: 3</span>
                 </div>
-                <button id="close-game" class="close-btn">✕</button>
+                <button class="close-btn" id="close-game">×</button>
             </div>
             
-            <canvas id="game-canvas" width="800" height="600"></canvas>
+            <canvas id="game-canvas" width="800" height="400"></canvas>
             
             <div class="game-controls">
                 <div class="control-info">
-                    <p>🎮 Use ARROW KEYS to move your rocket</p>
-                    <p>🎯 Collect AI modules (blue) and avoid asteroids (gray)</p>
-                    <p>🚀 Complete 3 levels to earn your Space Commander Award!</p>
+                    <p>🎮 Use ARROW KEYS to navigate</p>
+                    <p>🚀 Avoid asteroids and collect stars</p>
+                    <p>⭐ Complete 3 levels to win!</p>
                 </div>
             </div>
             
-            <div id="game-over-screen" class="game-over hidden">
+            <div id="game-over" class="game-over hidden">
                 <div class="game-over-content">
-                    <h2 id="game-result">🎉 CONGRATULATIONS!</h2>
-                    <p id="final-score">Final Score: 0</p>
-                    <div id="award-display" class="award-display">
+                    <h2 id="game-over-title">MISSION COMPLETE!</h2>
+                    <div class="award-display">
                         <div class="award-trophy">🏆</div>
-                        <h3>SPACE AI COMMANDER AWARD</h3>
-                        <p>You have successfully completed all training levels!</p>
-                        <p>You are now certified as a Space AI Commander!</p>
+                        <h3>SPACE COMMANDER AWARD</h3>
+                        <p>Congratulations! You've completed all 3 levels!</p>
+                        <p>Final Score: <span id="final-score">0</span></p>
+                        <p>You are now a certified Space AI Commander!</p>
                     </div>
-                    <button id="play-again" class="play-again-btn">Play Again</button>
+                    <button class="play-again-btn" id="play-again">🚀 PLAY AGAIN</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

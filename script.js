@@ -615,12 +615,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize space objects system
     new SpaceObjectsSystem();
     
-    // Initialize rocket game
-    new SpaceRocketGame();
-    
-    // Initialize skills scrolling
-    initializeSkillsScrolling();
-    
     // Add loading screen effect
     const loadingScreen = document.createElement('div');
     loadingScreen.className = 'space-loading-screen';
@@ -704,121 +698,103 @@ document.head.appendChild(style);
 // Space Rocket Game
 class SpaceRocketGame {
     constructor() {
-        this.canvas = null;
-        this.ctx = null;
-        this.gameRunning = false;
-        this.level = 1;
-        this.score = 0;
-        this.lives = 3;
-        this.rocket = null;
-        this.aiModules = [];
-        this.asteroids = [];
-        this.keys = {};
-        this.gameSpeed = 2;
-        this.lastSpawn = 0;
-        this.init();
-    }
-
-    init() {
-        this.setupEventListeners();
-    }
-
-    setupEventListeners() {
-        // Rocket click to start game
-        const rocketTrigger = document.getElementById('rocket-game-trigger');
-        if (rocketTrigger) {
-            rocketTrigger.addEventListener('click', () => {
-                this.startGame();
-            });
-        }
-
-        // Close game button
-        const closeBtn = document.getElementById('close-game');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                this.closeGame();
-            });
-        }
-
-        // Play again button
-        const playAgainBtn = document.getElementById('play-again');
-        if (playAgainBtn) {
-            playAgainBtn.addEventListener('click', () => {
-                this.restartGame();
-            });
-        }
-
-        // Keyboard controls
-        document.addEventListener('keydown', (e) => {
-            if (this.gameRunning) {
-                this.keys[e.code] = true;
-                e.preventDefault();
-            }
-        });
-
-        document.addEventListener('keyup', (e) => {
-            if (this.gameRunning) {
-                this.keys[e.code] = false;
-            }
-        });
-    }
-
-    startGame() {
-        const modal = document.getElementById('game-modal');
-        if (modal) {
-            modal.classList.add('active');
-            this.canvas = document.getElementById('game-canvas');
-            this.ctx = this.canvas.getContext('2d');
-            this.resetGame();
-            this.gameLoop();
-        }
-    }
-
-    closeGame() {
-        const modal = document.getElementById('game-modal');
-        if (modal) {
-            modal.classList.remove('active');
-            this.gameRunning = false;
-        }
-    }
-
-    resetGame() {
-        this.level = 1;
-        this.score = 0;
-        this.lives = 3;
-        this.gameSpeed = 2;
+        this.canvas = document.getElementById('game-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.gameModal = document.getElementById('game-modal');
+        this.gameOver = document.getElementById('game-over');
+        
+        this.gameState = {
+            running: false,
+            level: 1,
+            score: 0,
+            lives: 3,
+            gameSpeed: 2
+        };
+        
         this.rocket = {
             x: this.canvas.width / 2,
             y: this.canvas.height - 60,
-            width: 30,
+            width: 40,
             height: 40,
             speed: 5
         };
-        this.aiModules = [];
+        
         this.asteroids = [];
-        this.lastSpawn = 0;
-        this.gameRunning = true;
-        this.updateDisplay();
+        this.stars = [];
+        this.keys = {};
+        
+        this.init();
     }
-
-    restartGame() {
-        const gameOverScreen = document.getElementById('game-over-screen');
-        if (gameOverScreen) {
-            gameOverScreen.classList.add('hidden');
+    
+    init() {
+        this.setupEventListeners();
+        this.gameLoop();
+    }
+    
+    setupEventListeners() {
+        // Rocket click to start game
+        document.getElementById('rocket-game-trigger').addEventListener('click', () => {
+            this.startGame();
+        });
+        
+        // Close game
+        document.getElementById('close-game').addEventListener('click', () => {
+            this.closeGame();
+        });
+        
+        // Play again
+        document.getElementById('play-again').addEventListener('click', () => {
+            this.restartGame();
+        });
+        
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            this.keys[e.code] = true;
+        });
+        
+        document.addEventListener('keyup', (e) => {
+            this.keys[e.code] = false;
+        });
+    }
+    
+    startGame() {
+        this.gameModal.classList.add('active');
+        this.gameState.running = true;
+        this.gameState.level = 1;
+        this.gameState.score = 0;
+        this.gameState.lives = 3;
+        this.gameState.gameSpeed = 2;
+        
+        this.rocket.x = this.canvas.width / 2;
+        this.rocket.y = this.canvas.height - 60;
+        this.asteroids = [];
+        this.stars = [];
+        
+        this.updateUI();
+        // Get sound system from existing SpaceObjectsSystem
+        const spaceSystem = window.spaceObjectsSystem;
+        if (spaceSystem && spaceSystem.soundSystem) {
+            spaceSystem.soundSystem.playSpaceClick();
         }
-        this.resetGame();
     }
-
-    gameLoop() {
-        if (!this.gameRunning) return;
-
-        this.update();
-        this.draw();
-        requestAnimationFrame(() => this.gameLoop());
+    
+    closeGame() {
+        this.gameModal.classList.remove('active');
+        this.gameState.running = false;
     }
-
-    update() {
-        // Move rocket
+    
+    restartGame() {
+        this.gameOver.classList.add('hidden');
+        this.startGame();
+    }
+    
+    updateUI() {
+        document.getElementById('level-display').textContent = `LEVEL: ${this.gameState.level}`;
+        document.getElementById('score-display').textContent = `SCORE: ${this.gameState.score}`;
+        document.getElementById('lives-display').textContent = `LIVES: ${this.gameState.lives}`;
+    }
+    
+    handleInput() {
         if (this.keys['ArrowLeft'] && this.rocket.x > 0) {
             this.rocket.x -= this.rocket.speed;
         }
@@ -831,266 +807,224 @@ class SpaceRocketGame {
         if (this.keys['ArrowDown'] && this.rocket.y < this.canvas.height - this.rocket.height) {
             this.rocket.y += this.rocket.speed;
         }
-
-        // Spawn objects
-        const now = Date.now();
-        if (now - this.lastSpawn > 1000) {
-            this.spawnObjects();
-            this.lastSpawn = now;
-        }
-
-        // Update AI modules
-        this.aiModules.forEach((module, index) => {
-            module.y += this.gameSpeed;
-            if (module.y > this.canvas.height) {
-                this.aiModules.splice(index, 1);
-            }
-        });
-
-        // Update asteroids
-        this.asteroids.forEach((asteroid, index) => {
-            asteroid.y += this.gameSpeed;
-            asteroid.rotation += 0.1;
-            if (asteroid.y > this.canvas.height) {
-                this.asteroids.splice(index, 1);
-            }
-        });
-
-        // Check collisions
-        this.checkCollisions();
-
-        // Check level completion
-        this.checkLevelCompletion();
     }
-
-    spawnObjects() {
-        // Spawn AI modules (good)
-        if (Math.random() < 0.3) {
-            this.aiModules.push({
-                x: Math.random() * (this.canvas.width - 20),
-                y: -20,
-                width: 20,
-                height: 20,
-                collected: false
-            });
-        }
-
-        // Spawn asteroids (bad)
-        if (Math.random() < 0.4) {
+    
+    spawnAsteroids() {
+        if (Math.random() < 0.02 + (this.gameState.level * 0.01)) {
             this.asteroids.push({
                 x: Math.random() * (this.canvas.width - 30),
                 y: -30,
                 width: 30,
                 height: 30,
-                rotation: 0
+                speed: this.gameState.gameSpeed + Math.random() * 2
             });
         }
     }
-
-    checkCollisions() {
-        // Check AI module collisions
-        this.aiModules.forEach((module, index) => {
-            if (this.isColliding(this.rocket, module) && !module.collected) {
-                module.collected = true;
-                this.score += 10;
-                this.aiModules.splice(index, 1);
-                this.updateDisplay();
-                // Play collection sound
-                if (window.soundSystem) {
-                    window.soundSystem.playAchievement();
-                }
-            }
-        });
-
-        // Check asteroid collisions
-        this.asteroids.forEach((asteroid, index) => {
-            if (this.isColliding(this.rocket, asteroid)) {
-                this.lives--;
-                this.asteroids.splice(index, 1);
-                this.updateDisplay();
-                // Play hit sound
-                if (window.soundSystem) {
-                    window.soundSystem.playShieldHit();
-                }
-                
-                if (this.lives <= 0) {
-                    this.gameOver(false);
-                }
-            }
-        });
+    
+    spawnStars() {
+        if (Math.random() < 0.01) {
+            this.stars.push({
+                x: Math.random() * (this.canvas.width - 20),
+                y: -20,
+                width: 20,
+                height: 20,
+                speed: this.gameState.gameSpeed
+            });
+        }
     }
-
-    isColliding(rect1, rect2) {
+    
+    updateAsteroids() {
+        for (let i = this.asteroids.length - 1; i >= 0; i--) {
+            const asteroid = this.asteroids[i];
+            asteroid.y += asteroid.speed;
+            
+            // Remove asteroids that are off screen
+            if (asteroid.y > this.canvas.height) {
+                this.asteroids.splice(i, 1);
+                continue;
+            }
+            
+            // Check collision with rocket
+            if (this.checkCollision(this.rocket, asteroid)) {
+                this.asteroids.splice(i, 1);
+                this.gameState.lives--;
+                // Get sound system from existing SpaceObjectsSystem
+                const spaceSystem = window.spaceObjectsSystem;
+                if (spaceSystem && spaceSystem.soundSystem) {
+                    spaceSystem.soundSystem.playSpaceExplosion();
+                }
+                this.updateUI();
+                
+                if (this.gameState.lives <= 0) {
+                    this.gameOver();
+                }
+            }
+        }
+    }
+    
+    updateStars() {
+        for (let i = this.stars.length - 1; i >= 0; i--) {
+            const star = this.stars[i];
+            star.y += star.speed;
+            
+            // Remove stars that are off screen
+            if (star.y > this.canvas.height) {
+                this.stars.splice(i, 1);
+                continue;
+            }
+            
+            // Check collision with rocket
+            if (this.checkCollision(this.rocket, star)) {
+                this.stars.splice(i, 1);
+                this.gameState.score += 10;
+                // Get sound system from existing SpaceObjectsSystem
+                const spaceSystem = window.spaceObjectsSystem;
+                if (spaceSystem && spaceSystem.soundSystem) {
+                    spaceSystem.soundSystem.playAchievement();
+                }
+                this.updateUI();
+            }
+        }
+    }
+    
+    checkCollision(rect1, rect2) {
         return rect1.x < rect2.x + rect2.width &&
                rect1.x + rect1.width > rect2.x &&
                rect1.y < rect2.y + rect2.height &&
                rect1.y + rect1.height > rect2.y;
     }
-
-    checkLevelCompletion() {
-        if (this.score >= this.level * 50) {
-            this.level++;
-            this.gameSpeed += 0.5;
-            this.updateDisplay();
+    
+    checkLevelComplete() {
+        const starsNeeded = this.gameState.level * 5;
+        if (this.gameState.score >= starsNeeded * 10) {
+            this.gameState.level++;
+            this.gameState.gameSpeed += 0.5;
+            // Get sound system from existing SpaceObjectsSystem
+            const spaceSystem = window.spaceObjectsSystem;
+            if (spaceSystem && spaceSystem.soundSystem) {
+                spaceSystem.soundSystem.playPowerUp();
+            }
+            this.updateUI();
             
-            if (this.level > 3) {
-                this.gameOver(true);
+            if (this.gameState.level > 3) {
+                this.gameComplete();
             }
         }
     }
-
-    gameOver(won) {
-        this.gameRunning = false;
-        const gameOverScreen = document.getElementById('game-over-screen');
-        const gameResult = document.getElementById('game-result');
-        const finalScore = document.getElementById('final-score');
-        
-        if (won) {
-            gameResult.textContent = '🎉 CONGRATULATIONS!';
-            gameResult.style.color = '#ffcc00';
-            // Play victory sound
-            if (window.soundSystem) {
-                window.soundSystem.playPowerUp();
-            }
-        } else {
-            gameResult.textContent = '💥 GAME OVER';
-            gameResult.style.color = '#ff0000';
+    
+    gameComplete() {
+        this.gameState.running = false;
+        document.getElementById('final-score').textContent = this.gameState.score;
+        this.gameOver.classList.remove('hidden');
+        // Get sound system from existing SpaceObjectsSystem
+        const spaceSystem = window.spaceObjectsSystem;
+        if (spaceSystem && spaceSystem.soundSystem) {
+            spaceSystem.soundSystem.playAchievement();
         }
-        
-        finalScore.textContent = `Final Score: ${this.score}`;
-        gameOverScreen.classList.remove('hidden');
     }
-
+    
+    gameOver() {
+        this.gameState.running = false;
+        document.getElementById('game-over-title').textContent = 'MISSION FAILED!';
+        document.getElementById('final-score').textContent = this.gameState.score;
+        this.gameOver.classList.remove('hidden');
+    }
+    
     draw() {
         // Clear canvas
         this.ctx.fillStyle = '#000011';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // Draw stars background
-        this.drawStars();
-
-        // Draw rocket
-        this.ctx.fillStyle = '#ffcc00';
-        this.ctx.fillRect(this.rocket.x, this.rocket.y, this.rocket.width, this.rocket.height);
         
-        // Draw rocket details
-        this.ctx.fillStyle = '#ff6600';
-        this.ctx.fillRect(this.rocket.x + 5, this.rocket.y + 5, this.rocket.width - 10, this.rocket.height - 10);
-
-        // Draw AI modules
-        this.aiModules.forEach(module => {
-            this.ctx.fillStyle = '#00ffff';
-            this.ctx.fillRect(module.x, module.y, module.width, module.height);
-            this.ctx.fillStyle = '#ffffff';
-            this.ctx.font = '12px Arial';
-            this.ctx.fillText('AI', module.x + 2, module.y + 15);
-        });
-
-        // Draw asteroids
-        this.asteroids.forEach(asteroid => {
-            this.ctx.save();
-            this.ctx.translate(asteroid.x + asteroid.width/2, asteroid.y + asteroid.height/2);
-            this.ctx.rotate(asteroid.rotation);
-            this.ctx.fillStyle = '#666666';
-            this.ctx.fillRect(-asteroid.width/2, -asteroid.height/2, asteroid.width, asteroid.height);
-            this.ctx.restore();
-        });
-
-        // Draw level indicator
-        this.ctx.fillStyle = '#ffcc00';
-        this.ctx.font = '20px Orbitron';
-        this.ctx.fillText(`Level ${this.level}`, 20, 30);
-    }
-
-    drawStars() {
+        // Draw stars background
         this.ctx.fillStyle = '#ffffff';
         for (let i = 0; i < 50; i++) {
             const x = (i * 37) % this.canvas.width;
             const y = (i * 23) % this.canvas.height;
             this.ctx.fillRect(x, y, 1, 1);
         }
-    }
-
-    updateDisplay() {
-        const levelDisplay = document.getElementById('level-display');
-        const scoreDisplay = document.getElementById('score-display');
-        const livesDisplay = document.getElementById('lives-display');
         
-        if (levelDisplay) levelDisplay.textContent = `Level: ${this.level}`;
-        if (scoreDisplay) scoreDisplay.textContent = `Score: ${this.score}`;
-        if (livesDisplay) livesDisplay.textContent = `Lives: ${this.lives}`;
-    }
-}
-
-// Skills Scrolling Functionality
-function initializeSkillsScrolling() {
-    const skillsScroll = document.querySelector('.skills-scroll');
-    const skillItems = document.querySelectorAll('.skill-item');
-    
-    if (!skillsScroll || !skillItems.length) return;
-    
-    // Auto-scroll functionality
-    let scrollPosition = 0;
-    const scrollSpeed = 0.5; // pixels per frame
-    const scrollDirection = 1; // 1 for right, -1 for left
-    
-    function autoScroll() {
-        scrollPosition += scrollSpeed * scrollDirection;
+        // Draw rocket
+        this.ctx.fillStyle = '#ffcc00';
+        this.ctx.fillRect(this.rocket.x, this.rocket.y, this.rocket.width, this.rocket.height);
+        this.ctx.fillStyle = '#ff0000';
+        this.ctx.fillRect(this.rocket.x + 5, this.rocket.y + 5, 30, 30);
         
-        // Reverse direction when reaching the end
-        if (scrollPosition >= skillsScroll.scrollWidth - skillsScroll.clientWidth) {
-            scrollPosition = skillsScroll.scrollWidth - skillsScroll.clientWidth;
-        } else if (scrollPosition <= 0) {
-            scrollPosition = 0;
+        // Draw asteroids
+        this.ctx.fillStyle = '#666666';
+        this.asteroids.forEach(asteroid => {
+            this.ctx.fillRect(asteroid.x, asteroid.y, asteroid.width, asteroid.height);
+        });
+        
+        // Draw stars
+        this.ctx.fillStyle = '#ffff00';
+        this.stars.forEach(star => {
+            this.ctx.fillRect(star.x, star.y, star.width, star.height);
+        });
+        
+        // Draw level progress
+        const starsNeeded = this.gameState.level * 5;
+        const starsCollected = Math.floor(this.gameState.score / 10);
+        const progress = Math.min(starsCollected / starsNeeded, 1);
+        
+        this.ctx.fillStyle = '#333333';
+        this.ctx.fillRect(10, 10, 200, 20);
+        this.ctx.fillStyle = '#ffcc00';
+        this.ctx.fillRect(10, 10, 200 * progress, 20);
+        
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.font = '12px Orbitron';
+        this.ctx.fillText(`Level ${this.gameState.level} Progress: ${starsCollected}/${starsNeeded}`, 10, 35);
+    }
+    
+    gameLoop() {
+        if (this.gameState.running) {
+            this.handleInput();
+            this.spawnAsteroids();
+            this.spawnStars();
+            this.updateAsteroids();
+            this.updateStars();
+            this.checkLevelComplete();
         }
         
-        skillsScroll.scrollLeft = scrollPosition;
-        requestAnimationFrame(autoScroll);
+        this.draw();
+        requestAnimationFrame(() => this.gameLoop());
     }
-    
-    // Start auto-scroll
-    autoScroll();
-    
-    // Add hover effects to skill items
-    skillItems.forEach((skill, index) => {
-        skill.addEventListener('mouseenter', () => {
-            skill.style.transform = 'scale(1.1)';
-            skill.style.boxShadow = '0 0 25px rgba(255, 204, 0, 0.8)';
-            
-            // Play hover sound if sound system is available
-            if (window.soundSystem) {
-                window.soundSystem.playSpaceHover();
-            }
-        });
-        
-        skill.addEventListener('mouseleave', () => {
-            skill.style.transform = 'scale(1)';
-            skill.style.boxShadow = '0 0 10px rgba(255, 204, 0, 0.2)';
-        });
-        
-        skill.addEventListener('click', () => {
-            // Create click effect
-            skill.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                skill.style.transform = 'scale(1.05)';
-            }, 100);
-            
-            // Play click sound if sound system is available
-            if (window.soundSystem) {
-                window.soundSystem.playSpaceClick();
-            }
-        });
-        
-        // Add staggered animation delay
-        skill.style.animationDelay = `${index * 0.1}s`;
-    });
-    
-    // Pause auto-scroll on hover
-    skillsScroll.addEventListener('mouseenter', () => {
-        skillsScroll.style.animationPlayState = 'paused';
-    });
-    
-    skillsScroll.addEventListener('mouseleave', () => {
-        skillsScroll.style.animationPlayState = 'running';
-    });
 }
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new ParticleSystem();
+    window.spaceObjectsSystem = new SpaceObjectsSystem();
+    
+    // Initialize game
+    const game = new SpaceRocketGame();
+    
+    // Loading screen effect
+    setTimeout(() => {
+        document.body.classList.add('loaded');
+    }, 1000);
+    
+    // CRT effect
+    const style = document.createElement('style');
+    style.textContent = `
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent 50%, rgba(0, 255, 0, 0.03) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 0.1s linear infinite;
+        }
+        
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+    `;
+    document.head.appendChild(style);
+});
