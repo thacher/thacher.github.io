@@ -717,14 +717,24 @@ class SpaceRocketGame {
         }
         
         // Close game
-        document.getElementById('close-game').addEventListener('click', () => {
-            this.closeGame();
-        });
+        const closeBtn = document.getElementById('close-game');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                this.closeGame();
+            });
+        } else {
+            console.error('Close button not found!');
+        }
         
         // Play again
-        document.getElementById('play-again').addEventListener('click', () => {
-            this.restartGame();
-        });
+        const playAgainBtn = document.getElementById('play-again');
+        if (playAgainBtn) {
+            playAgainBtn.addEventListener('click', () => {
+                this.restartGame();
+            });
+        } else {
+            console.error('Play again button not found!');
+        }
         
         // Keyboard controls
         document.addEventListener('keydown', (e) => {
