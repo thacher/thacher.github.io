@@ -701,7 +701,7 @@ class SpaceRocketGame {
         this.canvas = document.getElementById('game-canvas');
         this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
         this.gameModal = document.getElementById('game-modal');
-        this.gameOver = document.getElementById('game-over');
+        this.gameOverElement = document.getElementById('game-over');
         
         console.log('Game constructor - Canvas:', this.canvas, 'Modal:', this.gameModal);
         
@@ -740,13 +740,7 @@ class SpaceRocketGame {
         
         if (rocketElement) {
             rocketElement.addEventListener('click', () => {
-                alert('ROCKET CLICKED! Game should start now...');
                 console.log('Rocket clicked! Starting game...');
-                // Visual test - change rocket color
-                rocketElement.style.filter = 'hue-rotate(180deg)';
-                setTimeout(() => {
-                    rocketElement.style.filter = '';
-                }, 500);
                 this.startGame();
             });
         } else {
@@ -811,7 +805,7 @@ class SpaceRocketGame {
     }
     
     restartGame() {
-        this.gameOver.classList.add('hidden');
+        this.gameOverElement.classList.add('hidden');
         this.startGame();
     }
     
@@ -941,8 +935,9 @@ class SpaceRocketGame {
     
     gameComplete() {
         this.gameState.running = false;
+        document.getElementById('game-over-title').textContent = 'MISSION COMPLETE!';
         document.getElementById('final-score').textContent = this.gameState.score;
-        this.gameOver.classList.remove('hidden');
+        this.gameOverElement.classList.remove('hidden');
         // Get sound system from existing SpaceObjectsSystem
         const spaceSystem = window.spaceObjectsSystem;
         if (spaceSystem && spaceSystem.soundSystem) {
@@ -954,7 +949,7 @@ class SpaceRocketGame {
         this.gameState.running = false;
         document.getElementById('game-over-title').textContent = 'MISSION FAILED!';
         document.getElementById('final-score').textContent = this.gameState.score;
-        this.gameOver.classList.remove('hidden');
+        this.gameOverElement.classList.remove('hidden');
     }
     
     draw() {
