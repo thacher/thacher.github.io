@@ -1025,6 +1025,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize game
     window.spaceRocketGame = new SpaceRocketGame();
     
+    // Auto-play music for 30 seconds on first visit
+    setTimeout(() => {
+        const musicBtn = document.getElementById('music-toggle');
+        if (musicBtn && window.spaceObjectsSystem && window.spaceObjectsSystem.soundSystem) {
+            console.log('Auto-starting music for 30 seconds...');
+            window.spaceObjectsSystem.soundSystem.toggleBackgroundMusic();
+            
+            // Stop after 30 seconds
+            setTimeout(() => {
+                console.log('Auto-stopping music after 30 seconds');
+                window.spaceObjectsSystem.soundSystem.stopBackgroundMusic();
+                // Update button to show it's stopped
+                const speakerIcon = musicBtn.querySelector('.speaker-icon');
+                if (speakerIcon) {
+                    speakerIcon.textContent = '🔇';
+                }
+            }, 30000);
+        }
+    }, 2000); // Start after 2 seconds to let page load
+    
     // Loading screen effect
     setTimeout(() => {
         document.body.classList.add('loaded');
