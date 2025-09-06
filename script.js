@@ -650,14 +650,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add keyboard shortcuts for space feel
 document.addEventListener('keydown', (e) => {
-    // Space bar for random space object activation
-    if (e.code === 'Space') {
-        e.preventDefault();
-        const objects = document.querySelectorAll('.space-object');
-        const randomObject = objects[Math.floor(Math.random() * objects.length)];
-        randomObject.click();
-    }
-    
     // Enter for achievement
     if (e.code === 'Enter') {
         e.preventDefault();
@@ -801,7 +793,9 @@ class SpaceRocketGame {
     
     closeGame() {
         this.gameModal.classList.remove('active');
+        this.gameOverElement.classList.add('hidden');
         this.gameState.running = false;
+        console.log('Game closed');
     }
     
     restartGame() {
