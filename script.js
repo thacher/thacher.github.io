@@ -740,6 +740,7 @@ class SpaceRocketGame {
         
         if (rocketElement) {
             rocketElement.addEventListener('click', () => {
+                alert('ROCKET CLICKED! Game should start now...');
                 console.log('Rocket clicked! Starting game...');
                 // Visual test - change rocket color
                 rocketElement.style.filter = 'hue-rotate(180deg)';
