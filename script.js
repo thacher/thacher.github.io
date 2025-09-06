@@ -699,9 +699,11 @@ document.head.appendChild(style);
 class SpaceRocketGame {
     constructor() {
         this.canvas = document.getElementById('game-canvas');
-        this.ctx = this.canvas.getContext('2d');
+        this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
         this.gameModal = document.getElementById('game-modal');
         this.gameOver = document.getElementById('game-over');
+        
+        console.log('Game constructor - Canvas:', this.canvas, 'Modal:', this.gameModal);
         
         this.gameState = {
             running: false,
@@ -734,6 +736,7 @@ class SpaceRocketGame {
     setupEventListeners() {
         // Rocket click to start game
         document.getElementById('rocket-game-trigger').addEventListener('click', () => {
+            console.log('Rocket clicked! Starting game...');
             this.startGame();
         });
         
@@ -758,6 +761,7 @@ class SpaceRocketGame {
     }
     
     startGame() {
+        console.log('Starting game...', this.gameModal);
         this.gameModal.classList.add('active');
         this.gameState.running = true;
         this.gameState.level = 1;
@@ -931,6 +935,8 @@ class SpaceRocketGame {
     }
     
     draw() {
+        if (!this.ctx || !this.canvas) return;
+        
         // Clear canvas
         this.ctx.fillStyle = '#000011';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -997,7 +1003,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.spaceObjectsSystem = new SpaceObjectsSystem();
     
     // Initialize game
-    const game = new SpaceRocketGame();
+    window.spaceRocketGame = new SpaceRocketGame();
     
     // Loading screen effect
     setTimeout(() => {
