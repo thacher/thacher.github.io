@@ -431,6 +431,24 @@ body {
     box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
 }
 
+.action-button.product-walkthrough {
+    border-color: #00bcd4;
+}
+
+.action-button.product-walkthrough:hover {
+    background: rgba(0, 188, 212, 0.1);
+    box-shadow: 0 0 20px rgba(0, 188, 212, 0.3);
+}
+
+.action-button.video-demos {
+    border-color: #4caf50;
+}
+
+.action-button.video-demos:hover {
+    background: rgba(76, 175, 80, 0.1);
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+}
+
 .action-button.white-papers {
     border-color: #9c27b0;
 }
@@ -468,6 +486,15 @@ body {
     0% { left: -100%; }
     50% { left: 100%; }
     100% { left: 100%; }
+}
+
+.action-button.interviews {
+    border-color: #ff0000;
+}
+
+.action-button.interviews:hover {
+    background: rgba(255, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
 }
 
 /* Game Footer */
