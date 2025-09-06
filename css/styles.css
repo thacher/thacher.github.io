@@ -758,6 +758,9 @@ body {
     color: var(--space-blue);
     font-weight: bold;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 1001;
+    pointer-events: auto;
 }
 
 .close-btn:hover {

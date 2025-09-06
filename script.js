@@ -726,7 +726,10 @@ class SpaceRocketGame {
         // Close game
         const closeBtn = document.getElementById('close-game');
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
+            closeBtn.addEventListener('click', (e) => {
+                console.log('Close button clicked!');
+                e.preventDefault();
+                e.stopPropagation();
                 this.closeGame();
             });
         } else {
@@ -786,6 +789,10 @@ class SpaceRocketGame {
     }
     
     closeGame() {
+        console.log('closeGame() called');
+        console.log('gameModal:', this.gameModal);
+        console.log('gameOverElement:', this.gameOverElement);
+        
         this.gameModal.classList.remove('active');
         this.gameOverElement.classList.add('hidden');
         this.gameState.running = false;
