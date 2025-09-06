@@ -1,227 +1,305 @@
+/* Additional Gaming Brand Elements */
 
-/* ----------------------------------------------------- */
-
-.links {
-    text-align: center;
-    margin-top: 20px;
-    padding: 20px;
-    border:  solid white;
-    border-width: 1px;
-    width: 290px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 12px;
-    font-size: 15px;
+/* Particle System Enhancement */
+.particles {
+    position: relative;
 }
 
-/* ----------------------------------------------------- */
-
-
-
-/* --------------YOUTUBE--------------------------------------- */
-
-.links-youtube{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  border:  solid white;
-  border-width: 0.5px;
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFloat 8s linear infinite;
 }
 
-.links-youtube:hover{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  background: #ED213A;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #93291E, #ED213A);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #93291E, #ED213A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
-  color: white;
-}
-/* --------------YOUTUBE--------------------------------------- */
-
-
-/* --------------GITHUB--------------------------------------- */
-
-.links-github{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  border:  solid white;
-  border-width: 0.5px;
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
 }
 
-.links-github:hover{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  background: #2B3035;
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
-  color: white;
-}
-/* --------------GITHUB--------------------------------------- */
-
-
-/* --------------INSTAGRAM--------------------------------------- */
-
-.links-instagram{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  border:  solid white;
-  border-width: 0.5px;
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
+/* Gaming Sound Effects (Visual Feedback) */
+.sound-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    animation: soundWave 0.5s ease-out;
 }
 
-.links-instagram:hover{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  background: #833ab4;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #fcb045, #fd1d1d, #833ab4);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #fcb045, #fd1d1d, #833ab4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
-  color: white;
-}
-/* --------------INSTAGRAM--------------------------------------- */
-
-
-/* --------------TWITTER--------------------------------------- */
-
-.links-twitter{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  border:  solid white;
-  border-width: 0.5px;
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
+@keyframes soundWave {
+    0% {
+        width: 4px;
+        height: 4px;
+        opacity: 1;
+    }
+    100% {
+        width: 100px;
+        height: 100px;
+        opacity: 0;
+    }
 }
 
-.links-twitter:hover{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  background: #00B4DB;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
-  color: white;
-}
-/* --------------TWITTER--------------------------------------- */
-
-
-/* --------------LIN--------------------------------------- */
-
-.links-linkedin{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  border:  solid white;
-  border-width: 0.5px;
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
+/* Achievement Unlock Animation */
+.achievement-unlock {
+    animation: achievementPop 0.6s ease-out;
 }
 
-.links-linkedin:hover{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  background: #0072AC;  /* fallback for old browsers */
-
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
-  color: white;
-}
-/* --------------LIN--------------------------------------- */
-
-
-
-/* --------------MAIL--------------------------------------- */
-
-.links-mail{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  border:  solid white;
-  border-width: 0.5px;
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
+@keyframes achievementPop {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(-90deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
 }
 
-.links-mail:hover{
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  background: #870000;  /* fallback for old browsers */
- 
-  width: 290px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  font-size: 15px;
-  color: white;
+/* Level Up Effect */
+.level-up {
+    position: relative;
+    overflow: hidden;
 }
-/* --------------MAIL--------------------------------------- */
 
+.level-up::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+    animation: levelUpShine 1s ease-out;
+}
 
+@keyframes levelUpShine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
 
+/* Retro CRT Effect */
+.crt-effect {
+    position: relative;
+}
+
+.crt-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(transparent 50%, rgba(0, 255, 136, 0.03) 50%);
+    background-size: 100% 4px;
+    pointer-events: none;
+    animation: crtScan 0.1s linear infinite;
+}
+
+@keyframes crtScan {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(4px); }
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+    animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    animation: glitch-1 0.5s infinite;
+    color: #ff0000;
+    z-index: -1;
+}
+
+.glitch::after {
+    animation: glitch-2 0.5s infinite;
+    color: #00ff00;
+    z-index: -2;
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-1 {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-2 {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-2px, 2px); }
+    80% { transform: translate(-2px, -2px); }
+}
+
+/* Holographic Effect */
+.holographic {
+    background: linear-gradient(45deg, 
+        #ff0080, #ff8000, #ffff00, #80ff00, 
+        #00ff80, #0080ff, #8000ff, #ff0080);
+    background-size: 400% 400%;
+    animation: holographicShift 3s ease-in-out infinite;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes holographicShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -2;
+    opacity: 0.1;
+}
+
+.matrix-column {
+    position: absolute;
+    top: -100%;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: var(--primary-color);
+    animation: matrixFall 10s linear infinite;
+}
+
+@keyframes matrixFall {
+    0% { top: -100%; }
+    100% { top: 100%; }
+}
+
+/* Power-up Glow */
+.power-up {
+    position: relative;
+    animation: powerUpGlow 2s ease-in-out infinite;
+}
+
+.power-up::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color), var(--secondary-color));
+    border-radius: inherit;
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0.7;
+}
+
+@keyframes powerUpGlow {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Retro Game Border */
+.retro-border {
+    position: relative;
+    border: 4px solid var(--primary-color);
+    border-radius: 0;
+}
+
+.retro-border::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 2px solid var(--accent-color);
+    border-radius: 0;
+}
+
+.retro-border::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    bottom: -12px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 0;
+}
+
+/* Loading Screen Effect */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeOut 1s ease-out 2s forwards;
+}
+
+.loading-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 24px;
+    color: var(--primary-color);
+    animation: loadingPulse 1s ease-in-out infinite;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes loadingPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
