@@ -88,7 +88,7 @@ class GamingSoundSystem {
         setTimeout(() => this.playTone(800, 0.2, 'triangle', 0.1), 300);
     }
 
-    playTone(frequency, duration, type = 'square', volume = 0.05) {
+    playTone(frequency, duration, type = 'square', volume = 0.08) {
         if (!this.audioContext) return;
         
         const oscillator = this.audioContext.createOscillator();
@@ -185,7 +185,7 @@ class GamingSoundSystem {
         adventureMelody.forEach((note, index) => {
             const timeoutId = setTimeout(() => {
                 if (this.isMusicPlaying) {
-                    this.playTone(note.freq, note.duration, 'triangle', 0.03);
+                    this.playTone(note.freq, note.duration, 'triangle', 0.06);
                 }
             }, currentTime * 1000);
             this.activeTimeouts.push(timeoutId);
@@ -196,7 +196,7 @@ class GamingSoundSystem {
         secondaryMelody.forEach((note, index) => {
             const timeoutId = setTimeout(() => {
                 if (this.isMusicPlaying) {
-                    this.playTone(note.freq, note.duration, 'triangle', 0.025);
+                    this.playTone(note.freq, note.duration, 'triangle', 0.05);
                 }
             }, currentTime * 1000);
             this.activeTimeouts.push(timeoutId);
@@ -209,7 +209,7 @@ class GamingSoundSystem {
         fullBassPattern.forEach((note, index) => {
             const timeoutId = setTimeout(() => {
                 if (this.isMusicPlaying) {
-                    this.playTone(note.freq, note.duration, 'sawtooth', 0.02);
+                    this.playTone(note.freq, note.duration, 'sawtooth', 0.04);
                 }
             }, bassTime * 1000);
             this.activeTimeouts.push(timeoutId);
@@ -222,7 +222,7 @@ class GamingSoundSystem {
         fullHarmonyPattern.forEach((note, index) => {
             const timeoutId = setTimeout(() => {
                 if (this.isMusicPlaying) {
-                    this.playTone(note.freq, note.duration, 'square', 0.015);
+                    this.playTone(note.freq, note.duration, 'square', 0.03);
                 }
             }, harmonyTime * 1000);
             this.activeTimeouts.push(timeoutId);
@@ -233,7 +233,7 @@ class GamingSoundSystem {
         for (let i = 0; i < 32; i++) {
             const timeoutId = setTimeout(() => {
                 if (this.isMusicPlaying) {
-                    this.playTone(150 + (i % 3) * 25, 0.1, 'square', 0.008);
+                    this.playTone(150 + (i % 3) * 25, 0.1, 'square', 0.02);
                 }
             }, i * 0.5 * 1000);
             this.activeTimeouts.push(timeoutId);
