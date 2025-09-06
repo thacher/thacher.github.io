@@ -373,8 +373,8 @@ class SpaceObjectsSystem {
         // Create floating space debris
         this.createSpaceDebris();
         
-        // Create energy pulses
-        this.createEnergyPulses();
+        // Energy pulses disabled - was causing center pulsing circle
+        // this.createEnergyPulses();
         
         // Create shield effects
         this.createShieldEffects();
