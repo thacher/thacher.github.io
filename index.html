@@ -23,13 +23,17 @@
         <!-- Space Command Header -->
         <header class="space-command-header">
             <div class="shield-status">
-                <div class="shield-bar">
-                    <div class="shield-fill"></div>
+                <div class="shield-circle">
+                    <span class="shield-text">SHIELD: 100%</span>
                 </div>
-                <span class="shield-text">SHIELD: 100%</span>
             </div>
             <div class="commander-badge">
                 <span class="commander-text">SPACE AI COMMANDER</span>
+            </div>
+            <div class="music-controls">
+                <button id="music-toggle" class="music-btn" title="Click to start music (or press M key)">
+                    <span class="speaker-icon">🔇</span>
+                </button>
             </div>
         </header>
 
@@ -37,7 +41,7 @@
         <section class="commander-profile">
             <div class="commander-avatar">
                 <div class="avatar-container">
-                    <div class="space-avatar">🚀</div>
+                    <div class="space-avatar" id="rocket-game-trigger">🚀</div>
                     <div class="status-ring"></div>
                 </div>
             </div>
@@ -72,9 +76,39 @@
                     </div>
                 </div>
             </div>
+        <!-- Skills Scrolling Display -->
+        <section class="skills-display">
+            <div class="skills-container">
+                <h3 class="skills-title">AI & TECH EXPERTISE</h3>
+                <div class="skills-scroll">
+                    <div class="skill-item">Machine Learning</div>
+                    <div class="skill-item">Deep Learning</div>
+                    <div class="skill-item">Neural Networks</div>
+                    <div class="skill-item">Computer Vision</div>
+                    <div class="skill-item">Natural Language Processing</div>
+                    <div class="skill-item">Python</div>
+                    <div class="skill-item">TensorFlow</div>
+                    <div class="skill-item">PyTorch</div>
+                    <div class="skill-item">JavaScript</div>
+                    <div class="skill-item">React</div>
+                    <div class="skill-item">Node.js</div>
+                    <div class="skill-item">AWS</div>
+                    <div class="skill-item">Docker</div>
+                    <div class="skill-item">Kubernetes</div>
+                    <div class="skill-item">Data Science</div>
+                    <div class="skill-item">Big Data</div>
+                    <div class="skill-item">Cloud Computing</div>
+                    <div class="skill-item">DevOps</div>
+                    <div class="skill-item">API Development</div>
+                    <div class="skill-item">Database Design</div>
+                    <div class="skill-item">System Architecture</div>
+                    <div class="skill-item">Agile Development</div>
+                    <div class="skill-item">Project Management</div>
+                    <div class="skill-item">Team Leadership</div>
+                    <div class="skill-item">Strategic Planning</div>
+                </div>
+            </div>
         </section>
-
-        <!-- Interactive Space Objects -->
         <div class="space-objects-container">
             <div class="space-object consultation" data-link="https://intro.co/RobThacher">
                 <div class="object-icon">🚀</div>
@@ -145,6 +179,41 @@
         </footer>
     </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <!-- Space Rocket Game Modal -->
+    <div id="game-modal" class="game-modal">
+        <div class="game-container">
+            <div class="game-header">
+                <h2>🚀 SPACE AI COMMANDER TRAINING</h2>
+                <div class="game-stats">
+                    <span id="level-display">Level: 1</span>
+                    <span id="score-display">Score: 0</span>
+                    <span id="lives-display">Lives: 3</span>
+                </div>
+                <button id="close-game" class="close-btn">✕</button>
+            </div>
+            
+            <canvas id="game-canvas" width="800" height="600"></canvas>
+            
+            <div class="game-controls">
+                <div class="control-info">
+                    <p>🎮 Use ARROW KEYS to move your rocket</p>
+                    <p>🎯 Collect AI modules (blue) and avoid asteroids (gray)</p>
+                    <p>🚀 Complete 3 levels to earn your Space Commander Award!</p>
+                </div>
+            </div>
+            
+            <div id="game-over-screen" class="game-over hidden">
+                <div class="game-over-content">
+                    <h2 id="game-result">🎉 CONGRATULATIONS!</h2>
+                    <p id="final-score">Final Score: 0</p>
+                    <div id="award-display" class="award-display">
+                        <div class="award-trophy">🏆</div>
+                        <h3>SPACE AI COMMANDER AWARD</h3>
+                        <p>You have successfully completed all training levels!</p>
+                        <p>You are now certified as a Space AI Commander!</p>
+                    </div>
+                    <button id="play-again" class="play-again-btn">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
