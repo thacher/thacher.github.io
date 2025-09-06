@@ -902,6 +902,28 @@ class SpaceRocketGame {
         this.gameState.running = false;
         document.getElementById('game-over-title').textContent = 'MISSION COMPLETE!';
         document.getElementById('final-score').textContent = this.gameState.score;
+        
+        // Reset award display to gold for success
+        const awardDisplay = document.querySelector('.award-display');
+        const awardTrophy = document.querySelector('.award-trophy');
+        const awardTitle = document.querySelector('.award-display h3');
+        
+        if (awardDisplay) {
+            awardDisplay.classList.remove('failed');
+            awardDisplay.style.background = 'rgba(255, 204, 0, 0.1)';
+            awardDisplay.style.borderColor = 'var(--star-gold)';
+        }
+        
+        if (awardTrophy) {
+            awardTrophy.textContent = '🏆';
+            awardTrophy.style.color = 'var(--star-gold)';
+        }
+        
+        if (awardTitle) {
+            awardTitle.textContent = 'SPACE COMMANDER AWARD';
+            awardTitle.style.color = 'var(--star-gold)';
+        }
+        
         this.gameOverElement.classList.remove('hidden');
         // Get sound system from existing SpaceObjectsSystem
         const spaceSystem = window.spaceObjectsSystem;
@@ -914,6 +936,28 @@ class SpaceRocketGame {
         this.gameState.running = false;
         document.getElementById('game-over-title').textContent = 'MISSION FAILED!';
         document.getElementById('final-score').textContent = this.gameState.score;
+        
+        // Change award display to red for failure
+        const awardDisplay = document.querySelector('.award-display');
+        const awardTrophy = document.querySelector('.award-trophy');
+        const awardTitle = document.querySelector('.award-display h3');
+        
+        if (awardDisplay) {
+            awardDisplay.classList.add('failed');
+            awardDisplay.style.background = 'rgba(255, 0, 0, 0.1)';
+            awardDisplay.style.borderColor = '#ff0000';
+        }
+        
+        if (awardTrophy) {
+            awardTrophy.textContent = '💀';
+            awardTrophy.style.color = '#ff0000';
+        }
+        
+        if (awardTitle) {
+            awardTitle.textContent = 'MISSION FAILED';
+            awardTitle.style.color = '#ff0000';
+        }
+        
         this.gameOverElement.classList.remove('hidden');
     }
     

@@ -843,6 +843,33 @@ body {
     color: var(--star-gold);
 }
 
+/* Failed mission styles */
+.award-display.failed {
+    background: rgba(255, 0, 0, 0.1) !important;
+    border-color: #ff0000 !important;
+}
+
+.award-display.failed h3 {
+    color: #ff0000 !important;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+}
+
+.award-display.failed .award-trophy {
+    color: #ff0000 !important;
+    animation: skullGlow 2s infinite;
+}
+
+@keyframes skullGlow {
+    0%, 100% { 
+        transform: scale(1); 
+        filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8));
+    }
+    50% { 
+        transform: scale(1.1); 
+        filter: drop-shadow(0 0 20px rgba(255, 0, 0, 1));
+    }
+}
+
 .award-display p {
     font-size: 14px;
     margin: 5px 0;
