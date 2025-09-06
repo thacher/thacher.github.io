@@ -741,6 +741,11 @@ class SpaceRocketGame {
         if (rocketElement) {
             rocketElement.addEventListener('click', () => {
                 console.log('Rocket clicked! Starting game...');
+                // Visual test - change rocket color
+                rocketElement.style.filter = 'hue-rotate(180deg)';
+                setTimeout(() => {
+                    rocketElement.style.filter = '';
+                }, 500);
                 this.startGame();
             });
         } else {
@@ -769,7 +774,17 @@ class SpaceRocketGame {
     
     startGame() {
         console.log('Starting game...', this.gameModal);
+        console.log('Game modal element:', this.gameModal);
+        console.log('Game modal classes before:', this.gameModal.className);
+        
         this.gameModal.classList.add('active');
+        console.log('Game modal classes after:', this.gameModal.className);
+        
+        // Force show modal for testing
+        this.gameModal.style.display = 'flex';
+        this.gameModal.style.zIndex = '9999';
+        console.log('Modal display forced to flex');
+        
         this.gameState.running = true;
         this.gameState.level = 1;
         this.gameState.score = 0;
