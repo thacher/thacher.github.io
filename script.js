@@ -793,10 +793,18 @@ class SpaceRocketGame {
         console.log('gameModal:', this.gameModal);
         console.log('gameOverElement:', this.gameOverElement);
         
+        // Force hide the modal
         this.gameModal.classList.remove('active');
+        this.gameModal.style.display = 'none';
+        
+        // Hide game over screen
         this.gameOverElement.classList.add('hidden');
+        this.gameOverElement.style.display = 'none';
+        
+        // Stop the game
         this.gameState.running = false;
-        console.log('Game closed');
+        
+        console.log('Game closed - modal should be hidden');
     }
     
     restartGame() {
