@@ -271,6 +271,7 @@ body {
     border: 2px solid var(--primary-color);
     border-radius: 50%;
     animation: statusRing 2s ease-in-out infinite;
+    pointer-events: none;
 }
 
 @keyframes avatarGlow {
