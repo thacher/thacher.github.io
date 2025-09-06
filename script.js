@@ -11,7 +11,7 @@ not to judge our variable names.
     var typed = new Typed(".typing", {
     strings: [
         "AI Engineer", 
-        "Space AI Commander", 
+        "Space Commander", 
         "Neural Network Pilot", 
         "Deep Learning Navigator", 
         "Computer Vision Explorer", 
