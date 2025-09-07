@@ -1073,6 +1073,45 @@ class SpaceRocketGame {
         this.gameOverElement.classList.remove('hidden');
     }
     
+    drawAsteroid(x, y, width, height, color) {
+        this.ctx.fillStyle = color;
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = 1;
+        
+        // Create an irregular asteroid shape
+        this.ctx.beginPath();
+        const centerX = x + width / 2;
+        const centerY = y + height / 2;
+        const radius = Math.min(width, height) / 2;
+        
+        // Create irregular points around the asteroid
+        const points = 8;
+        for (let i = 0; i < points; i++) {
+            const angle = (i / points) * Math.PI * 2;
+            const variation = 0.7 + Math.random() * 0.6; // 0.7 to 1.3 variation
+            const pointRadius = radius * variation;
+            const pointX = centerX + Math.cos(angle) * pointRadius;
+            const pointY = centerY + Math.sin(angle) * pointRadius;
+            
+            if (i === 0) {
+                this.ctx.moveTo(pointX, pointY);
+            } else {
+                this.ctx.lineTo(pointX, pointY);
+            }
+        }
+        this.ctx.closePath();
+        this.ctx.fill();
+        this.ctx.stroke();
+        
+        // Add some surface details
+        this.ctx.fillStyle = color;
+        this.ctx.globalAlpha = 0.3;
+        this.ctx.beginPath();
+        this.ctx.arc(centerX - radius * 0.3, centerY - radius * 0.3, radius * 0.2, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.globalAlpha = 1;
+    }
+    
     draw() {
         if (!this.ctx || !this.canvas) return;
         
@@ -1094,16 +1133,14 @@ class SpaceRocketGame {
         this.ctx.fillStyle = '#ff0000';
         this.ctx.fillRect(this.rocket.x + 5, this.rocket.y + 5, 30, 30);
         
-        // Draw bullets
-        this.ctx.fillStyle = '#00ffff';
+        // Draw bullets (as asteroids)
         this.bullets.forEach(bullet => {
-            this.ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            this.drawAsteroid(bullet.x, bullet.y, bullet.width, bullet.height, '#00ffff');
         });
         
         // Draw asteroids
-        this.ctx.fillStyle = '#666666';
         this.asteroids.forEach(asteroid => {
-            this.ctx.fillRect(asteroid.x, asteroid.y, asteroid.width, asteroid.height);
+            this.drawAsteroid(asteroid.x, asteroid.y, asteroid.width, asteroid.height, '#666666');
         });
         
         // Draw stars
