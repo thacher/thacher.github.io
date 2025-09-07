@@ -687,6 +687,19 @@ class SpaceRocketGame {
             console.error('Rocket element not found!');
         }
         
+        // Play Game button click to start game
+        const playGameElement = document.getElementById('play-game-trigger');
+        console.log('Play Game element found:', playGameElement);
+        
+        if (playGameElement) {
+            playGameElement.addEventListener('click', () => {
+                console.log('Play Game clicked! Starting game...');
+                this.startGame();
+            });
+        } else {
+            console.error('Play Game element not found!');
+        }
+        
         // Close game
         const closeBtn = document.getElementById('close-game');
         if (closeBtn) {
@@ -1111,6 +1124,122 @@ class SpaceRocketGame {
         this.ctx.globalAlpha = 1;
     }
     
+    drawSpaceship(centerX, centerY) {
+        const size = 20;
+        
+        // Save context
+        this.ctx.save();
+        
+        // Move to center and rotate slightly for dynamic feel
+        this.ctx.translate(centerX, centerY);
+        this.ctx.rotate(Math.sin(Date.now() * 0.01) * 0.1);
+        
+        // Draw spaceship body (main triangle)
+        this.ctx.fillStyle = '#ffcc00';
+        this.ctx.strokeStyle = '#ffaa00';
+        this.ctx.lineWidth = 2;
+        
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, -size); // Top point
+        this.ctx.lineTo(-size * 0.6, size * 0.8); // Bottom left
+        this.ctx.lineTo(size * 0.6, size * 0.8); // Bottom right
+        this.ctx.closePath();
+        this.ctx.fill();
+        this.ctx.stroke();
+        
+        // Draw spaceship cockpit
+        this.ctx.fillStyle = '#00ffff';
+        this.ctx.beginPath();
+        this.ctx.arc(0, -size * 0.3, size * 0.3, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        // Draw engine glow
+        this.ctx.fillStyle = '#ff6600';
+        this.ctx.beginPath();
+        this.ctx.ellipse(-size * 0.3, size * 0.8, size * 0.2, size * 0.4, 0, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.beginPath();
+        this.ctx.ellipse(size * 0.3, size * 0.8, size * 0.2, size * 0.4, 0, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        // Draw engine flames
+        this.ctx.fillStyle = '#ff0000';
+        this.ctx.beginPath();
+        this.ctx.ellipse(-size * 0.3, size * 1.2, size * 0.15, size * 0.3, 0, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.beginPath();
+        this.ctx.ellipse(size * 0.3, size * 1.2, size * 0.15, size * 0.3, 0, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        // Restore context
+        this.ctx.restore();
+    }
+    
+    drawEnergyBlast(centerX, centerY) {
+        const size = 6;
+        
+        // Create glowing energy blast effect
+        this.ctx.save();
+        
+        // Outer glow
+        this.ctx.fillStyle = '#00ffff';
+        this.ctx.globalAlpha = 0.3;
+        this.ctx.beginPath();
+        this.ctx.arc(centerX, centerY, size * 2, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        // Inner core
+        this.ctx.globalAlpha = 1;
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.beginPath();
+        this.ctx.arc(centerX, centerY, size, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        // Bright center
+        this.ctx.fillStyle = '#00ffff';
+        this.ctx.beginPath();
+        this.ctx.arc(centerX, centerY, size * 0.5, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        this.ctx.restore();
+    }
+    
+    drawStar(centerX, centerY) {
+        const size = 10;
+        
+        this.ctx.save();
+        
+        // Create glowing star effect
+        // Outer glow
+        this.ctx.fillStyle = '#ffff00';
+        this.ctx.globalAlpha = 0.4;
+        this.ctx.beginPath();
+        this.ctx.arc(centerX, centerY, size * 1.5, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        // Main star body
+        this.ctx.globalAlpha = 1;
+        this.ctx.fillStyle = '#ffcc00';
+        this.ctx.beginPath();
+        this.ctx.arc(centerX, centerY, size, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        // Bright center
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.beginPath();
+        this.ctx.arc(centerX, centerY, size * 0.4, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        // Add twinkling effect
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.globalAlpha = 0.8;
+        this.ctx.beginPath();
+        this.ctx.arc(centerX - size * 0.3, centerY - size * 0.3, size * 0.2, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        this.ctx.restore();
+    }
+    
     draw() {
         if (!this.ctx || !this.canvas) return;
         
@@ -1126,15 +1255,12 @@ class SpaceRocketGame {
             this.ctx.fillRect(x, y, 1, 1);
         }
         
-        // Draw rocket
-        this.ctx.fillStyle = '#ffcc00';
-        this.ctx.fillRect(this.rocket.x, this.rocket.y, this.rocket.width, this.rocket.height);
-        this.ctx.fillStyle = '#ff0000';
-        this.ctx.fillRect(this.rocket.x + 5, this.rocket.y + 5, 30, 30);
+        // Draw spaceship
+        this.drawSpaceship(this.rocket.x + this.rocket.width / 2, this.rocket.y + this.rocket.height / 2);
         
-        // Draw bullets (as asteroids)
+        // Draw bullets (as energy blasts)
         this.bullets.forEach(bullet => {
-            this.drawAsteroid(bullet.x, bullet.y, bullet.width, bullet.height, '#00ffff');
+            this.drawEnergyBlast(bullet.x + bullet.width / 2, bullet.y + bullet.height / 2);
         });
         
         // Draw asteroids
@@ -1142,10 +1268,9 @@ class SpaceRocketGame {
             this.drawAsteroid(asteroid.x, asteroid.y, asteroid.width, asteroid.height, '#666666');
         });
         
-        // Draw stars
-        this.ctx.fillStyle = '#ffff00';
+        // Draw stars (as circles with glow effect)
         this.stars.forEach(star => {
-            this.ctx.fillRect(star.x, star.y, star.width, star.height);
+            this.drawStar(star.x + star.width / 2, star.y + star.height / 2);
         });
         
         // Draw level progress

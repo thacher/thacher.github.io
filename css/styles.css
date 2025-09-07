@@ -1222,6 +1222,17 @@ body {
     box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
 }
 
+/* Play Game specific space object styling */
+.space-object.play-game {
+    border-color: var(--star-gold);
+    background: linear-gradient(45deg, rgba(255, 204, 0, 0.1), rgba(255, 255, 0, 0.1));
+}
+
+.space-object.play-game:hover {
+    background: linear-gradient(45deg, rgba(255, 204, 0, 0.2), rgba(255, 255, 0, 0.2));
+    box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
+}
+
 /* Responsive design for mission log */
 @media (max-width: 768px) {
     .mission-log-container {
