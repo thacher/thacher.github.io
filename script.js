@@ -566,7 +566,7 @@ class SpaceObjectsSystem {
         // Style the achievement
         achievement.style.cssText = `
             position: fixed;
-            top: 20px;
+            top: 113px;
             right: -300px;
             background: linear-gradient(45deg, #ffcc00, #ffff00);
             color: #000;
@@ -661,7 +661,10 @@ class SpaceRocketGame {
         
         this.asteroids = [];
         this.stars = [];
+        this.bullets = [];
         this.keys = {};
+        this.lastShot = 0;
+        this.shootCooldown = 200; // milliseconds between shots
         
         this.init();
     }
@@ -710,7 +713,13 @@ class SpaceRocketGame {
         
         // Keyboard controls
         document.addEventListener('keydown', (e) => {
+            console.log('Key pressed:', e.code, e.key);
             this.keys[e.code] = true;
+            
+            // Prevent default behavior for spacebar (scrolling)
+            if (e.code === 'Space') {
+                e.preventDefault();
+            }
         });
         
         document.addEventListener('keyup', (e) => {
@@ -731,6 +740,19 @@ class SpaceRocketGame {
         this.gameModal.style.zIndex = '9999';
         console.log('Modal display forced to flex');
         
+        // Focus the canvas for keyboard input
+        if (this.canvas) {
+            this.canvas.focus();
+            this.canvas.tabIndex = 0; // Make canvas focusable
+        }
+        
+        // Add click handler to focus canvas
+        if (this.canvas) {
+            this.canvas.addEventListener('click', () => {
+                this.canvas.focus();
+            });
+        }
+        
         this.gameState.running = true;
         this.gameState.level = 1;
         this.gameState.score = 0;
@@ -741,6 +763,7 @@ class SpaceRocketGame {
         this.rocket.y = this.canvas.height - 60;
         this.asteroids = [];
         this.stars = [];
+        this.bullets = [];
         
         this.updateUI();
         // Get sound system from existing SpaceObjectsSystem
@@ -792,6 +815,63 @@ class SpaceRocketGame {
         }
         if (this.keys['ArrowDown'] && this.rocket.y < this.canvas.height - this.rocket.height) {
             this.rocket.y += this.rocket.speed;
+        }
+        
+        // Spacebar shooting
+        if (this.keys['Space'] && Date.now() - this.lastShot > this.shootCooldown) {
+            console.log('Shooting!');
+            this.shoot();
+            this.lastShot = Date.now();
+        }
+    }
+    
+    shoot() {
+        console.log('Shoot function called!');
+        // Play shooting sound
+        const spaceSystem = window.spaceObjectsSystem;
+        if (spaceSystem && spaceSystem.soundSystem) {
+            spaceSystem.soundSystem.playSpaceClick();
+        }
+        
+        // Create bullet from rocket center
+        this.bullets.push({
+            x: this.rocket.x + this.rocket.width / 2 - 2,
+            y: this.rocket.y,
+            width: 4,
+            height: 10,
+            speed: 8
+        });
+        console.log('Bullet created, total bullets:', this.bullets.length);
+    }
+    
+    updateBullets() {
+        for (let i = this.bullets.length - 1; i >= 0; i--) {
+            const bullet = this.bullets[i];
+            bullet.y -= bullet.speed;
+            
+            // Remove bullets that are off screen
+            if (bullet.y < 0) {
+                this.bullets.splice(i, 1);
+                continue;
+            }
+            
+            // Check collision with asteroids
+            for (let j = this.asteroids.length - 1; j >= 0; j--) {
+                const asteroid = this.asteroids[j];
+                if (this.checkCollision(bullet, asteroid)) {
+                    // Remove bullet and asteroid
+                    this.bullets.splice(i, 1);
+                    this.asteroids.splice(j, 1);
+                    
+                    // Play explosion sound
+                    const spaceSystem = window.spaceObjectsSystem;
+                    if (spaceSystem && spaceSystem.soundSystem) {
+                        spaceSystem.soundSystem.playSpaceExplosion();
+                    }
+                    
+                    break;
+                }
+            }
         }
     }
     
@@ -926,6 +1006,20 @@ class SpaceRocketGame {
             awardTitle.style.color = 'var(--star-gold)';
         }
         
+        // Show congratulations message for success
+        const congratsMessage = document.querySelector('.award-display p');
+        if (congratsMessage && congratsMessage.textContent.includes('Congratulations')) {
+            congratsMessage.style.display = 'block';
+        }
+        
+        // Show commander message for success
+        const allMessages = document.querySelectorAll('.award-display p');
+        allMessages.forEach(message => {
+            if (message.textContent.includes('certified Commander')) {
+                message.style.display = 'block';
+            }
+        });
+        
         this.gameOverElement.classList.remove('hidden');
         // Get sound system from existing SpaceObjectsSystem
         const spaceSystem = window.spaceObjectsSystem;
@@ -962,6 +1056,20 @@ class SpaceRocketGame {
             awardTitle.style.color = '#ff0000';
         }
         
+        // Hide congratulations message for failure
+        const congratsMessage = document.querySelector('.award-display p');
+        if (congratsMessage && congratsMessage.textContent.includes('Congratulations')) {
+            congratsMessage.style.display = 'none';
+        }
+        
+        // Hide commander message for failure
+        const allMessages = document.querySelectorAll('.award-display p');
+        allMessages.forEach(message => {
+            if (message.textContent.includes('certified Commander')) {
+                message.style.display = 'none';
+            }
+        });
+        
         this.gameOverElement.classList.remove('hidden');
     }
     
@@ -985,6 +1093,12 @@ class SpaceRocketGame {
         this.ctx.fillRect(this.rocket.x, this.rocket.y, this.rocket.width, this.rocket.height);
         this.ctx.fillStyle = '#ff0000';
         this.ctx.fillRect(this.rocket.x + 5, this.rocket.y + 5, 30, 30);
+        
+        // Draw bullets
+        this.ctx.fillStyle = '#00ffff';
+        this.bullets.forEach(bullet => {
+            this.ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+        });
         
         // Draw asteroids
         this.ctx.fillStyle = '#666666';
@@ -1020,6 +1134,7 @@ class SpaceRocketGame {
             this.spawnStars();
             this.updateAsteroids();
             this.updateStars();
+            this.updateBullets();
             this.checkLevelComplete();
         }
         
