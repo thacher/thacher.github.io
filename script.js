@@ -651,6 +651,10 @@ class SpaceRocketGame {
             gameSpeed: 2
         };
         
+        // Initialize scaling factors
+        this.scaleX = 1;
+        this.scaleY = 1;
+        
         this.rocket = {
             x: this.canvas.width / 2,
             y: this.canvas.height - 60,
@@ -671,7 +675,30 @@ class SpaceRocketGame {
     
     init() {
         this.setupEventListeners();
+        this.setupTouchControls();
+        this.updateScaling();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            this.updateScaling();
+        });
+        
         this.gameLoop();
+    }
+    
+    updateScaling() {
+        if (!this.canvas) return;
+        
+        // Calculate scaling factors based on current canvas size
+        this.scaleX = this.canvas.width / 800; // Original width was 800
+        this.scaleY = this.canvas.height / 400; // Original height was 400
+        
+        // Update rocket size and position
+        this.rocket.width = 40 * this.scaleX;
+        this.rocket.height = 40 * this.scaleY;
+        this.rocket.speed = 5 * Math.min(this.scaleX, this.scaleY);
+        this.rocket.x = this.canvas.width / 2;
+        this.rocket.y = this.canvas.height - (60 * this.scaleY);
     }
     
     setupEventListeners() {
@@ -833,13 +860,15 @@ class SpaceRocketGame {
             spaceSystem.soundSystem.playSpaceClick();
         }
         
-        // Create bullet from rocket center
+        // Create bullet from rocket center with scaled dimensions
+        const bulletWidth = 4 * this.scaleX;
+        const bulletHeight = 10 * this.scaleY;
         this.bullets.push({
-            x: this.rocket.x + this.rocket.width / 2 - 2,
+            x: this.rocket.x + this.rocket.width / 2 - bulletWidth / 2,
             y: this.rocket.y,
-            width: 4,
-            height: 10,
-            speed: 8
+            width: bulletWidth,
+            height: bulletHeight,
+            speed: 8 * Math.min(this.scaleX, this.scaleY)
         });
         console.log('Bullet created, total bullets:', this.bullets.length);
     }
@@ -877,24 +906,26 @@ class SpaceRocketGame {
     
     spawnAsteroids() {
         if (Math.random() < 0.02 + (this.gameState.level * 0.01)) {
+            const asteroidSize = 30 * Math.min(this.scaleX, this.scaleY);
             this.asteroids.push({
-                x: Math.random() * (this.canvas.width - 30),
-                y: -30,
-                width: 30,
-                height: 30,
-                speed: this.gameState.gameSpeed + Math.random() * 2
+                x: Math.random() * (this.canvas.width - asteroidSize),
+                y: -asteroidSize,
+                width: asteroidSize,
+                height: asteroidSize,
+                speed: (this.gameState.gameSpeed + Math.random() * 2) * Math.min(this.scaleX, this.scaleY)
             });
         }
     }
     
     spawnStars() {
         if (Math.random() < 0.01) {
+            const starSize = 20 * Math.min(this.scaleX, this.scaleY);
             this.stars.push({
-                x: Math.random() * (this.canvas.width - 20),
-                y: -20,
-                width: 20,
-                height: 20,
-                speed: this.gameState.gameSpeed
+                x: Math.random() * (this.canvas.width - starSize),
+                y: -starSize,
+                width: starSize,
+                height: starSize,
+                speed: this.gameState.gameSpeed * Math.min(this.scaleX, this.scaleY)
             });
         }
     }
