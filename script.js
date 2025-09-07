@@ -709,9 +709,15 @@ class SpaceRocketGame {
             height = 400;
         }
         
+        console.log('Setting canvas size:', width, 'x', height, 'Container width:', containerWidth);
+        
         // Set canvas size
         this.canvas.width = width;
         this.canvas.height = height;
+        
+        // Also set CSS size to ensure proper display
+        this.canvas.style.width = width + 'px';
+        this.canvas.style.height = height + 'px';
         
         // Update scaling
         this.updateScaling();
@@ -724,12 +730,16 @@ class SpaceRocketGame {
         this.scaleX = this.canvas.width / 800; // Original width was 800
         this.scaleY = this.canvas.height / 400; // Original height was 400
         
+        console.log('Scaling factors:', this.scaleX, this.scaleY, 'Canvas:', this.canvas.width, 'x', this.canvas.height);
+        
         // Update rocket size and position
         this.rocket.width = 40 * this.scaleX;
         this.rocket.height = 40 * this.scaleY;
         this.rocket.speed = 5 * Math.min(this.scaleX, this.scaleY);
         this.rocket.x = this.canvas.width / 2;
         this.rocket.y = this.canvas.height - (60 * this.scaleY);
+        
+        console.log('Rocket size:', this.rocket.width, 'x', this.rocket.height, 'Position:', this.rocket.x, this.rocket.y);
     }
     
     setupEventListeners() {
