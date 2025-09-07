@@ -651,13 +651,9 @@ class SpaceRocketGame {
             gameSpeed: 2
         };
         
-        // Initialize scaling factors
-        this.scaleX = 1;
-        this.scaleY = 1;
-        
         this.rocket = {
-            x: 0,
-            y: 0,
+            x: this.canvas.width / 2,
+            y: this.canvas.height - 60,
             width: 40,
             height: 40,
             speed: 5
@@ -675,71 +671,7 @@ class SpaceRocketGame {
     
     init() {
         this.setupEventListeners();
-        this.setupTouchControls();
-        this.setCanvasSize();
-        
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            this.setCanvasSize();
-        });
-        
         this.gameLoop();
-    }
-    
-    setCanvasSize() {
-        if (!this.canvas) return;
-        
-        // Get the container width
-        const container = this.canvas.parentElement;
-        const containerWidth = container.clientWidth - 40; // Account for padding
-        
-        // Set responsive dimensions
-        let width, height;
-        if (window.innerWidth <= 480) {
-            // Mobile portrait
-            width = Math.min(containerWidth, 350);
-            height = Math.floor(width * 9 / 16); // 16:9 aspect ratio
-        } else if (window.innerWidth <= 768) {
-            // Mobile landscape / tablet
-            width = Math.min(containerWidth, 600);
-            height = Math.floor(width / 2); // 2:1 aspect ratio
-        } else {
-            // Desktop
-            width = 800;
-            height = 400;
-        }
-        
-        console.log('Setting canvas size:', width, 'x', height, 'Container width:', containerWidth);
-        
-        // Set canvas size
-        this.canvas.width = width;
-        this.canvas.height = height;
-        
-        // Also set CSS size to ensure proper display
-        this.canvas.style.width = width + 'px';
-        this.canvas.style.height = height + 'px';
-        
-        // Update scaling
-        this.updateScaling();
-    }
-    
-    updateScaling() {
-        if (!this.canvas) return;
-        
-        // Calculate scaling factors based on current canvas size
-        this.scaleX = this.canvas.width / 800; // Original width was 800
-        this.scaleY = this.canvas.height / 400; // Original height was 400
-        
-        console.log('Scaling factors:', this.scaleX, this.scaleY, 'Canvas:', this.canvas.width, 'x', this.canvas.height);
-        
-        // Update rocket size and position
-        this.rocket.width = 40 * this.scaleX;
-        this.rocket.height = 40 * this.scaleY;
-        this.rocket.speed = 5 * Math.min(this.scaleX, this.scaleY);
-        this.rocket.x = this.canvas.width / 2;
-        this.rocket.y = this.canvas.height - (60 * this.scaleY);
-        
-        console.log('Rocket size:', this.rocket.width, 'x', this.rocket.height, 'Position:', this.rocket.x, this.rocket.y);
     }
     
     setupEventListeners() {
@@ -901,15 +833,13 @@ class SpaceRocketGame {
             spaceSystem.soundSystem.playSpaceClick();
         }
         
-        // Create bullet from rocket center with scaled dimensions
-        const bulletWidth = 4 * this.scaleX;
-        const bulletHeight = 10 * this.scaleY;
+        // Create bullet from rocket center
         this.bullets.push({
-            x: this.rocket.x + this.rocket.width / 2 - bulletWidth / 2,
+            x: this.rocket.x + this.rocket.width / 2 - 2,
             y: this.rocket.y,
-            width: bulletWidth,
-            height: bulletHeight,
-            speed: 8 * Math.min(this.scaleX, this.scaleY)
+            width: 4,
+            height: 10,
+            speed: 8
         });
         console.log('Bullet created, total bullets:', this.bullets.length);
     }
@@ -947,26 +877,24 @@ class SpaceRocketGame {
     
     spawnAsteroids() {
         if (Math.random() < 0.02 + (this.gameState.level * 0.01)) {
-            const asteroidSize = 30 * Math.min(this.scaleX, this.scaleY);
             this.asteroids.push({
-                x: Math.random() * (this.canvas.width - asteroidSize),
-                y: -asteroidSize,
-                width: asteroidSize,
-                height: asteroidSize,
-                speed: (this.gameState.gameSpeed + Math.random() * 2) * Math.min(this.scaleX, this.scaleY)
+                x: Math.random() * (this.canvas.width - 30),
+                y: -30,
+                width: 30,
+                height: 30,
+                speed: this.gameState.gameSpeed + Math.random() * 2
             });
         }
     }
     
     spawnStars() {
         if (Math.random() < 0.01) {
-            const starSize = 20 * Math.min(this.scaleX, this.scaleY);
             this.stars.push({
-                x: Math.random() * (this.canvas.width - starSize),
-                y: -starSize,
-                width: starSize,
-                height: starSize,
-                speed: this.gameState.gameSpeed * Math.min(this.scaleX, this.scaleY)
+                x: Math.random() * (this.canvas.width - 20),
+                y: -20,
+                width: 20,
+                height: 20,
+                speed: this.gameState.gameSpeed
             });
         }
     }
