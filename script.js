@@ -656,8 +656,8 @@ class SpaceRocketGame {
         this.scaleY = 1;
         
         this.rocket = {
-            x: this.canvas.width / 2,
-            y: this.canvas.height - 60,
+            x: 0,
+            y: 0,
             width: 40,
             height: 40,
             speed: 5
@@ -676,14 +676,45 @@ class SpaceRocketGame {
     init() {
         this.setupEventListeners();
         this.setupTouchControls();
-        this.updateScaling();
+        this.setCanvasSize();
         
         // Handle window resize
         window.addEventListener('resize', () => {
-            this.updateScaling();
+            this.setCanvasSize();
         });
         
         this.gameLoop();
+    }
+    
+    setCanvasSize() {
+        if (!this.canvas) return;
+        
+        // Get the container width
+        const container = this.canvas.parentElement;
+        const containerWidth = container.clientWidth - 40; // Account for padding
+        
+        // Set responsive dimensions
+        let width, height;
+        if (window.innerWidth <= 480) {
+            // Mobile portrait
+            width = Math.min(containerWidth, 350);
+            height = Math.floor(width * 9 / 16); // 16:9 aspect ratio
+        } else if (window.innerWidth <= 768) {
+            // Mobile landscape / tablet
+            width = Math.min(containerWidth, 600);
+            height = Math.floor(width / 2); // 2:1 aspect ratio
+        } else {
+            // Desktop
+            width = 800;
+            height = 400;
+        }
+        
+        // Set canvas size
+        this.canvas.width = width;
+        this.canvas.height = height;
+        
+        // Update scaling
+        this.updateScaling();
     }
     
     updateScaling() {
