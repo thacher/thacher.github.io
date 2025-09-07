@@ -16,7 +16,7 @@ not to judge our variable names.
         "Computer Vision Explorer", 
         "NLP Space Specialist",
         "MLOps Mission Control",
-        "AI Infrastrucutre Architect",
+        "AI Infrastructure Architect",
         "Algorithm Space Engineer",
         "Data Streaming Commander",
         "Product Launch Director",
@@ -1179,12 +1179,101 @@ class SpaceRocketGame {
     }
 }
 
+// Mission Log Modal System
+class MissionLogSystem {
+    constructor() {
+        this.missionLogModal = document.getElementById('mission-log-modal');
+        this.missionLogTrigger = document.getElementById('mission-log-trigger');
+        this.closeMissionLogBtn = document.getElementById('close-mission-log');
+        this.init();
+    }
+    
+    init() {
+        this.setupEventListeners();
+    }
+    
+    setupEventListeners() {
+        // Mission Log trigger click
+        if (this.missionLogTrigger) {
+            this.missionLogTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.openMissionLog();
+            });
+        }
+        
+        // Close Mission Log
+        if (this.closeMissionLogBtn) {
+            this.closeMissionLogBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.closeMissionLog();
+            });
+        }
+        
+        // Close on background click
+        if (this.missionLogModal) {
+            this.missionLogModal.addEventListener('click', (e) => {
+                if (e.target === this.missionLogModal) {
+                    this.closeMissionLog();
+                }
+            });
+        }
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.missionLogModal.classList.contains('active')) {
+                this.closeMissionLog();
+            }
+        });
+    }
+    
+    openMissionLog() {
+        console.log('Opening Mission Log...');
+        
+        if (this.missionLogModal) {
+            this.missionLogModal.classList.add('active');
+            this.missionLogModal.style.display = 'flex';
+            this.missionLogModal.style.zIndex = '9999';
+            
+            // Play sound effect
+            const spaceSystem = window.spaceObjectsSystem;
+            if (spaceSystem && spaceSystem.soundSystem) {
+                spaceSystem.soundSystem.playSpaceClick();
+            }
+            
+            // Show achievement
+            if (spaceSystem) {
+                spaceSystem.showAchievement('Mission Log Accessed!');
+            }
+        }
+    }
+    
+    closeMissionLog() {
+        console.log('Closing Mission Log...');
+        
+        if (this.missionLogModal) {
+            this.missionLogModal.classList.remove('active');
+            this.missionLogModal.style.display = 'none';
+            
+            // Play sound effect
+            const spaceSystem = window.spaceObjectsSystem;
+            if (spaceSystem && spaceSystem.soundSystem) {
+                spaceSystem.soundSystem.playSpaceClick();
+            }
+        }
+    }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.spaceObjectsSystem = new SpaceObjectsSystem();
     
     // Initialize game
     window.spaceRocketGame = new SpaceRocketGame();
+    
+    // Initialize Mission Log
+    window.missionLogSystem = new MissionLogSystem();
     
     // Loading screen effect
     setTimeout(() => {

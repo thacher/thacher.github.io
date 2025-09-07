@@ -1090,3 +1090,182 @@ body {
     transform: scale(1.1);
     filter: drop-shadow(0 0 20px rgba(255, 204, 0, 0.8));
 }
+
+/* Mission Log Modal Styles */
+.mission-log-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.mission-log-modal.active {
+    display: flex;
+}
+
+.mission-log-container {
+    background: linear-gradient(135deg, var(--space-blue), var(--nebula-purple));
+    border: 3px solid var(--star-gold);
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 1000px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 0 50px rgba(255, 204, 0, 0.5);
+    position: relative;
+}
+
+.mission-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.mission-log-header h2 {
+    color: var(--star-gold);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    margin: 0;
+}
+
+.mission-log-content {
+    color: var(--text-primary);
+    font-family: 'Orbitron', monospace;
+}
+
+.mission-log-intro {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 1px solid var(--star-gold);
+}
+
+.mission-log-intro p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: var(--text-accent);
+}
+
+.missions-list {
+    display: grid;
+    gap: 20px;
+}
+
+.mission-item {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.mission-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    border-color: var(--star-gold);
+}
+
+.mission-item h3 {
+    color: var(--star-gold);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+}
+
+.mission-item p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.mission-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.mission-item:hover::before {
+    left: 100%;
+}
+
+/* Mission Log specific space object styling */
+.space-object.mission-log {
+    border-color: var(--primary-color);
+    background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 128, 255, 0.1));
+}
+
+.space-object.mission-log:hover {
+    background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(0, 128, 255, 0.2));
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+/* Responsive design for mission log */
+@media (max-width: 768px) {
+    .mission-log-container {
+        width: 95%;
+        max-height: 85vh;
+        padding: 15px;
+    }
+    
+    .mission-log-header h2 {
+        font-size: 12px;
+    }
+    
+    .mission-item {
+        padding: 15px;
+    }
+    
+    .mission-item h3 {
+        font-size: 10px;
+    }
+    
+    .mission-item p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mission-log-container {
+        width: 98%;
+        padding: 10px;
+    }
+    
+    .mission-log-header h2 {
+        font-size: 10px;
+    }
+    
+    .mission-item {
+        padding: 12px;
+    }
+    
+    .mission-item h3 {
+        font-size: 9px;
+    }
+    
+    .mission-item p {
+        font-size: 11px;
+    }
+}
