@@ -681,11 +681,22 @@ class SpaceRocketGame {
             
             const container = this.canvas.parentElement;
             const containerWidth = container.clientWidth - 40; // Account for padding
-            const maxHeight = window.innerHeight * 0.6; // Max 60% of viewport height
+            const containerHeight = container.clientHeight - 100; // Account for header and controls
+            
+            // Check if we're in portrait mode on mobile
+            const isPortrait = window.innerWidth < 480 && window.innerHeight > window.innerWidth;
+            const maxHeight = isPortrait ? window.innerHeight * 0.5 : window.innerHeight * 0.6;
             
             // Calculate responsive dimensions
             let canvasWidth = Math.min(containerWidth, 800); // Max 800px width
             let canvasHeight = Math.min(canvasWidth / 2, maxHeight); // 2:1 aspect ratio
+            
+            // For portrait mode, adjust to use more vertical space
+            if (isPortrait) {
+                const availableHeight = Math.min(containerHeight, maxHeight);
+                canvasHeight = Math.min(availableHeight, canvasWidth / 1.5); // Slightly taller aspect ratio
+                canvasWidth = canvasHeight * 1.5; // Adjust width to maintain aspect ratio
+            }
             
             // Set canvas display size
             this.canvas.style.width = canvasWidth + 'px';
@@ -709,8 +720,11 @@ class SpaceRocketGame {
         // Initial resize
         resizeCanvas();
         
-        // Resize on window resize
+        // Resize on window resize and orientation change
         window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(resizeCanvas, 100); // Small delay for orientation change
+        });
         
         // Resize when game starts
         const originalStartGame = this.startGame.bind(this);

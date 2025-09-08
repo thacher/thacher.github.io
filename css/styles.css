@@ -1239,10 +1239,21 @@ body {
         width: 98%;
         padding: 10px;
         margin: 5px;
+        max-height: 95vh;
+        overflow-y: auto;
+    }
+    
+    .game-header {
+        padding: 8px;
+        margin-bottom: 10px;
     }
     
     .game-header h2 {
         font-size: 12px;
+    }
+    
+    .game-stats {
+        gap: 3px;
     }
     
     .game-stats span {
@@ -1250,12 +1261,22 @@ body {
     }
     
     #game-canvas {
-        max-height: 50vh;
+        max-height: 45vh;
+        margin-bottom: 10px;
+    }
+    
+    .control-info {
+        margin-bottom: 10px;
     }
     
     .control-info p {
         font-size: 10px;
         margin: 2px 0;
+    }
+    
+    .mobile-controls {
+        padding: 10px;
+        margin-top: 10px;
     }
     
     .mobile-btn {
@@ -1279,6 +1300,94 @@ body {
     .control-row {
         gap: 8px;
         margin-bottom: 8px;
+    }
+}
+
+/* Portrait orientation specific optimizations */
+@media (max-width: 480px) and (orientation: portrait) {
+    .game-modal {
+        padding: 5px;
+    }
+    
+    .game-container {
+        width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        margin: 0;
+        padding: 8px;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .game-header {
+        flex-shrink: 0;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .game-header h2 {
+        font-size: 11px;
+    }
+    
+    .game-stats {
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 5px;
+    }
+    
+    .game-stats span {
+        font-size: 9px;
+    }
+    
+    #game-canvas {
+        flex: 1;
+        max-height: none;
+        height: auto;
+        min-height: 200px;
+        margin: 5px 0;
+    }
+    
+    .game-controls {
+        flex-shrink: 0;
+        margin-top: 5px;
+    }
+    
+    .control-info {
+        margin-bottom: 5px;
+    }
+    
+    .control-info p {
+        font-size: 9px;
+        margin: 1px 0;
+    }
+    
+    .mobile-controls {
+        padding: 8px;
+        margin-top: 5px;
+    }
+    
+    .mobile-btn {
+        font-size: 11px;
+        padding: 8px 12px;
+        min-width: 35px;
+        min-height: 35px;
+    }
+    
+    .shoot-btn {
+        font-size: 9px;
+        padding: 8px 14px;
+    }
+    
+    .direction-btn {
+        font-size: 16px;
+        min-width: 35px;
+        min-height: 35px;
+    }
+    
+    .control-row {
+        gap: 6px;
+        margin-bottom: 6px;
     }
 }
 
