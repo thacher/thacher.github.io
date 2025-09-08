@@ -729,7 +729,8 @@ body {
     }
     
     .mission-status {
-        margin-bottom: 30px;
+        margin-bottom: 40px;
+        min-height: 50px;
     }
     
     .ai-systems {
@@ -802,7 +803,8 @@ body {
     
     .mission-status {
         font-size: 16px;
-        margin-bottom: 35px;
+        margin-bottom: 50px;
+        min-height: 60px;
     }
     
     .ai-systems {
