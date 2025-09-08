@@ -355,6 +355,8 @@ body {
     border-radius: 20px;
     box-shadow: var(--shadow-glow);
     backdrop-filter: blur(10px);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .commander-avatar {
@@ -717,24 +719,35 @@ body {
         justify-content: center;
     }
     
+    .commander-profile {
+        padding: 30px 20px;
+        margin-bottom: 40px;
+    }
+    
     .name-highlight {
         font-size: 24px;
     }
     
+    .mission-status {
+        margin-bottom: 20px;
+    }
+    
     .ai-systems {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 400px;
-        gap: 25px;
-        padding: 0 10px;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 100%;
+        gap: 15px;
+        padding: 0 5px;
+        margin-bottom: 20px;
     }
     
     .system-label {
-        font-size: 9px;
+        font-size: 8px;
+        line-height: 1.1;
     }
     
     .system-bar {
-        width: 70px;
-        height: 14px;
+        width: 60px;
+        height: 12px;
     }
     
     .space-objects-container {
@@ -758,19 +771,21 @@ body {
 
 @media (max-width: 600px) {
     .ai-systems {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 350px;
-        gap: 20px;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 100%;
+        gap: 12px;
         padding: 0 5px;
+        margin-bottom: 25px;
     }
     
     .system-label {
-        font-size: 8px;
+        font-size: 7px;
+        line-height: 1.0;
     }
     
     .system-bar {
-        width: 60px;
-        height: 12px;
+        width: 50px;
+        height: 10px;
     }
 }
 
@@ -787,22 +802,25 @@ body {
     
     .mission-status {
         font-size: 16px;
+        margin-bottom: 25px;
     }
     
     .ai-systems {
-        grid-template-columns: 1fr;
-        max-width: 250px;
-        gap: 15px;
-        padding: 0;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 100%;
+        gap: 10px;
+        padding: 0 5px;
+        margin-bottom: 30px;
     }
     
     .system-label {
-        font-size: 7px;
+        font-size: 6px;
+        line-height: 1.0;
     }
     
     .system-bar {
-        width: 50px;
-        height: 10px;
+        width: 45px;
+        height: 8px;
     }
     
     .space-object {
