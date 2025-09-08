@@ -694,8 +694,15 @@ class SpaceRocketGame {
             // For portrait mode, adjust to use more vertical space
             if (isPortrait) {
                 const availableHeight = Math.min(containerHeight, maxHeight);
-                canvasHeight = Math.min(availableHeight, canvasWidth / 1.5); // Slightly taller aspect ratio
-                canvasWidth = canvasHeight * 1.5; // Adjust width to maintain aspect ratio
+                // Use a more square aspect ratio for portrait mode
+                canvasHeight = Math.min(availableHeight, canvasWidth * 0.8); // 1.25:1 aspect ratio
+                canvasWidth = canvasHeight / 0.8; // Adjust width to maintain aspect ratio
+                
+                // Ensure we don't exceed container width
+                if (canvasWidth > containerWidth) {
+                    canvasWidth = containerWidth;
+                    canvasHeight = canvasWidth * 0.8;
+                }
             }
             
             // Set canvas display size
