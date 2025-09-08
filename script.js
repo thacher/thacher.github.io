@@ -670,7 +670,54 @@ class SpaceRocketGame {
     
     init() {
         this.setupEventListeners();
+        this.setupCanvasResize();
         this.gameLoop();
+    }
+    
+    setupCanvasResize() {
+        // Handle canvas resize for responsive design
+        const resizeCanvas = () => {
+            if (!this.canvas) return;
+            
+            const container = this.canvas.parentElement;
+            const containerWidth = container.clientWidth - 40; // Account for padding
+            const maxHeight = window.innerHeight * 0.6; // Max 60% of viewport height
+            
+            // Calculate responsive dimensions
+            let canvasWidth = Math.min(containerWidth, 800); // Max 800px width
+            let canvasHeight = Math.min(canvasWidth / 2, maxHeight); // 2:1 aspect ratio
+            
+            // Set canvas display size
+            this.canvas.style.width = canvasWidth + 'px';
+            this.canvas.style.height = canvasHeight + 'px';
+            
+            // Set canvas internal resolution (for crisp rendering)
+            const devicePixelRatio = window.devicePixelRatio || 1;
+            this.canvas.width = canvasWidth * devicePixelRatio;
+            this.canvas.height = canvasHeight * devicePixelRatio;
+            
+            // Scale the context to match device pixel ratio
+            this.ctx.scale(devicePixelRatio, devicePixelRatio);
+            
+            // Update rocket position if game is running
+            if (this.gameState.running) {
+                this.rocket.x = canvasWidth / 2;
+                this.rocket.y = canvasHeight - 60;
+            }
+        };
+        
+        // Initial resize
+        resizeCanvas();
+        
+        // Resize on window resize
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Resize when game starts
+        const originalStartGame = this.startGame.bind(this);
+        this.startGame = () => {
+            originalStartGame();
+            setTimeout(resizeCanvas, 100); // Small delay to ensure modal is visible
+        };
     }
     
     setupEventListeners() {
