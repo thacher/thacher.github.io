@@ -680,7 +680,7 @@ class SpaceRocketGame {
             if (!this.canvas) return;
             
             const container = this.canvas.parentElement;
-            const containerWidth = container.clientWidth - 40; // Account for padding
+            const containerWidth = container.clientWidth - 8; // Account for reduced padding
             const containerHeight = container.clientHeight - 100; // Account for header and controls
             
             // Check if we're in portrait mode on mobile

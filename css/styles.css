@@ -1334,7 +1334,7 @@ body {
         height: 100vh;
         max-height: 100vh;
         margin: 0;
-        padding: 6px;
+        padding: 4px;
         border-radius: 0;
         display: flex;
         flex-direction: column;
@@ -1385,6 +1385,7 @@ body {
         min-height: 180px;
         margin: 3px 0;
         width: 100%;
+        border-radius: 0;
     }
     
     .game-controls {
