@@ -1405,8 +1405,11 @@ body {
     }
     
     .mobile-controls {
-        padding: 5px;
-        margin-top: 3px;
+        padding: 8px;
+        margin-top: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
     }
     
     .mobile-btn {
@@ -1435,6 +1438,23 @@ body {
     
     .control-row:first-child {
         justify-content: center;
+    }
+    
+    .shoot-row {
+        margin-bottom: 8px;
+    }
+    
+    .directions-row {
+        margin-bottom: 4px;
+    }
+    
+    .shoot-btn {
+        font-size: 10px;
+        padding: 8px 16px;
+        min-width: 80px;
+        background: linear-gradient(135deg, #ff3300, #ff0000);
+        border-color: #ff0000;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
     }
 }
 
