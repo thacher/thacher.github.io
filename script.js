@@ -700,6 +700,9 @@ class SpaceRocketGame {
             console.error('Play Game element not found!');
         }
         
+        // Mobile touch controls
+        this.setupMobileControls();
+        
         // Close game
         const closeBtn = document.getElementById('close-game');
         if (closeBtn) {
@@ -782,6 +785,119 @@ class SpaceRocketGame {
         const spaceSystem = window.spaceObjectsSystem;
         if (spaceSystem && spaceSystem.soundSystem) {
             spaceSystem.soundSystem.playSpaceClick();
+        }
+        
+        // Show mobile controls if on mobile device
+        this.showMobileControlsIfNeeded();
+    }
+    
+    // Mobile device detection
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+               (navigator.maxTouchPoints && navigator.maxTouchPoints > 2) ||
+               window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    }
+    
+    // Show mobile controls if needed
+    showMobileControlsIfNeeded() {
+        const mobileControls = document.getElementById('mobile-controls');
+        if (mobileControls && this.isMobileDevice()) {
+            mobileControls.classList.add('active');
+            console.log('Mobile controls activated');
+        }
+    }
+    
+    // Setup mobile touch controls
+    setupMobileControls() {
+        // Mobile shoot button
+        const mobileShoot = document.getElementById('mobile-shoot');
+        if (mobileShoot) {
+            mobileShoot.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.keys['Space'] = true;
+                this.shoot();
+            });
+            
+            mobileShoot.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.keys['Space'] = false;
+            });
+            
+            // Also handle click for desktop testing
+            mobileShoot.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.shoot();
+            });
+        }
+        
+        // Mobile direction buttons
+        const mobileUp = document.getElementById('mobile-up');
+        const mobileDown = document.getElementById('mobile-down');
+        const mobileLeft = document.getElementById('mobile-left');
+        const mobileRight = document.getElementById('mobile-right');
+        
+        if (mobileUp) {
+            mobileUp.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.keys['ArrowUp'] = true;
+            });
+            mobileUp.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.keys['ArrowUp'] = false;
+            });
+            mobileUp.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.keys['ArrowUp'] = true;
+                setTimeout(() => this.keys['ArrowUp'] = false, 100);
+            });
+        }
+        
+        if (mobileDown) {
+            mobileDown.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.keys['ArrowDown'] = true;
+            });
+            mobileDown.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.keys['ArrowDown'] = false;
+            });
+            mobileDown.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.keys['ArrowDown'] = true;
+                setTimeout(() => this.keys['ArrowDown'] = false, 100);
+            });
+        }
+        
+        if (mobileLeft) {
+            mobileLeft.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.keys['ArrowLeft'] = true;
+            });
+            mobileLeft.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.keys['ArrowLeft'] = false;
+            });
+            mobileLeft.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.keys['ArrowLeft'] = true;
+                setTimeout(() => this.keys['ArrowLeft'] = false, 100);
+            });
+        }
+        
+        if (mobileRight) {
+            mobileRight.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.keys['ArrowRight'] = true;
+            });
+            mobileRight.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.keys['ArrowRight'] = false;
+            });
+            mobileRight.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.keys['ArrowRight'] = true;
+                setTimeout(() => this.keys['ArrowRight'] = false, 100);
+            });
         }
     }
     
