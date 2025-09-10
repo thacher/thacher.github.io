@@ -877,26 +877,33 @@ class SpaceRocketGame {
     
     // Setup mobile touch controls
     setupMobileControls() {
-        // Mobile shoot button
-        const mobileShoot = document.getElementById('mobile-shoot');
-        if (mobileShoot) {
-            mobileShoot.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                this.keys['Space'] = true;
-                this.shoot();
-            });
-            
-            mobileShoot.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                this.keys['Space'] = false;
-            });
-            
-            // Also handle click for desktop testing
-            mobileShoot.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.shoot();
-            });
-        }
+        // Mobile shoot buttons (left and right)
+        const mobileShootLeft = document.getElementById('mobile-shoot-left');
+        const mobileShootRight = document.getElementById('mobile-shoot-right');
+        
+        const setupShootButton = (button) => {
+            if (button) {
+                button.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.keys['Space'] = true;
+                    this.shoot();
+                });
+                
+                button.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    this.keys['Space'] = false;
+                });
+                
+                // Also handle click for desktop testing
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.shoot();
+                });
+            }
+        };
+        
+        setupShootButton(mobileShootLeft);
+        setupShootButton(mobileShootRight);
         
         // Mobile direction buttons
         const mobileUp = document.getElementById('mobile-up');
