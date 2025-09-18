@@ -10,19 +10,15 @@ not to judge our variable names.
 // Space AI typing animation
     var typed = new Typed(".typing", {
     strings: [
-        "AI Engineering Leader", 
-        "Neural Network Pilot", 
-        "Deep Learning Navigator", 
-        "Computer Vision Explorer", 
-        "NLP Space Specialist",
-        "MLOps Mission Control",
-        "AI Infrastructure Architect",
-        "Algorithm Space Engineer",
-        "Data Streaming Commander",
-        "Product Launch Director",
-        "Technical Space Founder",
-        "Full-Stack Astronaut",
-        "AI Mission Specialist"
+        "BankShift Founder & CTO", 
+        "No-Code Platform Architect", 
+        "Capital One Managing Director", 
+        "Streaming Data Pioneer",
+        "Site Reliability Engineering Leader",
+        "Team Scaling Director",
+        "DevSecOps Champion",
+        "Global Wireless Data CTO",
+        "API Innovation Leader"
     ],
     typeSpeed: 50,
     backSpeed: 30,
