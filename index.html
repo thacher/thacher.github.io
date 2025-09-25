@@ -216,15 +216,28 @@ not to judge our variable names.
             <div class="game-controls">
                 <!-- Mobile Touch Controls -->
                 <div class="mobile-controls" id="mobile-controls">
-                    <div class="control-row">
-                        <button class="mobile-btn direction-btn" id="mobile-up">↑</button>
-                    </div>
-                    <div class="control-row">
-                        <button class="mobile-btn shoot-btn" id="mobile-shoot-left">🔫</button>
-                        <button class="mobile-btn direction-btn" id="mobile-left">←</button>
-                        <button class="mobile-btn direction-btn" id="mobile-down">↓</button>
-                        <button class="mobile-btn direction-btn" id="mobile-right">→</button>
-                        <button class="mobile-btn shoot-btn" id="mobile-shoot-right">🔫</button>
+                    <div class="controller-layout">
+                        <!-- Left shoot button (shoulder) -->
+                        <div class="shoulder-btn-left">
+                            <button class="mobile-btn shoot-btn" id="mobile-shoot-left">🔫</button>
+                        </div>
+                        
+                        <!-- Directional pad -->
+                        <div class="d-pad">
+                            <div class="d-pad-row">
+                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-up">↑</button>
+                            </div>
+                            <div class="d-pad-row">
+                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-left">←</button>
+                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-down">↓</button>
+                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-right">→</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Right shoot button (shoulder) -->
+                        <div class="shoulder-btn-right">
+                            <button class="mobile-btn shoot-btn" id="mobile-shoot-right">🔫</button>
+                        </div>
                     </div>
                 </div>
                 
