@@ -16,7 +16,8 @@ not to judge our variable names.
         "Site Reliability Engineering & Data Resiliency Leader",
         "Agentic Factory, AI Governance & Agent Leader",
         "DevSecOps & Developer Shift-left SDK Champion",
-        "Global Wireless Data (CTO) Aquired Karbon Systems CEO/CPO"
+        "Global Wireless Data (CTO)",
+        "Karbon Systems CEO/CPO"
     ],
     typeSpeed: 50,
     backSpeed: 30,
