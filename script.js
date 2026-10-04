@@ -10,15 +10,13 @@ not to judge our variable names.
 // Space AI typing animation
     var typed = new Typed(".typing", {
     strings: [
-        "BankShift Founder & CTO", 
-        "No-Code Platform Architect", 
-        "Capital One Managing Director", 
-        "Streaming Data Pioneer",
-        "Site Reliability Engineering Leader",
-        "Team Scaling Director",
-        "DevSecOps Champion",
-        "Global Wireless Data CTO",
-        "API Innovation Leader"
+        "BankShift Co-Founder CEO, CTO & AI Innovation",
+        "Workers Credit Union SVP Technology & AI Innovation", 
+        "Capital One Managing Director & Full-Stack Leader CreditWise", 
+        "Site Reliability Engineering & Data Resiliency Leader",
+        "Agentic Factory, AI Governance & Agent Leader",
+        "DevSecOps & Developer Shift-left SDK Champion",
+        "Global Wireless Data (CTO) Aquired Karbon Systems CEO/CPO"
     ],
     typeSpeed: 50,
     backSpeed: 30,
