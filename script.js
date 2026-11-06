@@ -6,25 +6,35 @@ not to judge our variable names.
 */
 
 const typedTarget = document.querySelector(".typing");
-if (typedTarget && window.Typed) {
-    new Typed(".typing", {
-        strings: [
-            "Agentic Factory · AI Governance & Agent Leader",
-            "BankShift Co-Founder CEO, CTO & AI Innovation",
-            "Workers Credit Union SVP Technology & AI Innovation",
-            "Capital One Managing Director · CreditWise",
-            "SRE & Data Resiliency Leader",
-            "DevSecOps & Shift-left SDK Champion",
-            "Global Wireless Data CTO",
-            "Karbon Systems CEO/CPO"
-        ],
-        typeSpeed: 42,
-        backSpeed: 22,
-        smartBackspace: true,
-        loop: true,
-        showCursor: true,
-        cursorChar: "█"
-    });
+const opLines = [
+    "Agentic Factory · AI Governance & Agent Leader",
+    "BankShift Co-Founder CEO, CTO & AI Innovation",
+    "Workers Credit Union SVP Technology & AI Innovation",
+    "Capital One Managing Director · CreditWise",
+    "SRE & Data Resiliency Leader",
+    "DevSecOps & Shift-left SDK Champion",
+    "Global Wireless Data CTO",
+    "Karbon Systems CEO/CPO"
+];
+if (typedTarget) {
+    const quietMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (quietMotion || !window.Typed) {
+        typedTarget.textContent = opLines[0];
+    } else {
+        new Typed(".typing", {
+            strings: opLines,
+            typeSpeed: 26,
+            backSpeed: 14,
+            backDelay: 2400,
+            startDelay: 200,
+            fadeOut: true,
+            fadeOutDelay: 420,
+            smartBackspace: false,
+            loop: true,
+            showCursor: true,
+            cursorChar: "|"
+        });
+    }
 }
 
 class OpsSoundSystem {
