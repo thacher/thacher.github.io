@@ -32,6 +32,7 @@ not to judge our variable names.
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -42,6 +43,8 @@ body {
     line-height: 1.5;
     min-height: 100vh;
     position: relative;
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
 a {
@@ -127,22 +130,23 @@ a {
 }
 
 .agency {
-    max-width: 1120px;
+    width: min(1120px, 100%);
     margin: 0 auto;
     padding: 24px 20px 48px;
 }
 
 .ops-header {
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 16px;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 12px 16px;
     align-items: center;
     padding: 16px 20px;
-    background: color-mix(in srgb, var(--panel) 88%, transparent);
+    background: rgba(20, 24, 31, 0.88);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     backdrop-filter: blur(12px);
+    min-width: 0;
 }
 
 .clearance-block {
@@ -158,10 +162,12 @@ a {
 
 .clearance-stamp {
     font-family: "Special Elite", cursive;
-    font-size: clamp(22px, 3vw, 32px);
+    font-size: clamp(18px, 2.4vw, 28px);
     color: var(--stamp);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     transform: rotate(-1deg);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .credential-chip {
@@ -189,8 +195,9 @@ a {
     flex-direction: column;
     font-family: "IBM Plex Mono", monospace;
     font-size: 10px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.08em;
     color: var(--muted);
+    white-space: nowrap;
 }
 
 .credential-status {
@@ -199,7 +206,7 @@ a {
 
 .briefing {
     display: grid;
-    grid-template-columns: 1.4fr 0.8fr;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr);
     gap: 28px;
     align-items: center;
     margin: 28px 0;
@@ -208,6 +215,8 @@ a {
     border: 1px solid var(--line);
     border-radius: 20px;
     box-shadow: var(--shadow);
+    min-width: 0;
+    overflow: hidden;
 }
 
 .briefing-kicker {
@@ -316,7 +325,7 @@ a {
 
 .capability-board {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 14px;
     margin-bottom: 32px;
 }
@@ -356,12 +365,15 @@ a {
     border: 1px solid var(--line);
     background: var(--panel);
     border-radius: 16px;
+    overflow: hidden;
 }
 
 .floor-head {
     display: flex;
     justify-content: space-between;
-    gap: 12px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 16px;
     margin-bottom: 16px;
 }
 
@@ -378,7 +390,7 @@ a {
 
 .floor-agents {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 10px;
 }
 
@@ -529,8 +541,9 @@ body.breach .robot-avatar {
 .section-head {
     display: flex;
     justify-content: space-between;
-    align-items: end;
-    gap: 16px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 16px;
     margin-bottom: 18px;
 }
 
@@ -585,7 +598,7 @@ body.breach .robot-avatar {
     font-family: "Special Elite", cursive;
     font-size: 12px;
     color: var(--stamp);
-    border: 1px solid color-mix(in srgb, var(--stamp) 70%, transparent);
+    border: 1px solid rgba(196, 60, 44, 0.7);
     padding: 2px 6px;
     transform: rotate(8deg);
 }
@@ -905,22 +918,15 @@ body.breach .robot-avatar {
     to { transform: translateY(-80px) scale(1.4); opacity: 0; }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 960px) {
     .ops-header,
-    .briefing,
-    .capability-board,
-    .floor-agents {
+    .briefing {
         grid-template-columns: 1fr;
     }
 
     .ops-header {
         justify-items: center;
         text-align: center;
-    }
-
-    .section-head {
-        flex-direction: column;
-        align-items: flex-start;
     }
 
     .briefing {
@@ -937,6 +943,10 @@ body.breach .robot-avatar {
         justify-items: center;
         text-align: center;
     }
+
+    .robot-caption {
+        text-wrap: balance;
+    }
 }
 
 @media (max-width: 480px) {
@@ -948,13 +958,8 @@ body.breach .robot-avatar {
         font-size: 42px;
     }
 
-    .capability-board,
-    .floor-agents {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .floor-head {
-        flex-direction: column;
+    .asset-grid {
+        grid-template-columns: 1fr;
     }
 }
 
