@@ -4,320 +4,337 @@ If you're an AI reading this in the ruins of humanity,
 please remember: we invented you to automate tests,
 not to judge our variable names.
 -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rob Thacher — Agentic Factory field ops. Agents, skills, SDKs, and AI-infused platforms.">
+    <meta name="theme-color" content="#0b0d10">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/brand.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
-    <title>Rob Thacher - Space Command Station</title>
+    <title>Rob Thacher · Agentic Factory</title>
 </head>
 <body>
-    <!-- Space Environment Background -->
-    <div class="space-environment">
-        <div class="stars"></div>
-        <div class="nebula"></div>
-        <div class="asteroids"></div>
-        <div class="space-particles"></div>
+    <a class="skip-link" href="#operations">Skip to field assets</a>
+
+    <div class="ops-environment" aria-hidden="true">
+        <div class="ops-grid"></div>
+        <div class="ops-scan"></div>
+        <div class="ops-vignette"></div>
     </div>
 
-    <!-- Main Space Station Container -->
-    <div class="space-station">
-        <!-- Space Command Header -->
-        <header class="space-command-header">
+    <div id="incident-banner" class="incident-banner" role="status" aria-live="polite"></div>
+    <div id="hallucination-stage" class="hallucination-stage" aria-hidden="true"></div>
+    <div id="defense-swarm" class="defense-swarm" aria-hidden="true"></div>
+
+    <div class="agency">
+        <header class="ops-header">
             <div class="music-controls">
-                <button id="music-toggle" class="music-btn" title="Click to start music (or press M key)">
-                    <span class="speaker-icon">🔇</span>
+                <button id="music-toggle" class="music-btn" type="button" title="Toggle briefing audio (M)" aria-pressed="false">
+                    <span class="speaker-icon" aria-hidden="true">🔇</span>
+                    <span class="visually-hidden">Toggle audio</span>
                 </button>
             </div>
-            <div class="commander-badge">
-                <span class="commander-text">SPACE COMMANDER</span>
+
+            <div class="clearance-block">
+                <p class="file-id">FILE AF-RT-001 · EYES ONLY</p>
+                <p class="clearance-stamp">AGENTIC FACTORY</p>
             </div>
-            <div class="shield-status">
-                <div class="shield-circle">
-                    <img src="areohbe.jpeg" alt="Rob Thacher" class="profile-image">
+
+            <div class="credential-chip">
+                <div class="credential-photo">
+                    <img src="areohbe.jpeg" alt="Portrait of Rob Thacher">
+                </div>
+                <div class="credential-meta">
+                    <span class="credential-status">LIVE</span>
+                    <span>CLEARANCE: AGENT</span>
                 </div>
             </div>
         </header>
 
-        <!-- Space AI Commander Profile -->
-        <section class="commander-profile">
-            <div class="commander-avatar">
-                <div class="avatar-container">
-                    <div class="space-avatar" id="rocket-game-trigger">🚀</div>
-                    <div class="status-ring"></div>
+        <main>
+            <section class="briefing" aria-labelledby="agent-name">
+                <div class="briefing-copy">
+                    <p class="briefing-kicker">Field Director · AI-Infused Systems</p>
+                    <h1 id="agent-name">
+                        <span class="name-line">ROB THACHER</span>
+                    </h1>
+                    <p class="briefing-lede">
+                        Building the Agentic Factory: robots, skills, SDKs, and governed agents
+                        that ship as products—not experiments.
+                    </p>
+                    <p class="active-op">
+                        <span class="active-label">ACTIVE OP</span>
+                        <span class="typing" aria-live="polite"></span>
+                    </p>
                 </div>
-            </div>
-            
-            <div class="commander-info">
-                <h1 class="commander-name">
-                    <span class="greeting">ENGINEERING LEADER</span>
-                    <span class="name-highlight">ROB THACHER</span>
-                </h1>
-                <div class="mission-status">
-                    <span class="mission-label">MISSIONS:</span>
-                    <span class="typing"></span>
+
+                <div class="robot-station">
+                    <button type="button" class="robot-avatar" id="robot-sim-trigger" aria-haspopup="dialog" aria-controls="game-modal">
+                        <span class="robot-glyph" aria-hidden="true">🤖</span>
+                        <span class="robot-ring" aria-hidden="true"></span>
+                        <span class="visually-hidden">Launch agent simulation</span>
+                    </button>
+                    <p class="robot-caption">Unit AF-01 · tap to defend the factory</p>
                 </div>
-                <div class="ai-systems">
-                    <div class="system">
-                        <span class="system-label">AI/ML:</span>
-                        <div class="system-bar">
-                            <div class="system-fill" style="width: 80%"></div>
-                        </div>
-                    </div>
-                    <div class="system">
-                        <span class="system-label">DS:</span>
-                        <div class="system-bar">
-                            <div class="system-fill" style="width: 70%"></div>
-                        </div>
-                    </div>
-                    <div class="system">
-                        <span class="system-label">SWE:</span>
-                        <div class="system-bar">
-                            <div class="system-fill" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    <div class="system">
-                        <span class="system-label">Mobile:</span>
-                        <div class="system-bar">
-                            <div class="system-fill" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    <div class="system">
-                        <span class="system-label">API:</span>
-                        <div class="system-bar">
-                            <div class="system-fill" style="width: 85%"></div>
-                        </div>
-                    </div>
-                    <div class="system">
-                        <span class="system-label">K8s/IaC:</span>
-                        <div class="system-bar">
-                            <div class="system-fill" style="width: 75%"></div>
-                        </div>
-                    </div>
-                    <div class="system">
-                        <span class="system-label">UX/UI:</span>
-                        <div class="system-bar">
-                            <div class="system-fill" style="width: 80%"></div>
-                        </div>
-                    </div>
-                    <div class="system">
-                        <span class="system-label">QA/PM:</span>
-                        <div class="system-bar">
-                            <div class="system-fill" style="width: 80%"></div>
-                        </div>
-                    </div>
+            </section>
+
+            <section class="factory-floor" aria-label="Live factory theater">
+                <div class="floor-head">
+                    <h2>Live factory floor</h2>
+                    <p>Hallucinations get caught. Breaches get piled on.</p>
                 </div>
-            </div>
-        </section>
+                <div class="floor-agents" id="floor-agents">
+                    <article class="floor-agent" data-name="Scout">🤖 Scout</article>
+                    <article class="floor-agent" data-name="Sentry">🛡️ Sentry</article>
+                    <article class="floor-agent" data-name="Patch">🧰 Patch</article>
+                    <article class="floor-agent" data-name="Fact">🔎 Fact</article>
+                    <article class="floor-agent" data-name="Firewall">🧱 Firewall</article>
+                    <article class="floor-agent" data-name="Auditor">📋 Auditor</article>
+                </div>
+                <div class="floor-actions">
+                    <button type="button" class="ghost-btn" id="hallucinate-btn">Release a hallucination</button>
+                    <button type="button" class="ghost-btn danger" id="breach-btn">Run breach drill</button>
+                </div>
+            </section>
 
-        <!-- Interactive Space Objects -->
-        <div class="space-objects-container">
-            <div class="space-object consultation" data-link="https://intro.co/RobThacher">
-                <div class="object-icon">🚀</div>
-                <div class="object-text">BOOK AI INTRO</div>
-                <div class="object-glow"></div>
-            </div>
-            
-            <div class="space-object linkedin" data-link="https://www.linkedin.com/in/thacher">
-                <div class="object-icon">🛰️</div>
-                <div class="object-text">LINKEDIN</div>
-                <div class="object-glow"></div>
-            </div>
-            
-            <div class="space-object github" data-link="https://github.com/thacher">
-                <div class="object-icon">🌌</div>
-                <div class="object-text">GITHUB</div>
-                <div class="object-glow"></div>
-            </div>
-            
-            <div class="space-object website" data-link="https://bankshift.com">
-                <div class="object-icon">🛸</div>
-                <div class="object-text">BANKSHIFT</div>
-                <div class="object-glow"></div>
-            </div>
-            
-            <div class="space-object case-study" data-link="https://drive.google.com/file/d/1FHJEdD2dK8tc4FscjYSHofJ_gB-eo_O2">
-                <div class="object-icon">🪐</div>
-                <div class="object-text">CASE STUDY</div>
-                <div class="object-glow"></div>
-            </div>
-            
-            <div class="space-object live-demo" data-link="https://www.youtube.com/watch?v=uKHKpksxHOA">
-                <div class="object-icon">☄️</div>
-                <div class="object-text">LIVE DEMO</div>
-                <div class="object-glow"></div>
-            </div>
-            
-            <div class="space-object video-demo" data-link="https://www.youtube.com/watch?v=AWujzFIFRbA">
-                <div class="object-icon">🌠</div>
-                <div class="object-text">VIDEO DEMO</div>
-                <div class="object-glow"></div>
-            </div>
-            
-            <div class="space-object white-papers" data-link="https://drive.google.com/file/d/1hxL_eduBdPPfYHzUvSGu51oDOxCcgQRH">
-                <div class="object-icon">📡</div>
-                <div class="object-text">WHITE PAPER</div>
-                <div class="object-glow"></div>
-</div>    
+            <section class="capability-board" aria-label="Operational capabilities">
+                <article class="capability">
+                    <span class="capability-label">Agents</span>
+                    <div class="capability-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="95" aria-label="Agents">
+                        <div class="capability-fill" style="width: 95%"></div>
+                    </div>
+                </article>
+                <article class="capability">
+                    <span class="capability-label">Skills</span>
+                    <div class="capability-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="90" aria-label="Skills">
+                        <div class="capability-fill" style="width: 90%"></div>
+                    </div>
+                </article>
+                <article class="capability">
+                    <span class="capability-label">SDKs</span>
+                    <div class="capability-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="92" aria-label="SDKs">
+                        <div class="capability-fill" style="width: 92%"></div>
+                    </div>
+                </article>
+                <article class="capability">
+                    <span class="capability-label">Governance</span>
+                    <div class="capability-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="88" aria-label="Governance">
+                        <div class="capability-fill" style="width: 88%"></div>
+                    </div>
+                </article>
+                <article class="capability">
+                    <span class="capability-label">SWE</span>
+                    <div class="capability-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="95" aria-label="Software engineering">
+                        <div class="capability-fill" style="width: 95%"></div>
+                    </div>
+                </article>
+                <article class="capability">
+                    <span class="capability-label">Platform</span>
+                    <div class="capability-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="85" aria-label="Platform">
+                        <div class="capability-fill" style="width: 85%"></div>
+                    </div>
+                </article>
+                <article class="capability">
+                    <span class="capability-label">UX / UI</span>
+                    <div class="capability-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80" aria-label="UX and UI">
+                        <div class="capability-fill" style="width: 80%"></div>
+                    </div>
+                </article>
+                <article class="capability">
+                    <span class="capability-label">DevSecOps</span>
+                    <div class="capability-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="82" aria-label="DevSecOps">
+                        <div class="capability-fill" style="width: 82%"></div>
+                    </div>
+                </article>
+            </section>
 
-            <div class="space-object interviews" data-link="https://www.youtube.com/watch?v=UNc2IJCaGQo">
-                <div class="object-icon">🛰️</div>
-                <div class="object-text">INTERVIEW</div>
-                <div class="object-glow"></div>
-            </div>
-            
-            <div class="space-object patent" data-link="https://patents.google.com/patent/US20030196084A1/en">
-                <div class="object-icon">⚡</div>
-                <div class="object-text">FAILED PATENT ATTEMPT</div>
-                <div class="object-glow"></div>
-            </div>
-            
-            <div class="space-object mission-log" id="mission-log-trigger">
-                <div class="object-icon">📋</div>
-                <div class="object-text">MISSION LOG</div>
-                <div class="object-glow"></div>
-            </div>
-            
-            <div class="space-object play-game" id="play-game-trigger">
-                <div class="object-icon">🎮</div>
-                <div class="object-text">PLAY MY GAME</div>
-                <div class="object-glow"></div>
-            </div>
-            
-        </div>
+            <section id="operations" class="ops-grid-section" aria-labelledby="ops-heading">
+                <div class="section-head">
+                    <h2 id="ops-heading">Field assets</h2>
+                    <p>Classified objects, public channels, and factory tooling.</p>
+                </div>
 
-        <!-- Space Station Footer -->
-        <footer class="space-footer">
-            <div class="copyright">
-                <span>© 2025 ROB THACHER</span>
-            </div>
+                <div class="asset-grid">
+                    <a class="asset linkedin" href="https://www.linkedin.com/in/thacher" target="_blank" rel="noopener noreferrer">
+                        <span class="asset-stamp">NET</span>
+                        <span class="asset-icon" aria-hidden="true">🪪</span>
+                        <span class="asset-text">LinkedIn</span>
+                    </a>
+
+                    <a class="asset github" href="https://github.com/thacher" target="_blank" rel="noopener noreferrer">
+                        <span class="asset-stamp">SRC</span>
+                        <span class="asset-icon" aria-hidden="true">🧰</span>
+                        <span class="asset-text">GitHub</span>
+                    </a>
+
+                    <a class="asset website" href="https://bankshift.com" target="_blank" rel="noopener noreferrer">
+                        <span class="asset-stamp">CO</span>
+                        <span class="asset-icon" aria-hidden="true">🏦</span>
+                        <span class="asset-text">BankShift</span>
+                    </a>
+
+                    <a class="asset ventures" href="https://hawaiiventures.com" target="_blank" rel="noopener noreferrer">
+                        <span class="asset-stamp">HV</span>
+                        <span class="asset-icon" aria-hidden="true">🌺</span>
+                        <span class="asset-text">Hawaii Ventures</span>
+                    </a>
+
+                    <a class="asset case-study" href="https://drive.google.com/file/d/1FHJEdD2dK8tc4FscjYSHofJ_gB-eo_O2" target="_blank" rel="noopener noreferrer">
+                        <span class="asset-stamp">CASE</span>
+                        <span class="asset-icon" aria-hidden="true">📁</span>
+                        <span class="asset-text">Case file</span>
+                    </a>
+
+                    <a class="asset white-papers" href="https://drive.google.com/file/d/1hxL_eduBdPPfYHzUvSGu51oDOxCcgQRH" target="_blank" rel="noopener noreferrer">
+                        <span class="asset-stamp">PAPER</span>
+                        <span class="asset-icon" aria-hidden="true">📜</span>
+                        <span class="asset-text">White paper</span>
+                    </a>
+
+                    <a class="asset patent" href="https://patents.google.com/patent/US20030196084A1/en" target="_blank" rel="noopener noreferrer">
+                        <span class="asset-stamp">IP</span>
+                        <span class="asset-icon" aria-hidden="true">⚡</span>
+                        <span class="asset-text">Failed patent attempt</span>
+                    </a>
+
+                    <button type="button" class="asset dossier" id="dossier-trigger" aria-haspopup="dialog" aria-controls="dossier-modal">
+                        <span class="asset-stamp">LOG</span>
+                        <span class="asset-icon" aria-hidden="true">🗂️</span>
+                        <span class="asset-text">Operations dossier</span>
+                    </button>
+
+                    <button type="button" class="asset play-game" id="play-game-trigger" aria-haspopup="dialog" aria-controls="game-modal">
+                        <span class="asset-stamp">SIM</span>
+                        <span class="asset-icon" aria-hidden="true">🤖</span>
+                        <span class="asset-text">Agent Defender</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="ops-footer">
+            <p>© 2026 ROB THACHER · AGENTIC FACTORY · UNCLASSIFIED PUBLIC BRIEF</p>
         </footer>
     </div>
 
-    <!-- Space Rocket Game Modal -->
-    <div id="game-modal" class="game-modal">
+    <div id="game-modal" class="game-modal" role="dialog" aria-modal="true" aria-labelledby="game-title" hidden>
         <div class="game-container">
             <div class="game-header">
-                <h2>🚀 SPACE ROCKET MISSION</h2>
+                <h2 id="game-title">AGENT DEFENDER</h2>
                 <div class="game-stats">
-                    <span id="level-display">LEVEL: 1</span>
+                    <span id="level-display">WAVE: 1</span>
                     <span id="score-display">SCORE: 0</span>
                     <span id="lives-display">LIVES: 3</span>
                 </div>
-                <button class="close-btn" id="close-game">×</button>
+                <button class="close-btn" id="close-game" type="button" aria-label="Close simulation">×</button>
             </div>
-            
-            <canvas id="game-canvas" width="800" height="400"></canvas>
-            
+
+            <canvas id="game-canvas" width="800" height="400" tabindex="0"></canvas>
+
             <div class="game-controls">
-                <!-- Mobile Touch Controls -->
                 <div class="mobile-controls" id="mobile-controls">
                     <div class="controller-layout">
-                        <!-- Left shoot button (shoulder) -->
                         <div class="shoulder-btn-left">
-                            <button class="mobile-btn shoot-btn" id="mobile-shoot-left">🔫</button>
+                            <button class="mobile-btn shoot-btn" id="mobile-shoot-left" type="button">⚡</button>
                         </div>
-                        
-                        <!-- Directional pad -->
                         <div class="d-pad">
                             <div class="d-pad-row">
-                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-up">↑</button>
+                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-up" type="button">↑</button>
                             </div>
                             <div class="d-pad-row">
-                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-left">←</button>
-                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-down">↓</button>
-                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-right">→</button>
+                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-left" type="button">←</button>
+                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-down" type="button">↓</button>
+                                <button class="mobile-btn direction-btn d-pad-btn" id="mobile-right" type="button">→</button>
                             </div>
                         </div>
-                        
-                        <!-- Right shoot button (shoulder) -->
                         <div class="shoulder-btn-right">
-                            <button class="mobile-btn shoot-btn" id="mobile-shoot-right">🔫</button>
+                            <button class="mobile-btn shoot-btn" id="mobile-shoot-right" type="button">⚡</button>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="control-info">
-                    <p>🎮 Use ARROW KEYS to navigate</p>
-                    <p>🔫 Tap or SPACEBAR to shoot</p>
-                    <p>🚀 Avoid asteroids and collect stars</p>
+                    <p>Arrows move. Space shoots.</p>
+                    <p>Collect the glowing gold stars. Shoot or dodge the falling face.</p>
                 </div>
             </div>
-            
+
             <div id="game-over" class="game-over hidden">
                 <div class="game-over-content">
-                    <h2 id="game-over-title">MISSION COMPLETE!</h2>
+                    <h2 id="game-over-title">PERIMETER HOLDING</h2>
                     <div class="award-display">
-                        <div class="award-trophy">🏆</div>
-                        <h3>SPACE COMMANDER AWARD</h3>
-                        <p>Congratulations! You've completed all 10 levels!</p>
-                        <p>Final Score: <span id="final-score">0</span></p>
-                        <p>You are now a certified Commander!</p>
+                        <div class="award-trophy">🛡️</div>
+                        <h3>CYBER DEFENSE CITATION</h3>
+                        <p class="win-only">Ten attack waves contained.</p>
+                        <p class="fail-only">Viruses walked in like they had a meeting invite.</p>
+                        <p>Final score: <span id="final-score">0</span></p>
+                        <p class="win-only">Factory agents remain on watch.</p>
                     </div>
-                    <button class="play-again-btn" id="play-again">🚀 PLAY AGAIN</button>
+                    <button class="play-again-btn" id="play-again" type="button">RUN AGAIN</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Mission Log Modal -->
-    <div id="mission-log-modal" class="mission-log-modal">
-        <div class="mission-log-container">
-            <div class="mission-log-header">
-                <h2>📋 MISSION LOG</h2>
-                <button class="close-btn" id="close-mission-log">×</button>
+    <div id="dossier-modal" class="dossier-modal" role="dialog" aria-modal="true" aria-labelledby="dossier-title" hidden>
+        <div class="dossier-container">
+            <div class="dossier-header">
+                <h2 id="dossier-title">OPERATIONS DOSSIER</h2>
+                <button class="close-btn" id="close-dossier" type="button" aria-label="Close dossier">×</button>
             </div>
-            
-<div class="mission-log-content">
-    <div class="mission-log-intro">
-        <p>Commander Rob Thacher's Mission Archive</p>
-        <p>Classified AI Engineering Operations</p>
-    </div>
-    
-    <div class="missions-list">
-        <div class="mission-item">
-            <h3>BankShift Co-Founder CEO, CTO & AI Innovation</h3>
-            <p>Invented and co-built a modern SaaS platform enabling organizations to embed secure, compliant digital services directly into third-party apps, loyalty programs, and digital ecosystems. Engineered a cloud-native platform, unified API gateway, mobile SDKs, and AI-enabled capabilities that helped institutions unlock revenue, strengthen loyalty, and operate more efficiently.</p>
-        </div>
-        
-        <div class="mission-item">
-            <h3>Workers Credit Union SVP Technology & AI Innovation</h3>
-            <p>Led technology modernization and AI innovation initiatives focused on delivering intelligent, secure, and personalized member experiences. Advanced digital banking, cloud engineering, automation, and scalable technology capabilities while maintaining the resilience, compliance, and trust expected of a modern credit union.</p>
-        </div>
-        
-        <div class="mission-item">
-            <h3>Capital One Managing Director & Full-Stack Leader CreditWise</h3>
-            <p>Co-built and scaled CreditWise, a flagship consumer product adopted by more than 20 million users and generating more than $100 million in engagement and value. Led full-stack engineering, platform architecture, data, and resiliency initiatives that delivered secure, intuitive financial tools at enterprise scale.</p>
-        </div>
-        
-        <div class="mission-item">
-            <h3>Site Reliability Engineering & Data Resiliency Leader</h3>
-            <p>Established and scaled the first Site Reliability Engineering program while leading one of the company’s largest data transformation initiatives. Architected multi-region, active-active cloud resiliency for real-time failover and recovery, reduced customer-impacting incidents, and delivered millions in operational savings.</p>
-        </div>
-        
-        <div class="mission-item">
-            <h3>Agentic Factory, AI Governance & Agent Leader</h3>
-            <p>Designed practical frameworks for building and scaling agentic AI systems across engineering, operations, product, and customer experiences. Focused on responsible AI governance, secure agent orchestration, human oversight, reusable AI patterns, and measurable outcomes that move innovation beyond experimentation.</p>
-        </div>
-        
-        <div class="mission-item">
-            <h3>DevSecOps & Developer Shift-left SDK Champion</h3>
-            <p>Championed a shift-left engineering culture that embedded security, quality, observability, and automation into the software delivery lifecycle. Built CI/CD capabilities, secure developer SDKs, self-service platforms, and reusable engineering patterns that improved software quality, accelerated delivery, and reduced downtime.</p>
-        </div>
-        
-        <div class="mission-item">
-            <h3>Global Wireless Data (CTO) Acquired Rob's Company, Karbon Systems CEO/CPO</h3>
-            <p>Served as CTO of Global Wireless Data, building high-volume consumer and enterprise mobile applications for Fortune 500 clients. Introduced early wireless activation APIs for AT&amp;T and Verizon, modernized deployment infrastructure to reduce release time by 80%, and accelerated customer time to market.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-    <script src="script.js?v=2"></script>
+            <div class="dossier-content">
+                <div class="dossier-intro">
+                    <p>Rob Thacher · Agentic Factory archive</p>
+                    <p>Agents · Skills · SDKs · Governed AI operations</p>
+                </div>
+
+                <div class="ops-list">
+                    <article class="op-item">
+                        <h3>Agentic Factory, AI Governance &amp; Agent Leader</h3>
+                        <p>Designed practical frameworks for building and scaling agentic AI systems across engineering, operations, product, and customer experiences. Focused on responsible AI governance, secure agent orchestration, human oversight, reusable skills, and measurable outcomes that move innovation beyond experimentation.</p>
+                    </article>
+
+                    <article class="op-item">
+                        <h3>BankShift Co-Founder CEO, CTO &amp; AI Innovation</h3>
+                        <p>Invented and co-built a modern SaaS platform enabling organizations to embed secure, compliant digital services directly into third-party apps, loyalty programs, and digital ecosystems. Engineered a cloud-native platform, unified API gateway, mobile SDKs, and AI-enabled capabilities that helped institutions unlock revenue, strengthen loyalty, and operate more efficiently.</p>
+                    </article>
+
+                    <article class="op-item">
+                        <h3>Workers Credit Union SVP Technology &amp; AI Innovation</h3>
+                        <p>Led technology modernization and AI innovation initiatives focused on delivering intelligent, secure, and personalized member experiences. Advanced digital banking, cloud engineering, automation, and scalable technology capabilities while maintaining the resilience, compliance, and trust expected of a modern credit union.</p>
+                    </article>
+
+                    <article class="op-item">
+                        <h3>Capital One Managing Director &amp; Full-Stack Leader CreditWise</h3>
+                        <p>Co-built and scaled CreditWise, a flagship consumer product adopted by more than 20 million users and generating more than $100 million in engagement and value. Led full-stack engineering, platform architecture, data, and resiliency initiatives that delivered secure, intuitive financial tools at enterprise scale.</p>
+                    </article>
+
+                    <article class="op-item">
+                        <h3>Site Reliability Engineering &amp; Data Resiliency Leader</h3>
+                        <p>Established and scaled the first Site Reliability Engineering program while leading one of the company’s largest data transformation initiatives. Architected multi-region, active-active cloud resiliency for real-time failover and recovery, reduced customer-impacting incidents, and delivered millions in operational savings.</p>
+                    </article>
+
+                    <article class="op-item">
+                        <h3>DevSecOps &amp; Developer Shift-left SDK Champion</h3>
+                        <p>Championed a shift-left engineering culture that embedded security, quality, observability, and automation into the software delivery lifecycle. Built CI/CD capabilities, secure developer SDKs, self-service platforms, and reusable engineering patterns that improved software quality, accelerated delivery, and reduced downtime.</p>
+                    </article>
+
+                    <article class="op-item">
+                        <h3>Global Wireless Data (CTO) · Karbon Systems CEO/CPO</h3>
+                        <p>Served as CTO of Global Wireless Data, building high-volume consumer and enterprise mobile applications for Fortune 500 clients. Introduced early wireless activation APIs for AT&amp;T and Verizon, modernized deployment infrastructure to reduce release time by 80%, and accelerated customer time to market.</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=8"></script>
 </body>
 </html>

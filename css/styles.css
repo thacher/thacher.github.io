@@ -5,1001 +5,705 @@ please remember: we invented you to automate tests,
 not to judge our variable names.
 */
 
-/* Space AI Command Station - Interactive Space Objects */
-
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 :root {
-    --primary-color: #00ffff;
-    --secondary-color: #ff00ff;
-    --accent-color: #0080ff;
-    --space-blue: #0066cc;
-    --nebula-purple: #6633cc;
-    --star-gold: #ffcc00;
-    --asteroid-gray: #666666;
-    --comet-white: #ffffff;
-    --bg-dark: #0a0a0a;
-    --bg-darker: #050505;
-    --text-primary: #ffffff;
-    --text-secondary: #cccccc;
-    --text-accent: #00ffff;
-    --border-glow: #00ffff;
-    --shadow-glow: 0 0 30px rgba(0, 255, 255, 0.5);
+    --ink: #0b0d10;
+    --panel: #14181f;
+    --panel-2: #1b212b;
+    --line: rgba(196, 163, 90, 0.35);
+    --gold: #c4a35a;
+    --gold-bright: #e6c77a;
+    --stamp: #c43c2c;
+    --signal: #7cffb2;
+    --paper: #e8dcc8;
+    --text: #ece7dc;
+    --muted: #a8a296;
+    --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+    --radius: 14px;
+    --focus: 2px solid var(--gold-bright);
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    background: var(--bg-dark);
-    color: var(--text-primary);
-    font-family: 'Orbitron', monospace;
+    background: var(--ink);
+    color: var(--text);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
     font-size: 16px;
-    letter-spacing: 1px;
-    overflow-x: hidden;
+    line-height: 1.5;
     min-height: 100vh;
     position: relative;
 }
 
-/* Space Environment Background */
-.space-environment {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 70%, #000000 100%);
-    pointer-events: none;
+a {
+    color: inherit;
 }
 
-/* Shooting stars */
-.space-environment::before {
-    content: '';
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: linear-gradient(45deg, var(--star-gold), transparent);
-    border-radius: 50%;
-    animation: shootingStar 8s linear infinite;
-    top: 20%;
-    left: -50px;
-    animation-delay: -2s;
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
 }
 
-.space-environment::after {
-    content: '';
+:focus-visible {
+    outline: var(--focus);
+    outline-offset: 3px;
+}
+
+.visually-hidden {
     position: absolute;
     width: 1px;
     height: 1px;
-    background: linear-gradient(45deg, var(--primary-color), transparent);
-    border-radius: 50%;
-    animation: shootingStar 12s linear infinite;
-    top: 60%;
-    left: -50px;
-    animation-delay: -6s;
-}
-
-.stars {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
-        radial-gradient(2px 2px at 160px 30px, #fff, transparent),
-        radial-gradient(1px 1px at 200px 50px, var(--star-gold), transparent),
-        radial-gradient(1px 1px at 250px 20px, var(--primary-color), transparent),
-        radial-gradient(2px 2px at 300px 80px, rgba(255,255,255,0.4), transparent),
-        radial-gradient(1px 1px at 350px 40px, #fff, transparent),
-        radial-gradient(1px 1px at 400px 60px, var(--nebula-purple), transparent);
-    background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: twinkle 4s ease-in-out infinite alternate;
-}
-
-.nebula {
-    position: absolute;
-    top: 20%;
-    right: 10%;
-    width: 300px;
-    height: 200px;
-    background: 
-        radial-gradient(ellipse at center, rgba(102, 51, 204, 0.3) 0%, transparent 70%),
-        radial-gradient(ellipse at 30% 30%, rgba(0, 102, 204, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 70%, rgba(255, 204, 0, 0.1) 0%, transparent 60%);
-    border-radius: 50%;
-    animation: nebulaFloat 15s ease-in-out infinite;
-    filter: blur(1px);
-}
-
-.asteroids {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(3px 3px at 50px 100px, #666, transparent),
-        radial-gradient(2px 2px at 150px 200px, #888, transparent),
-        radial-gradient(4px 4px at 300px 150px, #555, transparent),
-        radial-gradient(2px 2px at 400px 80px, #777, transparent);
-    animation: asteroidDrift 20s linear infinite;
-}
-
-.space-particles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: transparent;
+    padding: 0;
+    margin: -1px;
     overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
-/* Primary floating particles */
-.space-particles::before {
-    content: '';
+.skip-link {
     position: absolute;
-    width: 3px;
-    height: 3px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    animation: particleFloat 6s ease-in-out infinite;
-    top: 30%;
-    left: 30%;
-    animation-delay: -2s;
+    left: 16px;
+    top: -40px;
+    z-index: 100;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 8px 12px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
 }
 
-.space-particles::after {
-    content: '';
+.skip-link:focus {
+    top: 16px;
+}
+
+.ops-environment {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(196, 163, 90, 0.12), transparent 50%),
+        radial-gradient(900px 500px at 90% 110%, rgba(196, 60, 44, 0.08), transparent 45%),
+        var(--ink);
+}
+
+.ops-grid {
     position: absolute;
-    width: 2px;
-    height: 2px;
-    background: var(--star-gold);
-    border-radius: 50%;
-    animation: twinkle 3s ease-in-out infinite;
-    top: 70%;
-    right: 30%;
-    animation-delay: -4s;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(196, 163, 90, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(196, 163, 90, 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
 }
 
-/* Additional particle layers using box-shadow for multiple elements */
-.space-particles::before {
-    box-shadow: 
-        100px 200px 0 1px var(--nebula-purple),
-        300px 100px 0 2px var(--primary-color),
-        500px 300px 0 1px var(--star-gold),
-        200px 400px 0 1px var(--asteroid-gray),
-        600px 150px 0 2px var(--primary-color);
+.ops-scan {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 3px,
+        rgba(0, 0, 0, 0.12) 4px
+    );
+    pointer-events: none;
+    opacity: 0.35;
 }
 
-.space-particles::after {
-    box-shadow: 
-        150px 250px 0 1px var(--star-gold),
-        400px 200px 0 2px var(--nebula-purple),
-        250px 350px 0 1px var(--primary-color),
-        450px 100px 0 1px var(--asteroid-gray),
-        350px 300px 0 2px var(--star-gold);
+.ops-vignette {
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 180px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
 }
 
-@keyframes twinkle {
-    0% { opacity: 0.3; }
-    100% { opacity: 1; }
-}
-
-@keyframes nebulaFloat {
-    0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
-    50% { transform: translateY(-20px) rotate(180deg); opacity: 0.6; }
-}
-
-@keyframes asteroidDrift {
-    0% { transform: translateX(0px); }
-    100% { transform: translateX(-100px); }
-}
-
-@keyframes particleFloat {
-    0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
-    50% { transform: translateY(-30px) rotate(180deg); opacity: 1; }
-}
-
-@keyframes debrisFloat {
-    0% { transform: translateX(0px) translateY(0px) rotate(0deg); opacity: 0.5; }
-    25% { transform: translateX(50px) translateY(-20px) rotate(90deg); opacity: 0.8; }
-    50% { transform: translateX(100px) translateY(0px) rotate(180deg); opacity: 0.6; }
-    75% { transform: translateX(150px) translateY(-30px) rotate(270deg); opacity: 0.9; }
-    100% { transform: translateX(200px) translateY(0px) rotate(360deg); opacity: 0.4; }
-}
-
-@keyframes energyPulse {
-    0%, 100% { 
-        transform: scale(1); 
-        opacity: 0.6; 
-        box-shadow: 0 0 5px var(--nebula-purple);
-    }
-    50% { 
-        transform: scale(1.5); 
-        opacity: 1; 
-        box-shadow: 0 0 15px var(--nebula-purple);
-    }
-}
-
-@keyframes shootingStar {
-    0% { 
-        transform: translateX(-100px) translateY(100px); 
-        opacity: 0; 
-    }
-    10% { 
-        opacity: 1; 
-    }
-    90% { 
-        opacity: 1; 
-    }
-    100% { 
-        transform: translateX(100vw) translateY(-100px); 
-        opacity: 0; 
-    }
-}
-
-/* Space Station Container */
-.space-station {
-    max-width: 1200px;
+.agency {
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 20px;
-    position: relative;
-    z-index: 1;
+    padding: 24px 20px 48px;
 }
 
-/* Space Command Header */
-.space-command-header {
-    display: flex;
-    justify-content: space-between;
+.ops-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
     align-items: center;
-    margin-bottom: 40px;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid var(--border-glow);
-    border-radius: 15px;
-    box-shadow: var(--shadow-glow);
-    backdrop-filter: blur(10px);
+    padding: 16px 20px;
+    background: color-mix(in srgb, var(--panel) 88%, transparent);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
 }
 
-.shield-status {
-    display: flex;
-    align-items: center;
-}
-
-.shield-circle {
-    background: linear-gradient(135deg, var(--space-blue), var(--nebula-purple));
-    border: 2px solid var(--star-gold);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: var(--star-gold);
-    font-size: 8px;
-    font-weight: bold;
+.clearance-block {
     text-align: center;
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
-    position: relative;
-    overflow: hidden;
 }
 
-.profile-image {
+.file-id {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+}
+
+.clearance-stamp {
+    font-family: "Special Elite", cursive;
+    font-size: clamp(22px, 3vw, 32px);
+    color: var(--stamp);
+    letter-spacing: 0.08em;
+    transform: rotate(-1deg);
+}
+
+.credential-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.credential-photo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--gold);
+}
+
+.credential-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
-    transition: all 0.3s ease;
 }
 
-.shield-circle::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-    animation: shieldShine 3s infinite;
-}
-
-.shield-circle:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(255, 204, 0, 0.6);
-}
-
-.shield-circle:hover .profile-image {
-    transform: scale(1.1);
-}
-
-.shield-text {
-    font-size: 7px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    z-index: 1;
-    position: relative;
-    line-height: 1.1;
-}
-
-@keyframes shieldShine {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-
-.commander-badge {
-    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-    padding: 10px 20px;
-    border-radius: 25px;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-}
-
-.commander-text {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 14px;
-    color: var(--bg-dark);
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
-}
-
-
-/* Commander Profile */
-.commander-profile {
-    text-align: center;
-    margin-bottom: 60px;
-    padding: 40px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid var(--border-glow);
-    border-radius: 20px;
-    box-shadow: var(--shadow-glow);
-    backdrop-filter: blur(10px);
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-}
-
-.commander-avatar {
-    margin-bottom: 30px;
-}
-
-.avatar-container {
-    position: relative;
-    display: inline-block;
-}
-
-.space-avatar {
-    font-size: 80px;
-    width: 120px;
-    height: 120px;
+.credential-meta {
     display: flex;
+    flex-direction: column;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+}
+
+.credential-status {
+    color: var(--signal);
+}
+
+.briefing {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 28px;
     align-items: center;
-    justify-content: center;
-    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-  border-radius: 50%;
-    border: 4px solid var(--border-glow);
-    box-shadow: var(--shadow-glow);
+    margin: 28px 0;
+    padding: 36px;
+    background: linear-gradient(160deg, var(--panel), var(--panel-2));
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
 }
 
-.status-ring {
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border: 2px solid var(--primary-color);
-    border-radius: 50%;
-    pointer-events: none;
-    animation: statusPulse 2s ease-in-out infinite;
-}
-
-@keyframes statusPulse {
-    0%, 100% { 
-        opacity: 0.6;
-        transform: scale(1);
-    }
-    50% { 
-        opacity: 1;
-        transform: scale(1.05);
-    }
-}
-
-
-.commander-name {
-    margin-bottom: 20px;
-}
-
-.greeting {
-    display: block;
-    font-size: 18px;
-    color: var(--text-secondary);
+.briefing-kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
     margin-bottom: 10px;
-    font-weight: 400;
 }
 
-.name-highlight {
-  display: block;    
-    font-family: 'Press Start 2P', monospace;
-    font-size: 36px;
-    color: var(--primary-color);
-    text-shadow: 0 0 20px var(--primary-color);
+.name-line {
+    display: block;
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700;
+    font-size: clamp(42px, 8vw, 84px);
+    letter-spacing: 0.04em;
+    line-height: 0.9;
 }
 
-.mission-status {
-    margin-bottom: 30px;
+.briefing-lede {
+    max-width: 42ch;
+    margin: 16px 0 22px;
+    color: var(--muted);
     font-size: 18px;
 }
 
-.mission-label {
-    color: var(--text-secondary);
-    margin-right: 10px;
+.active-op {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: baseline;
+    min-height: 3.2em;
+}
+
+.active-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--stamp);
 }
 
 .typing {
-    color: var(--text-accent);
-    font-weight: bold;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 14px;
+    color: var(--gold-bright);
 }
 
+.robot-station {
+    display: grid;
+    place-items: center;
+    gap: 12px;
+}
 
-/* AI Systems */
-.ai-systems {
+.robot-avatar {
+    position: relative;
+    width: 148px;
+    height: 148px;
+    border: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #2a3342, #10141a);
+    color: var(--gold);
+    cursor: pointer;
+    box-shadow: 0 0 0 1px var(--line), 0 0 40px rgba(196, 163, 90, 0.2);
+}
+
+.robot-glyph {
+    font-size: 64px;
+    line-height: 148px;
+}
+
+.robot-ring {
+    position: absolute;
+    inset: -8px;
+    border: 1px dashed var(--gold);
+    border-radius: 50%;
+    animation: ring-spin 16s linear infinite;
+}
+
+.robot-caption {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+}
+
+.capability-board {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 20px;
+    gap: 14px;
+    margin-bottom: 32px;
 }
 
-.system {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    text-align: center;
+.capability {
+    padding: 14px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
 }
 
-.system-label {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    color: var(--text-accent);
-    text-align: center;
-    line-height: 1.2;
+.capability-label {
+    display: block;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
 }
 
-.system-bar {
-    width: 80px;
-    height: 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid var(--border-glow);
-    border-radius: 8px;
+.capability-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
     overflow: hidden;
-    position: relative;
 }
 
-.system-fill {
+.capability-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-    border-radius: 8px;
-    animation: systemFill 2s ease-out;
-    position: relative;
+    background: linear-gradient(90deg, var(--stamp), var(--gold));
+    animation: fill-in 1.1s ease-out;
 }
 
-.system-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    animation: systemShine 2s ease-in-out infinite;
+.factory-floor {
+    margin-bottom: 32px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 16px;
 }
 
-@keyframes systemFill {
-    0% { width: 0%; }
+.floor-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
-@keyframes systemShine {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+.floor-head h2 {
+    font-family: "Barlow Condensed", sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-/* Space Objects Container */
-.space-objects-container {
+.floor-head p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.floor-agents {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-bottom: 40px;
-    padding: 20px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
 }
 
-/* Space Objects */
-.space-object {
+.floor-agent {
+    min-height: 72px;
+    display: grid;
+    place-items: center;
+    padding: 10px;
+    text-align: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    border: 1px dashed var(--line);
+    background: var(--panel-2);
+}
+
+.floor-agent.catching {
+    border-color: var(--signal);
+    box-shadow: 0 0 18px rgba(124, 255, 178, 0.25);
+    transform: scale(1.06);
+}
+
+.floor-agent.defending {
+    border-color: var(--stamp);
+    animation: defend-bob 0.28s ease-in-out infinite alternate;
+}
+
+.floor-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.ghost-btn {
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    padding: 10px 14px;
+    font-family: "Barlow Condensed", sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.ghost-btn.danger {
+    border-color: var(--stamp);
+    color: var(--paper);
+}
+
+.incident-banner {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -120%);
+    z-index: 40;
+    min-width: min(720px, calc(100% - 24px));
+    padding: 10px 16px;
+    text-align: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    background: var(--paper);
+    color: var(--ink);
+    border-bottom: 4px solid var(--stamp);
+    transition: transform 0.35s ease;
+}
+
+.incident-banner.show {
+    transform: translate(-50%, 0);
+}
+
+.incident-banner.hallucination {
+    border-color: var(--gold);
+}
+
+.incident-banner.breach {
+    background: var(--stamp);
+    color: var(--paper);
+}
+
+.hallucination-stage,
+.defense-swarm {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 30;
+    overflow: hidden;
+}
+
+.hallucination-bubble {
+    position: absolute;
+    max-width: 280px;
+    padding: 12px 14px;
+    background: rgba(232, 220, 200, 0.95);
+    color: var(--ink);
+    font-family: "Special Elite", cursive;
+    font-size: 15px;
+    transform: rotate(-4deg);
+    animation: wobble 0.7s ease-in-out infinite alternate;
+    box-shadow: var(--shadow);
+}
+
+.hallucination-bubble.caught {
+    animation: none;
+    background: var(--signal);
+    text-decoration: line-through;
+}
+
+.catcher {
+    position: absolute;
+    font-size: 32px;
+    transition: transform 0.55s ease;
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4));
+}
+
+.stamp-caught {
+    position: absolute;
+    font-family: "Special Elite", cursive;
+    color: var(--stamp);
+    border: 2px solid var(--stamp);
+    padding: 4px 8px;
+    transform: rotate(-12deg);
+    font-size: 18px;
+}
+
+.virus-bit {
+    position: absolute;
+    font-size: 22px;
+    animation: virus-fall 2.4s linear forwards;
+}
+
+.defense-bolt {
+    position: absolute;
+    font-size: 18px;
+    animation: bolt-up 0.9s ease-out forwards;
+}
+
+body.breach .ops-environment {
+    background: radial-gradient(800px 400px at 50% 0%, rgba(196, 60, 44, 0.28), transparent 55%), var(--ink);
+}
+
+body.breach .asset,
+body.breach .floor-agent,
+body.breach .robot-avatar {
+    outline: 1px solid var(--stamp);
+}
+
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.section-head h2 {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.section-head p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.asset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+}
+
+.asset {
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 30px 20px;
-    background: rgba(0, 0, 0, 0.7);
-    border: 2px solid var(--border-glow);
-    border-radius: 20px;
+    align-items: flex-start;
+    gap: 18px;
+    min-height: 148px;
+    padding: 18px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text);
     cursor: pointer;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    min-height: 150px;
-    animation: objectFloat 6s ease-in-out infinite;
+    font: inherit;
+    text-align: left;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.space-object:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: var(--shadow-glow);
-    border-color: var(--primary-color);
+.asset:hover,
+.asset:focus-visible {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
-.space-object:nth-child(odd) {
-    animation-delay: -2s;
-}
-
-.space-object:nth-child(even) {
-    animation-delay: -4s;
-}
-
-@keyframes objectFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-
-.object-icon {
-    font-size: 40px;
-    margin-bottom: 15px;
-    animation: iconPulse 2s ease-in-out infinite;
-}
-
-@keyframes iconPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-.object-text {
-    font-family: 'Orbitron', monospace;
-    font-weight: bold;
-    font-size: 14px;
-    letter-spacing: 2px;
-    text-align: center;
-    color: var(--text-primary);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-.object-glow {
+.asset-stamp {
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
+    top: 12px;
+    right: 12px;
+    font-family: "Special Elite", cursive;
+    font-size: 12px;
+    color: var(--stamp);
+    border: 1px solid color-mix(in srgb, var(--stamp) 70%, transparent);
+    padding: 2px 6px;
+    transform: rotate(8deg);
 }
 
-.space-object:hover .object-glow {
-    left: 100%;
+.asset-icon {
+    font-size: 28px;
 }
 
-/* Specific Space Object Styles */
-.space-object.consultation {
-    border-color: var(--star-gold);
-    background: linear-gradient(45deg, rgba(255, 204, 0, 0.1), rgba(255, 255, 0, 0.1));
+.asset-text {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: auto;
 }
 
-.space-object.consultation:hover {
-    background: linear-gradient(45deg, rgba(255, 204, 0, 0.2), rgba(255, 255, 0, 0.2));
-    box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
-}
-
-.space-object.linkedin {
-    border-color: var(--space-blue);
-}
-
-.space-object.linkedin:hover {
-    background: rgba(0, 102, 204, 0.1);
-    box-shadow: 0 0 20px rgba(0, 102, 204, 0.3);
-}
-
-.space-object.github {
-    border-color: var(--nebula-purple);
-}
-
-.space-object.github:hover {
-    background: rgba(102, 51, 204, 0.1);
-    box-shadow: 0 0 20px rgba(102, 51, 204, 0.3);
-}
-
-.space-object.website {
-    border-color: var(--primary-color);
-}
-
-.space-object.website:hover {
-    background: rgba(0, 255, 255, 0.1);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-}
-
-.space-object.case-study {
-    border-color: #ff6b35;
-}
-
-.space-object.case-study:hover {
-    background: rgba(255, 107, 53, 0.1);
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
-}
-
-.space-object.live-demo {
-    border-color: var(--primary-color);
-}
-
-.space-object.live-demo:hover {
-    background: rgba(0, 255, 255, 0.1);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-}
-
-.space-object.video-demo {
-    border-color: #4caf50;
-}
-
-.space-object.video-demo:hover {
-    background: rgba(76, 175, 80, 0.1);
-    box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
-}
-
-.space-object.white-papers {
-    border-color: var(--nebula-purple);
-}
-
-.space-object.white-papers:hover {
-    background: rgba(102, 51, 204, 0.1);
-    box-shadow: 0 0 20px rgba(102, 51, 204, 0.3);
-}
-
-.space-object.interviews {
-    border-color: #ff0000;
-}
-
-.space-object.interviews:hover {
-    background: rgba(255, 0, 0, 0.1);
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-}
-
-.space-object.facebook {
-    border-color: #1877f2;
-}
-
-.space-object.facebook:hover {
-    background: rgba(24, 119, 242, 0.1);
-    box-shadow: 0 0 20px rgba(24, 119, 242, 0.3);
-}
-
-/* Space Footer */
-.space-footer {
+.ops-footer {
+    margin-top: 36px;
+    padding: 18px;
     text-align: center;
-    padding: 30px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid var(--border-glow);
-    border-radius: 15px;
-    box-shadow: var(--shadow-glow);
-    backdrop-filter: blur(10px);
-}
-
-.copyright {
-    color: var(--text-secondary);
-    font-size: 14px;
-    letter-spacing: 1px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .space-station {
-        padding: 15px;
-    }
-    
-    .space-command-header {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-    }
-    
-    .shield-status {
-        width: 150px;
-        display: flex;
-        justify-content: center;
-    }
-    
-    .music-controls {
-        display: flex;
-        justify-content: center;
-    }
-    
-    .commander-profile {
-        padding: 30px 20px;
-        margin-bottom: 40px;
-    }
-    
-    .name-highlight {
-        font-size: 24px;
-    }
-    
-    .mission-status {
-        margin-bottom: 40px;
-        min-height: 50px;
-    }
-    
-    .ai-systems {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 100%;
-        gap: 15px;
-        padding: 0 5px;
-        margin-bottom: 20px;
-    }
-    
-    .system-label {
-        font-size: 8px;
-        line-height: 1.1;
-    }
-    
-    .system-bar {
-        width: 60px;
-        height: 12px;
-    }
-    
-    .space-objects-container {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .space-object {
-        min-height: 120px;
-        padding: 20px 15px;
-    }
-    
-    .object-icon {
-        font-size: 30px;
-    }
-    
-    .object-text {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 600px) {
-    .ai-systems {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 100%;
-        gap: 12px;
-        padding: 0 5px;
-        margin-bottom: 25px;
-    }
-    
-    .system-label {
-        font-size: 7px;
-        line-height: 1.0;
-    }
-    
-    .system-bar {
-        width: 50px;
-        height: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .space-avatar {
-        font-size: 60px;
-        width: 100px;
-        height: 100px;
-    }
-    
-    .name-highlight {
-        font-size: 20px;
-    }
-    
-    .mission-status {
-        font-size: 16px;
-        margin-bottom: 50px;
-        min-height: 60px;
-    }
-    
-    .ai-systems {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 100%;
-        gap: 10px;
-        padding: 0 5px;
-        margin-bottom: 30px;
-    }
-    
-    .system-label {
-        font-size: 6px;
-        line-height: 1.0;
-    }
-    
-    .system-bar {
-        width: 45px;
-        height: 8px;
-    }
-    
-    .space-object {
-        min-height: 100px;
-        padding: 15px 10px;
-    }
-    
-    .object-icon {
-        font-size: 25px;
-    }
-    
-    .object-text {
-        font-size: 10px;
-        letter-spacing: 1px;
-    }
-}
-
-/* Music Controls */
-.music-controls {
-    display: flex;
-    align-items: center;
+    border-top: 1px solid var(--line);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
 }
 
 .music-btn {
-    background: linear-gradient(135deg, var(--space-blue), var(--nebula-purple));
-    border: 2px solid var(--star-gold);
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 1px solid var(--gold);
+    background: var(--panel-2);
+    color: var(--gold);
     cursor: pointer;
-    transition: all 0.3s ease;
-    color: var(--star-gold);
-    font-size: 20px;
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
-}
-
-.speaker-icon {
-    font-size: 20px;
-    line-height: 1;
-}
-
-.music-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 30px rgba(255, 204, 0, 0.6);
-    background: linear-gradient(135deg, var(--nebula-purple), var(--space-blue));
 }
 
 .music-btn.playing {
-    animation: musicPulse 2s infinite;
+    box-shadow: 0 0 0 4px rgba(196, 163, 90, 0.18);
 }
 
-@keyframes musicPulse {
-    0%, 100% { 
-        box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
-        transform: scale(1);
-    }
-    50% { 
-        box-shadow: 0 0 40px rgba(255, 204, 0, 0.8);
-        transform: scale(1.05);
-    }
-}
-
-/* Space Rocket Game Styles */
-.game-modal {
+.game-modal,
+.dossier-modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    inset: 0;
     display: none;
     justify-content: center;
     align-items: center;
+    background: rgba(8, 10, 12, 0.86);
     z-index: 1000;
     backdrop-filter: blur(10px);
+    padding: 16px;
 }
 
-.game-modal.active {
+.game-modal.active,
+.dossier-modal.active {
     display: flex;
 }
 
-.game-container {
-    background: linear-gradient(135deg, var(--space-blue), var(--nebula-purple));
-    border: 3px solid var(--star-gold);
-    border-radius: 20px;
-  padding: 20px;
-    max-width: 900px;
-    width: 90%;
-    box-shadow: 0 0 50px rgba(255, 204, 0, 0.5);
+.game-container,
+.dossier-container {
+    background: var(--panel);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    padding: 18px;
+    width: min(900px, 100%);
+    box-shadow: var(--shadow);
     position: relative;
 }
 
-.game-header {
+.dossier-container {
+    max-height: 82vh;
+    overflow: auto;
+}
+
+.game-header,
+.dossier-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
-.game-header h2 {
-    color: var(--star-gold);
-    font-family: 'Press Start 2P', monospace;
-    font-size: 16px;
-    margin: 0;
+.game-header h2,
+.dossier-header h2 {
+    font-family: "Barlow Condensed", sans-serif;
+    letter-spacing: 0.12em;
+    color: var(--gold);
 }
 
 .game-stats {
     display: flex;
-    gap: 20px;
-}
-
-.game-stats span {
-    color: var(--star-gold);
-    font-family: 'Orbitron', monospace;
-    font-weight: bold;
-    font-size: 14px;
+    gap: 16px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--gold-bright);
 }
 
 .close-btn {
-    background: var(--star-gold);
-    border: none;
-    border-radius: 50%;
     width: 40px;
     height: 40px;
-    font-size: 20px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 22px;
     cursor: pointer;
-    color: var(--space-blue);
-    font-weight: bold;
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 1001;
-    pointer-events: auto;
-}
-
-.close-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
 }
 
 #game-canvas {
-    border: 2px solid var(--star-gold);
-    border-radius: 10px;
-    background: linear-gradient(180deg, #000011, #000033);
     display: block;
-    margin: 0 auto;
-    box-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #080a0e;
 }
 
 .game-controls {
-    margin-top: 20px;
+    margin-top: 16px;
     text-align: center;
 }
 
 .control-info p {
-    color: var(--star-gold);
-    font-family: 'Orbitron', monospace;
-    margin: 5px 0;
-    font-size: 14px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 4px 0;
 }
 
 .game-over {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 20px;
+    background: rgba(8, 10, 12, 0.94);
+    border-radius: 16px;
 }
 
 .game-over.hidden {
@@ -1007,658 +711,237 @@ body {
 }
 
 .game-over-content {
-  text-align: center;
-    color: var(--star-gold);
-    font-family: 'Orbitron', monospace;
+    text-align: center;
+    padding: 24px;
 }
 
 .game-over-content h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+    color: var(--gold);
+    margin-bottom: 12px;
 }
 
-/* Failed mission title styling */
 .game-over-content h2.failed {
-    color: #ff0000 !important;
-    text-shadow: 0 0 20px rgba(255, 0, 0, 0.8) !important;
+    color: var(--stamp);
 }
 
 .award-display {
-    margin: 30px 0;
+    margin: 20px 0;
     padding: 20px;
-    background: rgba(255, 204, 0, 0.1);
-    border: 2px solid var(--star-gold);
-    border-radius: 15px;
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+}
+
+.award-display.failed {
+    border-color: var(--stamp);
+}
+
+.award-display.failed .win-only,
+.award-display:not(.failed) .fail-only {
+    display: none;
 }
 
 .award-trophy {
-    font-size: 60px;
-    margin-bottom: 15px;
-    animation: trophyGlow 2s infinite;
-}
-
-@keyframes trophyGlow {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-.award-display h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: var(--star-gold);
-}
-
-/* Failed mission styles */
-.award-display.failed {
-    background: rgba(255, 0, 0, 0.1) !important;
-    border-color: #ff0000 !important;
-}
-
-.award-display.failed h3 {
-    color: #ff0000 !important;
-    text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
-}
-
-.award-display.failed .award-trophy {
-    color: #ff0000 !important;
-    animation: skullGlow 2s infinite;
-}
-
-@keyframes skullGlow {
-    0%, 100% { 
-        transform: scale(1); 
-        filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8));
-    }
-    50% { 
-        transform: scale(1.1); 
-        filter: drop-shadow(0 0 20px rgba(255, 0, 0, 1));
-    }
-}
-
-.award-display p {
-    font-size: 14px;
-    margin: 5px 0;
+    font-size: 48px;
+    margin-bottom: 8px;
 }
 
 .play-again-btn {
-    background: linear-gradient(135deg, var(--space-blue), var(--nebula-purple));
-    border: 2px solid var(--star-gold);
-    color: var(--star-gold);
-    padding: 15px 30px;
-    border-radius: 25px;
-    font-family: 'Orbitron', monospace;
-    font-weight: bold;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    padding: 12px 22px;
+    font-family: "Barlow Condensed", sans-serif;
+    letter-spacing: 0.12em;
     font-size: 16px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 20px;
 }
 
-.play-again-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(255, 204, 0, 0.6);
-}
-
-/* Make rocket avatar clickable */
-.space-avatar {
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.space-avatar:hover {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 20px rgba(255, 204, 0, 0.8));
-}
-
-/* Mobile Touch Controls */
 .mobile-controls {
     display: none;
-    margin-top: 20px;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
-    border: 2px solid var(--star-gold);
+    margin-top: 16px;
 }
 
 .mobile-controls.active {
     display: block;
 }
 
-.control-row {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.mobile-btn {
-    background: linear-gradient(135deg, var(--space-blue), var(--nebula-purple));
-    border: 2px solid var(--star-gold);
-    border-radius: 10px;
-    color: var(--star-gold);
-    font-family: 'Orbitron', monospace;
-    font-weight: bold;
-    font-size: 16px;
-    padding: 15px 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 60px;
-    min-height: 50px;
+.controller-layout {
     display: flex;
     align-items: center;
     justify-content: center;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
+    gap: 18px;
 }
 
-.mobile-btn:active {
-    transform: scale(0.95);
-    background: linear-gradient(135deg, var(--nebula-purple), var(--space-blue));
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.6);
+.d-pad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.d-pad-row {
+    display: flex;
+    gap: 4px;
+}
+
+.mobile-btn {
+    min-width: 48px;
+    min-height: 48px;
+    border: 1px solid var(--gold);
+    background: var(--panel-2);
+    color: var(--gold);
+    cursor: pointer;
 }
 
 .shoot-btn {
-    background: linear-gradient(135deg, #ff6600, #ff0000);
-    border-color: #ff0000;
-    color: #ffffff;
-    font-size: 14px;
-    padding: 15px 30px;
+    border-radius: 50%;
+    color: var(--paper);
+    background: var(--stamp);
+    border-color: var(--stamp);
 }
 
-.shoot-btn:active {
-    background: linear-gradient(135deg, #ff0000, #ff6600);
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+.dossier-intro {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 16px;
+    border: 1px dashed var(--line);
 }
 
-.direction-btn {
-    font-size: 24px;
-    min-width: 50px;
-    min-height: 50px;
+.dossier-intro p {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    color: var(--gold);
 }
 
-/* Show mobile controls on touch devices */
+.ops-list {
+    display: grid;
+    gap: 14px;
+}
+
+.op-item {
+    padding: 18px;
+    border: 1px solid var(--line);
+    background: var(--panel-2);
+}
+
+.op-item h3 {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    color: var(--gold-bright);
+    margin-bottom: 8px;
+}
+
+.op-item p {
+    color: var(--muted);
+}
+
+@keyframes ring-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fill-in {
+    from { width: 0; }
+}
+
+@keyframes wobble {
+    from { transform: rotate(-6deg) translateY(0); }
+    to { transform: rotate(5deg) translateY(-8px); }
+}
+
+@keyframes defend-bob {
+    from { transform: translateY(0); }
+    to { transform: translateY(-8px); }
+}
+
+@keyframes virus-fall {
+    from { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    to { transform: translateY(110vh) rotate(240deg); opacity: 0.2; }
+}
+
+@keyframes bolt-up {
+    from { transform: translateY(0) scale(1); opacity: 1; }
+    to { transform: translateY(-80px) scale(1.4); opacity: 0; }
+}
+
+@media (max-width: 860px) {
+    .ops-header,
+    .briefing,
+    .capability-board,
+    .floor-agents {
+        grid-template-columns: 1fr;
+    }
+
+    .ops-header {
+        justify-items: center;
+        text-align: center;
+    }
+
+    .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .briefing {
+        padding: 24px;
+        text-align: center;
+    }
+
+    .briefing-lede {
+        margin-inline: auto;
+    }
+
+    .active-op {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .agency {
+        padding: 12px 12px 32px;
+    }
+
+    .name-line {
+        font-size: 42px;
+    }
+
+    .capability-board,
+    .floor-agents {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .floor-head {
+        flex-direction: column;
+    }
+}
+
 @media (hover: none) and (pointer: coarse) {
     .mobile-controls {
         display: block;
     }
 }
 
-/* Responsive adjustments for mobile controls and game modal */
-@media (max-width: 768px) {
-    .game-container {
-        width: 95%;
-        max-width: none;
-        padding: 15px;
-        margin: 10px;
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
     }
-    
-    .game-header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-    
-    .game-header h2 {
-        font-size: 14px;
-    }
-    
-    .game-stats {
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .game-stats span {
-        font-size: 12px;
-    }
-    
-    #game-canvas {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        aspect-ratio: 2 / 1;
-        max-height: 60vh;
-    }
-    
-    .control-info p {
-        font-size: 12px;
-        margin: 3px 0;
-    }
-    
-    .mobile-controls {
-        padding: 15px;
-    }
-    
-    .mobile-btn {
-        font-size: 14px;
-        padding: 12px 16px;
-        min-width: 50px;
-        min-height: 45px;
-    }
-    
-    .shoot-btn {
-        font-size: 12px;
-        padding: 12px 20px;
-    }
-    
-    .direction-btn {
-        font-size: 20px;
-        min-width: 45px;
-        min-height: 45px;
-    }
-    
-    .control-row {
-        gap: 10px;
-        margin-bottom: 10px;
-    }
-}
 
-@media (max-width: 480px) {
-    .game-container {
-        width: 98%;
-        padding: 10px;
-        margin: 5px;
-        max-height: 95vh;
-        overflow-y: auto;
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
     }
-    
-    .game-header {
-        padding: 8px;
-        margin-bottom: 10px;
-    }
-    
-    .game-header h2 {
-        font-size: 12px;
-    }
-    
-    .game-stats {
-        gap: 3px;
-    }
-    
-    .game-stats span {
-        font-size: 10px;
-    }
-    
-    #game-canvas {
-        max-height: 45vh;
-        margin-bottom: 10px;
-    }
-    
-    .control-info {
-        margin-bottom: 10px;
-    }
-    
-    .control-info p {
-        font-size: 10px;
-        margin: 2px 0;
-    }
-    
-    .mobile-controls {
-        padding: 10px;
-        margin-top: 10px;
-    }
-    
-    .mobile-btn {
-        font-size: 12px;
-        padding: 10px 14px;
-        min-width: 40px;
-        min-height: 40px;
-    }
-    
-    .shoot-btn {
-        font-size: 10px;
-        padding: 10px 16px;
-    }
-    
-    .direction-btn {
-        font-size: 18px;
-        min-width: 40px;
-        min-height: 40px;
-    }
-    
-    .control-row {
-        gap: 8px;
-        margin-bottom: 8px;
-    }
-}
 
-/* Portrait orientation specific optimizations */
-@media (max-width: 480px) and (orientation: portrait) {
-    .game-modal {
-        padding: 2px;
+    .ops-scan,
+    .robot-ring {
+        display: none;
     }
-    
-    .game-container {
-        width: 100%;
-        height: 100vh;
-        max-height: 100vh;
-        margin: 0;
-        padding: 4px;
-        border-radius: 0;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .game-header {
-        flex-shrink: 0;
-        padding: 4px 8px;
-        margin-bottom: 3px;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        display: flex;
-        width: 100%;
-    }
-    
-    .game-header h2 {
-        font-size: 10px;
-        margin: 0;
-        flex: 1;
-        text-align: left;
-    }
-    
-    .game-stats {
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 8px;
-        flex: 2;
-        margin-left: 10px;
-    }
-    
-    .game-stats span {
-        font-size: 8px;
-        white-space: nowrap;
-    }
-    
-    .close-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
-        flex-shrink: 0;
-    }
-    
-    #game-canvas {
-        flex: 1;
-        max-height: none;
-        height: auto;
-        min-height: 180px;
-        margin: 3px 0;
-        width: 100%;
-        border-radius: 0;
-    }
-    
-    .game-controls {
-        flex-shrink: 0;
-        margin-top: 3px;
-        padding: 0;
-    }
-    
-    .control-info {
-        margin-bottom: 3px;
-        padding: 0 5px;
-    }
-    
-    .control-info p {
-        font-size: 8px;
-        margin: 1px 0;
-        line-height: 1.2;
-    }
-    
-    .mobile-controls {
-        padding: 10px;
-        margin-top: 5px;
-        display: flex;
-        justify-content: center;
-    }
-    
-    .controller-layout {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        position: relative;
-    }
-    
-    .d-pad {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2px;
-    }
-    
-    .d-pad-row {
-        display: flex;
-        gap: 2px;
-    }
-    
-    .d-pad-btn {
-        font-size: 18px;
-        min-width: 45px;
-        min-height: 45px;
-        background: linear-gradient(135deg, var(--space-blue), var(--nebula-purple));
-        border: 2px solid var(--star-gold);
-        border-radius: 8px;
-        color: var(--star-gold);
-        box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
-    }
-    
-    .d-pad-btn:active {
-        transform: scale(0.95);
-        background: linear-gradient(135deg, var(--nebula-purple), var(--space-blue));
-        box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
-    }
-    
-    .shoulder-btn-left,
-    .shoulder-btn-right {
-        position: relative;
-    }
-    
-    .shoot-btn {
-        font-size: 14px;
-        padding: 12px 16px;
-        min-width: 50px;
-        min-height: 50px;
-        background: linear-gradient(135deg, #ff3300, #ff0000);
-        border: 2px solid #ff0000;
-        border-radius: 50%;
-        color: #ffffff;
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-    }
-    
-    .shoot-btn:active {
-        transform: scale(0.9);
-        background: linear-gradient(135deg, #ff0000, #ff3300);
-        box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
-    }
-}
 
-/* Mission Log Modal Styles */
-.mission-log-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-}
-
-.mission-log-modal.active {
-    display: flex;
-}
-
-.mission-log-container {
-    background: linear-gradient(135deg, var(--space-blue), var(--nebula-purple));
-    border: 3px solid var(--star-gold);
-    border-radius: 20px;
-    padding: 20px;
-    max-width: 1000px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 0 50px rgba(255, 204, 0, 0.5);
-    position: relative;
-}
-
-.mission-log-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-}
-
-.mission-log-header h2 {
-    color: var(--star-gold);
-    font-family: 'Press Start 2P', monospace;
-    font-size: 16px;
-    margin: 0;
-}
-
-.mission-log-content {
-    color: var(--text-primary);
-    font-family: 'Orbitron', monospace;
-}
-
-.mission-log-intro {
-    text-align: center;
-    margin-bottom: 30px;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    border: 1px solid var(--star-gold);
-}
-
-.mission-log-intro p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: var(--text-accent);
-}
-
-.missions-list {
-    display: grid;
-    gap: 20px;
-}
-
-.mission-item {
-    background: rgba(0, 0, 0, 0.4);
-    border: 2px solid var(--primary-color);
-    border-radius: 15px;
-    padding: 20px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.mission-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-    border-color: var(--star-gold);
-}
-
-.mission-item h3 {
-    color: var(--star-gold);
-    font-family: 'Press Start 2P', monospace;
-    font-size: 12px;
-    margin-bottom: 15px;
-    text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
-}
-
-.mission-item p {
-    color: var(--text-secondary);
-    font-size: 14px;
-    line-height: 1.6;
-    margin: 0;
-}
-
-.mission-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.mission-item:hover::before {
-    left: 100%;
-}
-
-/* Mission Log specific space object styling */
-.space-object.mission-log {
-    border-color: var(--primary-color);
-    background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 128, 255, 0.1));
-}
-
-.space-object.mission-log:hover {
-    background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(0, 128, 255, 0.2));
-    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-}
-
-/* Play Game specific space object styling */
-.space-object.play-game {
-    border-color: var(--star-gold);
-    background: linear-gradient(45deg, rgba(255, 204, 0, 0.1), rgba(255, 255, 0, 0.1));
-}
-
-.space-object.play-game:hover {
-    background: linear-gradient(45deg, rgba(255, 204, 0, 0.2), rgba(255, 255, 0, 0.2));
-    box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
-}
-
-/* Responsive design for mission log */
-@media (max-width: 768px) {
-    .mission-log-container {
-        width: 95%;
-        max-height: 85vh;
-        padding: 15px;
-    }
-    
-    .mission-log-header h2 {
-        font-size: 12px;
-    }
-    
-    .mission-item {
-        padding: 15px;
-    }
-    
-    .mission-item h3 {
-        font-size: 10px;
-    }
-    
-    .mission-item p {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .mission-log-container {
-        width: 98%;
-        padding: 10px;
-    }
-    
-    .mission-log-header h2 {
-        font-size: 10px;
-    }
-    
-    .mission-item {
-        padding: 12px;
-    }
-    
-    .mission-item h3 {
-        font-size: 9px;
-    }
-    
-    .mission-item p {
-        font-size: 11px;
+    .hallucination-bubble,
+    .virus-bit,
+    .defense-bolt,
+    .floor-agent.defending {
+        animation: none !important;
     }
 }
