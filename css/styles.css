@@ -648,6 +648,8 @@ body.breach .robot-avatar {
     align-items: center;
     gap: 12px;
     margin-bottom: 16px;
+    position: relative;
+    z-index: 6;
 }
 
 .game-header h2,
@@ -674,6 +676,8 @@ body.breach .robot-avatar {
     color: var(--ink);
     font-size: 22px;
     cursor: pointer;
+    position: relative;
+    z-index: 7;
 }
 
 #game-canvas {
@@ -698,12 +702,17 @@ body.breach .robot-avatar {
 
 .game-over {
     position: absolute;
-    inset: 0;
+    top: 68px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
     display: flex;
     justify-content: center;
     align-items: center;
     background: rgba(8, 10, 12, 0.94);
-    border-radius: 16px;
+    border-radius: 0 0 16px 16px;
+    overflow: auto;
 }
 
 .game-over.hidden {
@@ -743,6 +752,13 @@ body.breach .robot-avatar {
 .award-trophy {
     font-size: 48px;
     margin-bottom: 8px;
+}
+
+.game-over-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
 
 .play-again-btn {

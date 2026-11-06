@@ -260,6 +260,11 @@ class AgentProtocolGame {
         if (closeBtn) closeBtn.addEventListener("click", () => this.closeGame());
         const playAgainBtn = document.getElementById("play-again");
         if (playAgainBtn) playAgainBtn.addEventListener("click", () => this.restartGame());
+        const exitBtn = document.getElementById("exit-game");
+        if (exitBtn) exitBtn.addEventListener("click", () => this.closeGame());
+        this.gameOverElement?.addEventListener("click", (e) => {
+            if (e.target === this.gameOverElement) this.closeGame();
+        });
         document.addEventListener("keydown", (e) => {
             this.keys[e.code] = true;
             if (e.code === "Space" && this.gameState.running) e.preventDefault();
