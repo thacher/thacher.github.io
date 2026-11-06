@@ -730,7 +730,10 @@ class FactoryTheater {
         const tick = () => {
             const wait = 16000 + Math.random() * 9000;
             this.timer = setTimeout(() => {
-                if (!document.getElementById("game-modal")?.classList.contains("active")) {
+                if (
+                    !document.getElementById("game-modal")?.classList.contains("active") &&
+                    !document.getElementById("video-modal")?.classList.contains("active")
+                ) {
                     if (Math.random() > 0.45) this.runHallucination();
                     else this.runBreach();
                 }
@@ -864,10 +867,68 @@ class FactoryTheater {
     }
 }
 
+class VideoBriefingSystem {
+    constructor() {
+        this.modal = document.getElementById("video-modal");
+        this.player = document.getElementById("video-player");
+        this.title = document.getElementById("video-title");
+        this.watchLink = document.getElementById("video-watch-link");
+        this.closeBtn = document.getElementById("close-video");
+        this.triggers = [...document.querySelectorAll(".video-brief")];
+        this.activeTrigger = null;
+        this.setup();
+    }
+
+    setup() {
+        this.triggers.forEach((trigger) => {
+            trigger.addEventListener("click", () => this.open(trigger));
+        });
+        this.closeBtn?.addEventListener("click", () => this.close());
+        this.modal?.addEventListener("click", (e) => {
+            if (e.target === this.modal) this.close();
+        });
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && this.modal?.classList.contains("active")) this.close();
+        });
+    }
+
+    open(trigger) {
+        const videoId = trigger.dataset.videoId;
+        const videoTitle = trigger.dataset.videoTitle || "Field reel";
+        if (!this.modal || !this.player || !videoId) return;
+
+        this.activeTrigger = trigger;
+        this.title.textContent = videoTitle;
+        this.player.title = videoTitle;
+        this.player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        if (this.watchLink) {
+            this.watchLink.href = `https://www.youtube.com/watch?v=${videoId}`;
+        }
+
+        this.modal.hidden = false;
+        this.modal.classList.add("active");
+        this.modal.style.display = "flex";
+        window.fieldAssets?.soundSystem.playClick();
+        window.fieldAssets?.showToast("Reel loaded");
+        this.closeBtn?.focus();
+    }
+
+    close() {
+        if (!this.modal) return;
+        this.modal.classList.remove("active");
+        this.modal.hidden = true;
+        this.modal.style.display = "none";
+        if (this.player) this.player.src = "";
+        window.fieldAssets?.soundSystem.playClick();
+        this.activeTrigger?.focus();
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     window.fieldAssets = new FieldAssets();
     window.agentGame = new AgentProtocolGame();
     window.dossierSystem = new DossierSystem();
+    window.videoBriefing = new VideoBriefingSystem();
     window.factoryTheater = new FactoryTheater();
     document.body.classList.add("loaded");
 });

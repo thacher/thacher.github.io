@@ -641,7 +641,8 @@ body.breach .robot-avatar {
 }
 
 .game-modal,
-.dossier-modal {
+.dossier-modal,
+.video-modal {
     position: fixed;
     inset: 0;
     display: none;
@@ -654,12 +655,14 @@ body.breach .robot-avatar {
 }
 
 .game-modal.active,
-.dossier-modal.active {
+.dossier-modal.active,
+.video-modal.active {
     display: flex;
 }
 
 .game-container,
-.dossier-container {
+.dossier-container,
+.video-container {
     background: var(--panel);
     border: 1px solid var(--gold);
     border-radius: 16px;
@@ -675,7 +678,8 @@ body.breach .robot-avatar {
 }
 
 .game-header,
-.dossier-header {
+.dossier-header,
+.video-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -686,7 +690,8 @@ body.breach .robot-avatar {
 }
 
 .game-header h2,
-.dossier-header h2 {
+.dossier-header h2,
+.video-header h2 {
     font-family: "Barlow Condensed", sans-serif;
     letter-spacing: 0.12em;
     color: var(--gold);
@@ -847,6 +852,34 @@ body.breach .robot-avatar {
     color: var(--paper);
     background: var(--stamp);
     border-color: var(--stamp);
+}
+
+.video-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border: 1px solid var(--line);
+    overflow: hidden;
+}
+
+.video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.video-caption {
+    margin-top: 12px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+}
+
+.video-caption a {
+    color: var(--gold);
 }
 
 .dossier-intro {
